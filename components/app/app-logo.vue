@@ -1,8 +1,6 @@
 <template>
   <div class="app-logo">
-    <NuxtLink to="/" title="首页">
-      <img class="w-24" :src="`/images/logo.svg`" alt="" />
-    </NuxtLink>
+    <img :src="`/images/logo.svg`" alt="" />
   </div>
 </template>
 
