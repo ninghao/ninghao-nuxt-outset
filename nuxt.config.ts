@@ -3,16 +3,16 @@ export default defineNuxtConfig({
   /**
    * 模块
    */
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt"],
+  modules: ['@vueuse/nuxt', '@nuxthq/ui'],
 
   /**
    * 配置
    */
   runtimeConfig: {
     public: {
-      appName: "",
-      apiBaseUrl: "",
-      apiToken: "",
+      appName: '',
+      apiBaseUrl: '',
+      apiToken: '',
     },
   },
 });
