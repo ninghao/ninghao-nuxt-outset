@@ -1,7 +1,7 @@
 <template>
-  <div class="flex gap-8 font-light">
+  <div class="flex font-light">
     <WorkspaceAside />
-    <main>
+    <main class="flex-1">
       <slot></slot>
     </main>
   </div>

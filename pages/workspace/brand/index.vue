@@ -1,5 +1,13 @@
 <template>
-  <div class="my-6">BrandList</div>
+  <div class="py-6">
+    <UContainer class="space-y-8">
+      <div class="flex justify-between items-center">
+        <h1>品牌</h1>
+        <UButton>添加</UButton>
+      </div>
+      <div>content</div>
+    </UContainer>
+  </div>
 </template>
 
 <script setup lang="ts">
