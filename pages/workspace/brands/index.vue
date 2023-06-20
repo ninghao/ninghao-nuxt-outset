@@ -3,9 +3,19 @@
     <UContainer class="space-y-8">
       <div class="flex justify-between items-center">
         <h1>品牌</h1>
-        <UButton>添加</UButton>
+        <UButton
+          icon="i-heroicons-plus"
+          size="xs"
+          color="primary"
+          square
+          variant="solid"
+          @click="isOpen = true"
+        />
       </div>
-      <div>content</div>
+      <BrandView />
+      <UModal v-model="isOpen">
+        <BrandCreate />
+      </UModal>
     </UContainer>
   </div>
 </template>
@@ -14,4 +24,6 @@
 definePageMeta({
   layout: 'workspace',
 });
+
+const isOpen = ref(false);
 </script>
