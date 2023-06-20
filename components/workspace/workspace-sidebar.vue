@@ -6,8 +6,43 @@
 const links = [
   {
     label: '品牌',
-    icon: 'i-heroicons-home',
-    to: '/workspace/brand',
+    icon: 'i-heroicons-heart',
+    to: '/workspace/brands',
+  },
+  {
+    label: '区域',
+    icon: 'i-heroicons-map',
+    to: '/workspace/locations',
+  },
+  {
+    label: '来源',
+    icon: 'i-heroicons-link',
+    to: '/workspace/origins',
+  },
+  {
+    label: '日志',
+    icon: 'i-heroicons-bug-ant',
+    to: '/workspace/logs',
+  },
+  {
+    label: '产品',
+    icon: 'i-heroicons-shopping-bag',
+    to: '/workspace/products',
+  },
+  {
+    label: '用户',
+    icon: 'i-heroicons-user',
+    to: '/workspace/users',
+  },
+  {
+    label: '管理',
+    icon: 'i-heroicons-user-circle',
+    to: '/workspace/admins',
+  },
+  {
+    label: '设置',
+    icon: 'i-heroicons-adjustments-horizontal',
+    to: '/workspace/settings',
   },
   // {
   //   label: 'Profile',
