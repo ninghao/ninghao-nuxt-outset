@@ -6,7 +6,10 @@
     ]"
   >
     <div
-      :class="['min-w-[400px]', 'border px-8 py-12 rounded-xl']"
+      :class="[
+        'min-w-[400px]',
+        'border border-neutral-100 px-8 py-12 rounded-xl',
+      ]"
     >
       <AppLogo class="mb-12" />
       <div class="space-y-4 w-full">
