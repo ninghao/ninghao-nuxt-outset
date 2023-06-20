@@ -15,4 +15,7 @@ export default defineNuxtConfig({
       apiToken: '',
     },
   },
+
+  // 源文件目录
+  srcDir: 'src',
 });
