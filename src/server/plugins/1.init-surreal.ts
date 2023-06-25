@@ -32,7 +32,7 @@ export default defineNitroPlugin(async (nitroApp) => {
    */
   const name = config.surreal.administratorName;
 
-  const password = createHash(
+  const password = await createHash(
     config.surreal.administratorPassword,
   );
 
@@ -62,8 +62,6 @@ export default defineNitroPlugin(async (nitroApp) => {
         );
       `,
   );
-
-  const publicKey = decodeBase64(config.jwt.publicKey);
 
   /**
    * Token

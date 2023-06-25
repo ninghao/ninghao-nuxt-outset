@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     jwt: {
       publicKey: '',
       privateKey: '',
+      expiresIn: '7d',
     },
   },
 

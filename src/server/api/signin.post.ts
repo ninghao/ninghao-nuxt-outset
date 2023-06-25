@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-const bodySchema = z.object({
+/**
+ * 用户登录请求主体数据
+ */
+const SigninBodySchema = z.object({
   name: z
     .string({
       required_error: '请提供用户名',
@@ -16,11 +19,19 @@ const bodySchema = z.object({
     }),
 });
 
+export type SigninBody = z.infer<typeof SigninBodySchema>;
+
+/**
+ * 用户登录接口处理器
+ */
 export default defineEventHandler(async (event) => {
-  const { name, password } = await parseBody(event, bodySchema);
+  const body = await parseBody(event, SigninBodySchema);
+  const user = await validateUserSignin(body);
+  const token = signToken(user);
 
   return {
-    name,
-    password,
+    id: user.id,
+    name: user.name,
+    token,
   };
 });
