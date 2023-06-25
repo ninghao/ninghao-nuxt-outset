@@ -1,8 +1,9 @@
-import type { FetchError } from 'ofetch';
+import type { FetchError, FetchContext } from 'ofetch';
 
-export const useApiResponseError = (
-  error: Ref<FetchError | null>,
-) => {
+/**
+ * 处理接口错误
+ */
+export const useApiError = (error: Ref<FetchError | null>) => {
   const toast = useToast();
 
   const { data } = error.value!;
@@ -12,4 +13,21 @@ export const useApiResponseError = (
   }
 
   toast.add({ title: data.message });
+};
+
+/**
+ * 请求拦截器
+ */
+export const useApiInterceptor = () => {
+  return {
+    onRequest: (context: FetchContext) => {
+      const { currentUser } = useCurrentUser();
+
+      if (currentUser.value) {
+        context.options.headers = {
+          Authorization: `Bearer ${currentUser.value?.token}`,
+        };
+      }
+    },
+  };
 };

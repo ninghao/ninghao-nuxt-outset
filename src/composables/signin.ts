@@ -20,15 +20,21 @@ export const useSignin = () => {
     const { data, error } = await useFetch('/api/signin', {
       method: 'POST',
       body,
+      ...useApiInterceptor(),
     });
 
-    // 处理数据
+    // 处理错误
     if (error.value) {
-      return useApiResponseError(error);
+      return useApiError(error);
     }
 
+    // 当前用户
+    useCurrentUser(data.value);
+
+    // 返回数据
     return data;
   };
 
+  // 提供数据
   return { name, password, signin };
 };
