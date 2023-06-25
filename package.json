@@ -17,6 +17,8 @@
     "typescript": "5.0.4"
   },
   "dependencies": {
-    "@vueuse/nuxt": "^10.1.2"
+    "@vueuse/nuxt": "^10.1.2",
+    "argon2": "^0.30.3",
+    "surrealdb.js": "^0.8.1"
   }
 }

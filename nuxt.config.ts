@@ -14,10 +14,30 @@ export default defineNuxtConfig({
    * 配置
    */
   runtimeConfig: {
+    // 公开配置
     public: {
       appName: '',
       apiBaseUrl: '',
       apiToken: '',
+    },
+
+    // Surreal 数据库
+    surreal: {
+      url: 'http://127.0.0.1:8000/rpc',
+      rootUser: 'yoyo',
+      rootPass: 'password',
+      namespace: 'yoyo',
+      database: 'app',
+      scope: 'authenticated',
+      tokenName: 'yoyo_token',
+      administratorName: 'wanghao',
+      administratorPassword: '258369',
+    },
+
+    // JWT
+    jwt: {
+      publicKey: '',
+      privateKey: '',
     },
   },
 
