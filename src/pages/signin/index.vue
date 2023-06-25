@@ -32,7 +32,7 @@
         </UFormGroup>
 
         <div class="border-t pt-6 border-neutral-100">
-          <UButton size="lg">登录</UButton>
+          <UButton size="lg" @click="signin">登录</UButton>
         </div>
       </div>
     </div>
@@ -44,6 +44,5 @@ definePageMeta({
   layout: 'blank',
 });
 
-const name = ref<string>();
-const password = ref<string>();
+const { name, password, signin } = useSignin();
 </script>

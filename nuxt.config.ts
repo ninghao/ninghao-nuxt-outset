@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     // 公开配置
     public: {
       appName: '',
-      apiBaseUrl: '',
+      apiBaseUrl: '/api',
       apiToken: '',
     },
 

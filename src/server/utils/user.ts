@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { User } from '~/app.type';
-import { SigninBody } from '../api/signin.post';
+import { SigninBody } from '../schema/signin';
 
 /**
  * 验证用户登录
