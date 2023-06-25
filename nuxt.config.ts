@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   /**
    * 模块
    */
-  modules: ['@vueuse/nuxt', '@nuxthq/ui'],
+  modules: ['@vueuse/nuxt', '@nuxthq/ui', '@vueuse/nuxt'],
 
   /**
    * 配置
