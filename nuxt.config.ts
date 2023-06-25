@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   /**
+   * 开发者工具
+   */
+  devtools: { enabled: true },
+
+  /**
    * 模块
    */
   modules: ['@vueuse/nuxt', '@nuxthq/ui'],
