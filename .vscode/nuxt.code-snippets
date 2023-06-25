@@ -104,5 +104,13 @@
       "};",
       ""
     ]
-  }
+  },
+  "Server api handler": {
+    "prefix": "sa",
+    "body": [
+      "export default defineEventHandler(async (event) => {",
+        "${1}",
+      "});"
+    ]
+  },
 }
