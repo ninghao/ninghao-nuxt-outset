@@ -22,7 +22,7 @@
 const brands = [
   {
     id: 'louis-vuitton',
-    name: 'louis-vuitton',
+    name: 'louisvuitton',
     title: 'LOUIS VUITTON',
     alias: '路易威登',
     logo: '/images/brands/louis-vuitton.svg',
