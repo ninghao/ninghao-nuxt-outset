@@ -34,3 +34,11 @@ export const useFavicon = () => {
     ],
   });
 };
+
+/**
+ * 显示通知
+ */
+export const useAppToast = (message: string) => {
+  const toast = useToast();
+  toast.add({ title: message });
+};
