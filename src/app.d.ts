@@ -4,12 +4,13 @@ import {
   AbilityTuple,
   MongoQuery,
 } from '@casl/ability';
+import { AppAbility } from './server/utils/ability';
 
 // 扩展服务接口 Context 类型
 declare module 'h3' {
   interface H3EventContext {
     user: User | undefined;
-    ability: MongoAbility<AbilityTuple, MongoQuery>;
+    ability: AppAbility;
   }
 }
 

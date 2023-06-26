@@ -13,8 +13,13 @@ export default defineEventHandler(async (event) => {
   if (method === 'POST') {
     authGuard(event);
 
+    if (event.context.ability.cannot('create', 'Brand')) {
+      forbiddenException();
+    }
+
     const body = await parseBody(event, CreateBrandBodySchema);
     const result = await createBrand(body);
+
     return result;
   }
 

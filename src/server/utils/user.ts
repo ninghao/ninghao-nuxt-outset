@@ -82,16 +82,16 @@ export const getRequestUser = async (event: H3Event) => {
 /**
  * 角色
  */
-export const hasRole = (
-  user: User | undefined,
-  roleName: string,
-) => {
-  let result = false;
+export const hasRole =
+  (roleName: string) => (user: User | undefined) => {
+    let result = false;
 
-  if (user) {
-    const roles = (user.roles as Array<Role>) ?? [];
-    result = roles.some((role) => role.name === roleName);
-  }
+    if (user) {
+      const roles = (user.roles as Array<Role>) ?? [];
+      result = roles.some((role) => role.name === roleName);
+    }
 
-  return result;
-};
+    return result;
+  };
+
+export const isAdministrator = hasRole('administrator');
