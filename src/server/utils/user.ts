@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import { H3Event } from 'h3';
 import { User } from '~/app.type';
 import { SigninBody } from '../schema/signin';
