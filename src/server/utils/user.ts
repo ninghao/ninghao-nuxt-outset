@@ -1,5 +1,5 @@
 import { H3Event } from 'h3';
-import { User } from '~/app.type';
+import { User, Role } from '~/app.type';
 import { SigninBody } from '../schema/signin';
 
 /**
@@ -27,7 +27,7 @@ export const validateUserSignin = async ({
   }
 
   const isPasswordMatch = await compareHash(
-    user.password,
+    user.password!,
     password,
   );
 
@@ -77,4 +77,21 @@ export const getRequestUser = async (event: H3Event) => {
   }
 
   return user;
+};
+
+/**
+ * 角色
+ */
+export const hasRole = (
+  user: User | undefined,
+  roleName: string,
+) => {
+  let result = false;
+
+  if (user) {
+    const roles = (user.roles as Array<Role>) ?? [];
+    result = roles.some((role) => role.name === roleName);
+  }
+
+  return result;
 };

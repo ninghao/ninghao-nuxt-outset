@@ -1,4 +1,8 @@
-export default defineEventHandler(async (event) => {
-  authGuard(event);
-  return '您好 ~';
-});
+export default defineEventHandler(
+  async ({ context: { ability } }) => {
+    return {
+      readPost: ability.can('read', 'Post'),
+      deleteUser: ability.can('delete', 'User'),
+    };
+  },
+);

@@ -7,6 +7,6 @@ export type Role = {
 export type User = {
   id: string;
   name: string;
-  password: string;
-  roles: Array<Role> | Array<string>;
+  password?: string;
+  roles?: Array<Role> | Array<string>;
 };
