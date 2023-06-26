@@ -1,14 +1,3 @@
-import { defineAbility } from '@casl/ability';
-import { User, Role } from '../../app.type';
-
-const defineAbilityFor = (user: User) =>
-  defineAbility((can, cannot) => {
-    if (hasRole(user, 'administrator')) {
-      can('manage', 'all');
-      cannot('delete', 'User');
-    }
-  });
-
 export default defineEventHandler(async (event) => {
   // 检查是否为服务端接口
   if (!isServerApi(event)) return;
