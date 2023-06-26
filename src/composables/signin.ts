@@ -31,6 +31,9 @@ export const useSignin = () => {
     // 当前用户
     useCurrentUser(data.value);
 
+    // 重定向
+    navigateTo('/control');
+
     // 返回数据
     return data;
   };

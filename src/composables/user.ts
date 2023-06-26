@@ -44,9 +44,9 @@ export const useCurrentUser = (user?: CurrentUser | null) => {
   }
 
   // 是否登录
-  const isLoggedIn = () => {
+  const isLoggedIn = computed(() => {
     return currentUser.value ? true : false;
-  };
+  });
 
   // 返回数据
   return { currentUser, isLoggedIn };

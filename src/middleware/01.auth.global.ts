@@ -1,12 +1,20 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-  const { currentUser } = useCurrentUser();
-  // if (to.params.id === '1') {
-  //   return abortNavigation();
-  // }
-  // // In a real app you would probably not redirect every route to `/`
-  // // however it is important to check `to.path` before redirecting or you
-  // // might get an infinite redirect loop
-  // if (to.path !== '/') {
-  //   return navigateTo('/');
-  // }
+  // 跳过服务端
+  if (process.server) return;
+
+  const { isLoggedIn } = useCurrentUser();
+
+  // 用户未登录
+  if (
+    !isLoggedIn.value &&
+    to.path !== '/signin' &&
+    to.meta.layout === 'control'
+  ) {
+    return navigateTo('/signin');
+  }
+
+  // 用户已登录
+  if (isLoggedIn.value && to.path === '/signin') {
+    return navigateTo('/');
+  }
 });
