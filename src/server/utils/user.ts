@@ -1,5 +1,5 @@
 import { z } from 'zod';
-
+import { H3Event } from 'h3';
 import { User } from '~/app.type';
 import { SigninBody } from '../schema/signin';
 
@@ -37,6 +37,44 @@ export const validateUserSignin = async ({
       statusCode: 400,
       statusMessage: '密码不匹配',
     });
+  }
+
+  return user;
+};
+
+/**
+ * 获得当前用户
+ */
+export const getUserById = async (userId: string) => {
+  const [{ result }] = await surreal.query<[Array<User>]>(
+    `
+    SELECT 
+      id, name, roles
+    FROM 
+      user
+    WHERE 
+      id = $userId
+    FETCH
+      roles; 
+  `,
+    { userId },
+  );
+
+  const [user] = result ?? [];
+
+  return user ? user : undefined;
+};
+
+/**
+ * 获得请求用户
+ */
+export const getRequestUser = async (event: H3Event) => {
+  let user;
+  const token = getTokenFromAuthHeader(event);
+
+  if (token) {
+    const tokenPayload = verifyToken(token);
+    user = await getUserById(tokenPayload.ID);
   }
 
   return user;
