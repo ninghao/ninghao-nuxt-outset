@@ -37,10 +37,11 @@ export const useCurrentUser = (user?: CurrentUser | null) => {
     currentUserFromStorage.value = user;
   }
 
-  // 删除当前用户
+  // 删除当前用户（退出登录）
   if (user === null) {
     currentUser.value = null;
     currentUserFromStorage.value = null;
+    navigateTo('/');
   }
 
   // 是否登录
