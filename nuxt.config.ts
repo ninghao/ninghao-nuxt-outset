@@ -8,7 +8,12 @@ export default defineNuxtConfig({
   /**
    * 模块
    */
-  modules: ['@vueuse/nuxt', '@nuxthq/ui', '@vueuse/nuxt'],
+  modules: [
+    '@vueuse/nuxt',
+    '@nuxthq/ui',
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+  ],
 
   /**
    * 配置
@@ -44,4 +49,18 @@ export default defineNuxtConfig({
 
   // 源文件目录
   srcDir: 'src',
+
+  /**
+   * 导入
+   */
+  imports: {
+    dirs: ['stores'],
+  },
+
+  /**
+   * Pinia
+   */
+  pinia: {
+    autoImports: ['defineStore'],
+  },
 });

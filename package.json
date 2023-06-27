@@ -19,12 +19,17 @@
   },
   "dependencies": {
     "@casl/ability": "^6.5.0",
+    "@pinia/nuxt": "^0.4.11",
     "@vueuse/nuxt": "^10.2.0",
     "argon2": "^0.30.3",
     "i": "^0.3.7",
     "jsonwebtoken": "^9.0.0",
     "npm": "^9.7.2",
+    "pinia": "^2.1.4",
     "surrealdb.js": "^0.8.1",
     "zod": "^3.21.4"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
