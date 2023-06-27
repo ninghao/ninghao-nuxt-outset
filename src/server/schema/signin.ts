@@ -15,7 +15,7 @@ export const SigninBodySchema = z.object({
       required_error: '请提供密码',
     })
     .min(6, {
-      message: '密码至少要8位',
+      message: '密码至少要6位',
     }),
 });
 

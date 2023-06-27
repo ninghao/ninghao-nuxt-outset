@@ -38,9 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
     });
 
     // 处理错误
-    if (error.value) {
-      return useApiError(error);
-    }
+    if (error.value) return;
 
     // 重置
     resetSigninState();

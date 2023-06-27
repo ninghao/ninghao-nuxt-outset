@@ -24,9 +24,7 @@ export const useSignin = () => {
     });
 
     // 处理错误
-    if (error.value) {
-      return useApiError(error);
-    }
+    if (error.value) return;
 
     // 当前用户
     useCurrentUser(data.value);

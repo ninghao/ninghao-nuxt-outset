@@ -1,25 +1,11 @@
-import type { FetchError, FetchContext } from 'ofetch';
-
-/**
- * 处理接口错误
- */
-export const useApiError = (error: Ref<FetchError | null>) => {
-  const toast = useToast();
-
-  const { data } = error.value!;
-
-  if (data?.data && data.data?.name === 'ZodError') {
-    return toast.add({ title: data.data.issues[0].message });
-  }
-
-  toast.add({ title: data.message });
-};
+import type { FetchContext, FetchResponse } from 'ofetch';
 
 /**
  * 请求拦截器
  */
 export const useApiInterceptor = () => {
   return {
+    // 拦截请求
     onRequest: (context: FetchContext) => {
       const { currentUser } = useCurrentUser();
 
@@ -28,6 +14,38 @@ export const useApiInterceptor = () => {
           Authorization: `Bearer ${currentUser.value?.token}`,
         };
       }
+    },
+
+    // 拦截响应错误
+    onResponseError: (
+      context: FetchContext & {
+        response: FetchResponse<ResponseType>;
+      },
+    ) => {
+      const toast = useToast();
+
+      const error = context.response?._data;
+
+      if (error && error.data?.name === 'ZodError') {
+        toast.add({
+          title: error.data.issues[0].message,
+        });
+
+        return;
+      }
+
+      if (error && error.message) {
+        toast.add({ title: error.message });
+
+        return;
+      }
+    },
+
+    // 拦截请求错误
+    onRequestError: () => {
+      const toast = useToast();
+
+      toast.add({ title: '无法执行请求' });
     },
   };
 };
