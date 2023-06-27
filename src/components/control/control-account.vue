@@ -17,7 +17,7 @@
         <UButton
           color="white"
           variant="soft"
-          :label="currentUser?.name"
+          :label="store.currentUser.name"
         />
       </div>
     </UDropdown>
@@ -25,7 +25,8 @@
 </template>
 
 <script setup lang="ts">
-const { currentUser } = useCurrentUser();
+// const { currentUser } = useCurrentUser();
+const store = useAuthStore();
 
 const items = [
   // [
@@ -75,7 +76,7 @@ const items = [
       icon: 'i-heroicons-arrow-right-circle',
       // shortcuts: ['⌘', 'D'],
       click: () => {
-        useCurrentUser(null);
+        store.signout();
       },
     },
   ],

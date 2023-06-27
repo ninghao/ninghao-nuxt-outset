@@ -2,11 +2,13 @@ export default defineNuxtRouteMiddleware((to, from) => {
   // 跳过服务端
   if (process.server) return;
 
-  const { isLoggedIn } = useCurrentUser();
+  const store = useAuthStore();
+
+  console.log(store.isLoggedIn);
 
   // 用户未登录
   if (
-    !isLoggedIn.value &&
+    !store.isLoggedIn &&
     to.path !== '/signin' &&
     to.meta.layout === 'control'
   ) {
@@ -14,7 +16,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   }
 
   // 用户已登录
-  if (isLoggedIn.value && to.path === '/signin') {
+  if (store.isLoggedIn && to.path === '/signin') {
     return navigateTo('/');
   }
 });

@@ -1,25 +1,63 @@
+import { CurrentUser } from '../schema/auth';
+import { useStorage } from '@vueuse/core';
+
 /**
  * 身份验证 Store
  */
 export const useAuthStore = defineStore('auth', () => {
   /**
-   * 状态
+   * State
    */
 
-  // 名字
   const name = ref<string>();
-
-  // 密码
   const password = ref<string>();
 
+  const defaultCurrentUser = {
+    id: '',
+    name: '',
+    token: '',
+  };
+
+  const currentUser = ref<CurrentUser>(defaultCurrentUser);
+
+  const currentUserFromStorage = useStorage<CurrentUser>(
+    'currentUser',
+    defaultCurrentUser,
+  );
+
   /**
-   * 动作
+   * Getters
    */
 
-  // 重置登录状态
+  const isLoggedIn = computed(() => {
+    return currentUser.value && currentUser.value.token
+      ? true
+      : false;
+  });
+
+  /**
+   * Actions
+   */
+
   const resetSigninState = () => {
     name.value = '';
     password.value = '';
+  };
+
+  const setCurrentUser = (data: CurrentUser) => {
+    currentUser.value = data;
+    currentUserFromStorage.value = data;
+  };
+
+  const resetCurrentUser = () => {
+    currentUser.value = defaultCurrentUser;
+    currentUserFromStorage.value = defaultCurrentUser;
+  };
+
+  const restoreCurrentUser = () => {
+    if (currentUserFromStorage.value.token) {
+      currentUser.value = currentUserFromStorage.value;
+    }
   };
 
   // 用户登录
@@ -40,21 +78,35 @@ export const useAuthStore = defineStore('auth', () => {
     // 处理错误
     if (error.value) return;
 
+    // 当前用户
+    if (data.value) setCurrentUser(data?.value);
+
     // 重置
     resetSigninState();
 
-    // 当前用户
-    useCurrentUser(data.value);
-
     // 重定向
-    navigateTo('/control');
+    navigateTo('/');
 
     // 返回数据
     return data;
   };
 
+  // 退出登录
+  const signout = () => {
+    resetCurrentUser();
+    navigateTo('/');
+  };
+
   /**
-   * 提供对象
+   * 对象
    */
-  return { name, password, signin };
+  return {
+    name,
+    password,
+    signin,
+    signout,
+    currentUser,
+    restoreCurrentUser,
+    isLoggedIn,
+  };
 });

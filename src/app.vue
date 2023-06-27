@@ -12,5 +12,4 @@
 
 <script setup lang="ts">
 useFavicon();
-useCurrentUser();
 </script>

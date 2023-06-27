@@ -8,11 +8,17 @@
     <AppLogo />
     <UButton
       color="white"
-      @click="navigateTo('/signin')"
+      @click="
+        navigateTo(`${store.isLoggedIn ? '/control' : '/signin'}`)
+      "
       class="mt-4"
       size="xs"
     >
-      登录
+      {{ store.isLoggedIn ? '控制台' : '登录' }}
     </UButton>
   </div>
 </template>
+
+<script setup lang="ts">
+const store = useAuthStore();
+</script>
