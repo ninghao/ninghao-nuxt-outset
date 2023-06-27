@@ -10,7 +10,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (
     !store.isLoggedIn &&
     to.path !== '/signin' &&
-    to.meta.layout === 'control'
+    to.meta.layout === 'console'
   ) {
     return navigateTo('/signin');
   }

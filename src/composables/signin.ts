@@ -30,7 +30,7 @@ export const useSignin = () => {
     useCurrentUser(data.value);
 
     // 重定向
-    navigateTo('/control');
+    navigateTo('/console');
 
     // 返回数据
     return data;

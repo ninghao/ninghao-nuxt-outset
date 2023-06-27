@@ -2,7 +2,7 @@
   <div class="py-6">
     <UContainer class="space-y-8">
       <div class="flex justify-between items-center">
-        <h1>管理</h1>
+        <h1>产品</h1>
         <UButton>添加</UButton>
       </div>
       <div>content</div>
@@ -12,6 +12,6 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'control',
+  layout: 'console',
 });
 </script>

@@ -12,6 +12,6 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'control',
+  layout: 'console',
 });
 </script>

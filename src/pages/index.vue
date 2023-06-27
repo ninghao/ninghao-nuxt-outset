@@ -9,7 +9,7 @@
     <UButton
       color="white"
       @click="
-        navigateTo(`${store.isLoggedIn ? '/control' : '/signin'}`)
+        navigateTo(`${store.isLoggedIn ? '/console' : '/signin'}`)
       "
       class="mt-4"
       size="xs"

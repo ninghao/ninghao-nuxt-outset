@@ -7,42 +7,42 @@ const links = [
   {
     label: '品牌',
     icon: 'i-heroicons-heart',
-    to: '/control/brands',
+    to: '/console/brands',
   },
   {
     label: '区域',
     icon: 'i-heroicons-map',
-    to: '/control/locations',
+    to: '/console/locations',
   },
   {
     label: '来源',
     icon: 'i-heroicons-link',
-    to: '/control/origins',
+    to: '/console/origins',
   },
   {
     label: '日志',
     icon: 'i-heroicons-bug-ant',
-    to: '/control/logs',
+    to: '/console/logs',
   },
   {
     label: '产品',
     icon: 'i-heroicons-shopping-bag',
-    to: '/control/products',
+    to: '/console/products',
   },
   {
     label: '用户',
     icon: 'i-heroicons-user',
-    to: '/control/users',
+    to: '/console/users',
   },
   {
     label: '管理',
     icon: 'i-heroicons-user-circle',
-    to: '/control/admins',
+    to: '/console/admins',
   },
   {
     label: '设置',
     icon: 'i-heroicons-adjustments-horizontal',
-    to: '/control/settings',
+    to: '/console/settings',
   },
   // {
   //   label: 'Profile',

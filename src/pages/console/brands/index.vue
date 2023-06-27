@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'control',
+  layout: 'console',
 });
 
 const isOpen = ref(false);
