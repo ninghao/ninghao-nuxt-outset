@@ -15,7 +15,7 @@
       <div class="space-y-4 w-full">
         <UFormGroup name="name" label="名字">
           <UInput
-            v-model="name"
+            v-model="store.name"
             size="lg"
             placeholder="请输入名字"
             variant="none"
@@ -23,7 +23,7 @@
         </UFormGroup>
         <UFormGroup name="title" label="密码">
           <UInput
-            v-model="password"
+            v-model="store.password"
             type="password"
             size="lg"
             variant="none"
@@ -32,7 +32,7 @@
         </UFormGroup>
 
         <div class="border-t pt-6 border-neutral-100">
-          <UButton size="lg" @click="signin">登录</UButton>
+          <UButton size="lg" @click="store.signin">登录</UButton>
         </div>
       </div>
     </div>
@@ -44,5 +44,5 @@ definePageMeta({
   layout: 'blank',
 });
 
-const { name, password, signin } = useSignin();
+const store = useAuthStore();
 </script>
