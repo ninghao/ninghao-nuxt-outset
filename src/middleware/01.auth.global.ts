@@ -4,8 +4,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
 
   const store = useAuthStore();
 
-  console.log(store.isLoggedIn);
-
   // 用户未登录
   if (
     !store.isLoggedIn &&

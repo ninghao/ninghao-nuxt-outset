@@ -2,7 +2,7 @@ import { CurrentUser, CurrentUserSchema } from '../schema/auth';
 import { useStorage } from '@vueuse/core';
 
 /**
- * 身份验证 Store
+ * AuthStore
  */
 export const useAuthStore = defineStore('auth', () => {
   /**
@@ -93,7 +93,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   /**
-   * 对象
+   * 提供值
    */
   return {
     name,
