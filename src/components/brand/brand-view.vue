@@ -10,7 +10,7 @@
         'aspect-1/1',
         'cursor-pointer',
       ]"
-      @click="consoleStore.showSideover('BrandEdit')"
+      @click="onClickBrandItem(item.id)"
     >
       <div class="space-y-6 flex flex-col aspect-square p-2">
         <img class="h-12" :src="item.logo" :alt="item.title" />
@@ -42,4 +42,10 @@ const store = useBrandIndexStore();
 await store.getBrands();
 
 const consoleStore = useConsoleStore();
+const brandShowStore = useBrandShowStore();
+
+const onClickBrandItem = (id: string) => {
+  brandShowStore.getBrandById(id);
+  consoleStore.showSideover('BrandEdit');
+};
 </script>
