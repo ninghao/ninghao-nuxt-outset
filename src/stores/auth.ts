@@ -1,4 +1,4 @@
-import { CurrentUser } from '../schema/auth';
+import { CurrentUser, CurrentUserSchema } from '../schema/auth';
 import { useStorage } from '@vueuse/core';
 
 /**
@@ -12,14 +12,9 @@ export const useAuthStore = defineStore('auth', () => {
   const name = ref<string>();
   const password = ref<string>();
 
-  const defaultCurrentUser = {
-    id: '',
-    name: '',
-    token: '',
-  };
+  const defaultCurrentUser = CurrentUserSchema.parse({});
 
   const currentUser = ref<CurrentUser>(defaultCurrentUser);
-
   const currentUserFromStorage = useStorage<CurrentUser>(
     'currentUser',
     defaultCurrentUser,

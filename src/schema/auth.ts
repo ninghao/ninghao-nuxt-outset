@@ -1,9 +1,9 @@
-import { z } from 'zod';
+import { z, object, string } from 'zod';
 
-export const CurrentUserSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  token: z.string(),
+export const CurrentUserSchema = object({
+  id: string().default(''),
+  name: string().default(''),
+  token: string().default(''),
 });
 
 export type CurrentUser = z.infer<typeof CurrentUserSchema>;
