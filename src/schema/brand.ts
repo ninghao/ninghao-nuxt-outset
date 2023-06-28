@@ -35,3 +35,15 @@ export const createBrandDtoSchema = z.object({
 });
 
 export type CreateBrandDto = z.infer<typeof createBrandDtoSchema>;
+
+export const brandEntitySchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  title: z.string(),
+  alias: z.string(),
+  logo: z.string(),
+});
+
+export type BrandEntity = z.infer<typeof brandEntitySchema>;
+
+export const brandsEntitySchema = z.array(brandEntitySchema);

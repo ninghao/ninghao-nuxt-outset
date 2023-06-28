@@ -1,4 +1,4 @@
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin((app) => {
   const store = useAuthStore();
   store.restoreCurrentUser();
 });

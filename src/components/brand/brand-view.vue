@@ -1,7 +1,7 @@
 <template>
   <div class="flex gap-8">
     <UCard
-      v-for="item in brands"
+      v-for="item in store.brands"
       :key="item.id"
       :class="[
         'flex flex-col items-center justify-center',
@@ -19,20 +19,23 @@
 </template>
 
 <script setup lang="ts">
-const brands = [
-  {
-    id: 'louis-vuitton',
-    name: 'louisvuitton',
-    title: 'LOUIS VUITTON',
-    alias: '路易威登',
-    logo: '/images/brands/louis-vuitton.svg',
-  },
-  {
-    id: 'hermes',
-    name: 'hermes',
-    title: 'Hermès',
-    alias: '爱马仕',
-    logo: '/images/brands/hermes.svg',
-  },
-];
+// const brands = [
+//   {
+//     id: 'louis-vuitton',
+//     name: 'louisvuitton',
+//     title: 'LOUIS VUITTON',
+//     alias: '路易威登',
+//     logo: '/images/brands/louis-vuitton.svg',
+//   },
+//   {
+//     id: 'hermes',
+//     name: 'hermes',
+//     title: 'Hermès',
+//     alias: '爱马仕',
+//     logo: '/images/brands/hermes.svg',
+//   },
+// ];
+
+const store = useBrandIndexStore();
+await store.getBrands();
 </script>
