@@ -8,15 +8,12 @@
         color="primary"
         square
         variant="solid"
-        @click="isOpen = true"
+        @click="store.showModal('BrandCreate')"
       />
     </div>
     <UContainer>
       <BrandView />
     </UContainer>
-    <UModal v-model="isOpen">
-      <BrandCreate />
-    </UModal>
   </div>
 </template>
 
@@ -25,5 +22,5 @@ definePageMeta({
   layout: 'console',
 });
 
-const isOpen = ref(false);
+const store = useConsoleStore();
 </script>
