@@ -1,11 +1,10 @@
 <template>
   <div class="px-8 py-6 space-y-4">
     <div class="border-b border-neutral-100 pb-4 mb-8 flex justify-between gap-6">
-      <UButton size="xs" @click="" variant="soft">保存</UButton>
+      <UButton size="xs" @click="store.updateBrand" variant="soft">保存</UButton>
       <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
         <UButton
           size="xs"
-          @click=""
           icon="i-heroicons-ellipsis-horizontal"
           square
           color="white"
@@ -49,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-const store = useBrandShowStore();
+const store = useBrandUpdateStore();
 
 const items = [
   [

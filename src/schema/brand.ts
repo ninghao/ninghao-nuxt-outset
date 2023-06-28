@@ -4,6 +4,8 @@ import { z } from 'zod';
  * 创建品牌
  */
 export const createBrandDtoSchema = z.object({
+  id: z.string().trim().optional(),
+
   name: z
     .string({
       required_error: '请提供名称',
@@ -36,6 +38,14 @@ export const createBrandDtoSchema = z.object({
 
 export type CreateBrandDto = z.infer<typeof createBrandDtoSchema>;
 
+/**
+ * 修改品牌
+ */
+export const updateBrandDtoSchema = createBrandDtoSchema;
+
+/**
+ * 品牌
+ */
 export const brandSchema = z.object({
   id: z.string(),
   name: z.string(),

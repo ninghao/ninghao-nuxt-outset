@@ -43,9 +43,15 @@ await store.getBrands();
 
 const consoleStore = useConsoleStore();
 const brandShowStore = useBrandShowStore();
+const brandUpdateStore = useBrandUpdateStore();
 
-const onClickBrandItem = (id: string) => {
-  brandShowStore.getBrandById(id);
+const onClickBrandItem = async (id: string) => {
+  const brand = await brandShowStore.getBrandById(id);
+
+  if (brand?.value) {
+    brandUpdateStore.brand = brand.value;
+  }
+
   consoleStore.showSideover('BrandEdit');
 };
 </script>
