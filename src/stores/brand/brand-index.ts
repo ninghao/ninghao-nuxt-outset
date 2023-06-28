@@ -1,4 +1,4 @@
-import { BrandEntity, brandsEntitySchema } from '../../schema/brand';
+import { Brand, brandsSchema } from '../../schema/brand';
 
 /**
  * BrandIndexStore
@@ -7,7 +7,7 @@ export const useBrandIndexStore = defineStore('brandIndex', () => {
   /**
    * State
    */
-  const brands = ref<Array<BrandEntity>>([]);
+  const brands = ref<Array<Brand>>([]);
 
   /**
    * Getters
@@ -20,7 +20,7 @@ export const useBrandIndexStore = defineStore('brandIndex', () => {
     // 请求接口
     const { data, error } = await useFetch('/api/brands', {
       ...useApiInterceptor(),
-      transform: (data) => brandsEntitySchema.parse(data),
+      transform: (data) => brandsSchema.parse(data),
     });
 
     // 处理错误
