@@ -7,10 +7,10 @@ export const useConsoleStore = defineStore('console', () => {
    */
 
   const isModalVisible = ref(false);
-  const isSideoverVisible = ref(false);
+  const isSlideoverVisible = ref(false);
 
-  const modalComponent = ref('BrandCreate');
-  const sideoverComponent = ref('');
+  const modalComponent = ref('');
+  const slideoverComponent = ref('');
 
   /**
    * Getters
@@ -25,8 +25,9 @@ export const useConsoleStore = defineStore('console', () => {
     modalComponent.value = name;
   };
 
-  const showSideover = () => {
-    isSideoverVisible.value = true;
+  const showSideover = (name: string) => {
+    isSlideoverVisible.value = true;
+    slideoverComponent.value = name;
   };
 
   /**
@@ -34,10 +35,10 @@ export const useConsoleStore = defineStore('console', () => {
    */
   return {
     isModalVisible,
-    isSideoverVisible,
+    isSlideoverVisible,
     showModal,
     showSideover,
     modalComponent,
-    sideoverComponent,
+    slideoverComponent,
   };
 });

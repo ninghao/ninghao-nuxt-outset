@@ -7,6 +7,9 @@
     <UModal v-model="store.isModalVisible">
       <component :is="modalComponent"></component>
     </UModal>
+    <USlideover v-model="store.isSlideoverVisible">
+      <component :is="sideoverComponent"></component>
+    </USlideover>
   </div>
 </template>
 
@@ -22,9 +25,17 @@ const modalComponent = computed(() => {
   return components[store.modalComponent];
 });
 
+const sideoverComponent = computed(() => {
+  return components[store.slideoverComponent];
+});
+
 store.$subscribe(() => {
   if (!store.isModalVisible && store.modalComponent) {
     store.modalComponent = '';
+  }
+
+  if (!store.isSlideoverVisible && store.slideoverComponent) {
+    store.slideoverComponent = '';
   }
 });
 </script>
