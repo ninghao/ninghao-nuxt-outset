@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 const store = useBrandUpdateStore();
+const brandDestroyStore = useBrandDestroyStore();
 
 const items = [
   [
@@ -56,7 +57,7 @@ const items = [
       label: '删除',
       icon: 'i-heroicons-archive-box-x-mark',
       click: () => {
-        console.log('Edit');
+        brandDestroyStore.deleteBrandById(store.brand.id);
       },
     },
   ],

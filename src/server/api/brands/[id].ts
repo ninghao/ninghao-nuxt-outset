@@ -40,4 +40,18 @@ export default defineEventHandler(async (event) => {
 
     return result;
   }
+
+  if (method === 'DELETE') {
+    // 检查用户身份
+    authGuard(event);
+
+    // 检查用户权限
+    if (event.context.ability.cannot('delete', 'Brand')) {
+      forbiddenException();
+    }
+
+    const [result] = await surreal.delete(id!);
+
+    return result;
+  }
 });
