@@ -8,6 +8,8 @@ export default defineEventHandler(async (event) => {
   const user = await validateUserSignin(body);
   const token = signToken(user);
 
+  setCookie(event, 'token', token, { httpOnly: true });
+
   return {
     id: user.id,
     name: user.name,

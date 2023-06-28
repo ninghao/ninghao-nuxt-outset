@@ -63,12 +63,14 @@ export const signToken = (user: User) => {
 /**
  * 获取请求 Auth头部
  */
-export const getTokenFromAuthHeader = (event: H3Event) => {
+export const getTokenFromRequest = (event: H3Event) => {
   const authHeader = getRequestHeader(event, 'Authorization');
   let token;
 
   if (authHeader) {
     token = authHeader.replace('Bearer ', '');
+  } else {
+    token = getCookie(event, 'token');
   }
 
   return token;

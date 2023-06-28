@@ -69,7 +69,7 @@ export const getUserById = async (userId: string) => {
  */
 export const getRequestUser = async (event: H3Event) => {
   let user;
-  const token = getTokenFromAuthHeader(event);
+  const token = getTokenFromRequest(event);
 
   if (token) {
     const tokenPayload = verifyToken(token);
