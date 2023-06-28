@@ -36,7 +36,7 @@ export const createBrandDtoSchema = z.object({
 
 export type CreateBrandDto = z.infer<typeof createBrandDtoSchema>;
 
-export const brandEntitySchema = z.object({
+export const brandSchema = z.object({
   id: z.string(),
   name: z.string(),
   title: z.string(),
@@ -44,6 +44,6 @@ export const brandEntitySchema = z.object({
   logo: z.string(),
 });
 
-export type BrandEntity = z.infer<typeof brandEntitySchema>;
+export type Brand = z.infer<typeof brandSchema>;
 
-export const brandsEntitySchema = z.array(brandEntitySchema);
+export const brandsSchema = z.array(brandSchema);

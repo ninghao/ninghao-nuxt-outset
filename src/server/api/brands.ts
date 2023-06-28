@@ -1,4 +1,4 @@
-import { BrandEntity } from '../../schema/brand';
+import { Brand } from '../../schema/brand';
 import { CreateBrandBody, CreateBrandBodySchema } from '../schema/brand';
 
 const createBrand = async (brand: CreateBrandBody) => {
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
       forbiddenException();
     }
 
-    const [{ result }] = await surreal.query<[Array<BrandEntity>]>(`
+    const [{ result }] = await surreal.query<[Array<Brand>]>(`
       SELECT * FROM brand;
     `);
 
