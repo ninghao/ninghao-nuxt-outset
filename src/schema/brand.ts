@@ -41,7 +41,8 @@ export type CreateBrandDto = z.infer<typeof createBrandDtoSchema>;
 /**
  * 修改品牌
  */
-export const updateBrandDtoSchema = createBrandDtoSchema;
+export const updateBrandDtoSchema = z.optional(createBrandDtoSchema.partial());
+export type UpdateBrandDto = z.infer<typeof updateBrandDtoSchema>;
 
 /**
  * 品牌

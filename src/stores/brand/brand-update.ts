@@ -28,15 +28,10 @@ export const useBrandUpdateStore = defineStore('brandUpdate', () => {
   const updateBrand = async () => {
     const body = updateBrandDtoSchema.parse(brand.value);
 
-    // 验证数据
-    // createBrandDtoSchema.parse(brand.value);
-    // // 主体数据
-    // const body = {
-    //   ...brand.value,
-    // };
+    console.log(body);
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/brands/${body.id}`, {
+    const { data, error } = await useFetch(`/api/brands/${body?.id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),
@@ -45,15 +40,15 @@ export const useBrandUpdateStore = defineStore('brandUpdate', () => {
     // 处理错误
     if (error.value) return;
 
-    // // 重置状态
-    // $reset();
-    // // 显示通知
-    // useToast().add({ title: '成功创建了品牌' });
-    // // 更新列表
-    // const store = useBrandIndexStore();
-    // store.getBrands();
-    // // 返回数据
-    // return data;
+    // 显示通知
+    useToast().add({ title: '成功更新了品牌' });
+
+    // 更新列表
+    const store = useBrandIndexStore();
+    store.getBrands();
+
+    // 返回数据
+    return data;
   };
 
   /**

@@ -34,20 +34,10 @@ export default defineEventHandler(async (event) => {
       forbiddenException();
     }
 
-    const body = parseBody(event, updateBrandDtoSchema);
-    console.log(body);
+    const body = await parseBody(event, updateBrandDtoSchema);
 
-    // const [{ result }] = await surreal.query<[Array<Brand>]>(
-    //   `
-    //     SELECT *
-    //     FROM brand
-    //     WHERE id = $id;
-    //   `,
-    //   { id },
-    // );
+    const [result] = await surreal.merge(id!, body);
 
-    // return result![0];
-
-    return body;
+    return result;
   }
 });
