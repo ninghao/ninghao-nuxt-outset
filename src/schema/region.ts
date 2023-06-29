@@ -3,7 +3,7 @@ import { schema } from './base';
 import { brandSchema } from '~/schema/brand';
 
 /**
- * 创建区域
+ * 创建
  */
 export const createRegionDtoSchema = schema.merge(
   z.object({
@@ -30,10 +30,13 @@ export const createRegionDtoSchema = schema.merge(
   }),
 );
 
-export type CreateRegionDto = z.infer<typeof createRegionDtoSchema>;
+/**
+ * 修改
+ */
+export const updateRegionDtoSchema = z.optional(createRegionDtoSchema.partial());
 
 /**
- * 区域
+ * 实体
  */
 export const regionSchema = z.object({
   id: z.string(),
@@ -46,16 +49,28 @@ export const regionSchema = z.object({
   // brand: brandSchema,
 });
 
-export type Region = z.infer<typeof regionSchema>;
-
 /**
- * 区域列表
+ * 列表
  */
 export const regionsSchema = z.array(regionSchema);
+
+/**
+ * 类型
+ */
+export type CreateRegionDto = z.infer<typeof createRegionDtoSchema>;
+export type UpdateRegionDto = z.infer<typeof updateRegionDtoSchema>;
+export type Region = z.infer<typeof regionSchema>;
 export type Regions = z.infer<typeof regionsSchema>;
 
 /**
- * 修改区域
+ * 空白
  */
-export const updateRegionDtoSchema = z.optional(createRegionDtoSchema.partial());
-export type UpdateRegionDto = z.infer<typeof updateRegionDtoSchema>;
+export const _region = {
+  name: '',
+  title: '',
+  alias: '',
+  area: '',
+  code: '',
+  website: '',
+  brand: '',
+};

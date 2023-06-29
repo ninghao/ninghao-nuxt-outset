@@ -1,5 +1,5 @@
 <template>
-  <UTable :rows="store.regions" :columns="columns">
+  <UTable :rows="store.entities" :columns="columns">
     <template #actions-data="{ row }">
       <UDropdown :items="items(row)">
         <UButton
@@ -15,8 +15,8 @@
 <script setup lang="ts">
 import { Region } from '~/schema/region';
 
-const store = useRegionIndexStore();
-await store.getRegions();
+const store = useRegionStore();
+await store.retrieve();
 
 const consoleStore = useConsoleStore();
 
