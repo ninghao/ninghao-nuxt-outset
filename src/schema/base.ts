@@ -9,7 +9,7 @@ export const schema = z.object({
     })
     .trim()
     .min(1, { message: '名称不能为空白' })
-    .regex(/^[A-Za-z]+$/, { message: '名称必须由字母组成' }),
+    .regex(/^[a-z_]+$/, { message: '名称必须由小写字母与下划线组成' }),
 
   title: z
     .string({

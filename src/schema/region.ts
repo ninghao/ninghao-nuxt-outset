@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { schema } from './base';
 
 /**
  * 创建区域
