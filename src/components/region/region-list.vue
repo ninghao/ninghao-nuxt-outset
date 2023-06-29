@@ -66,6 +66,9 @@ const items = (row: Region) => [
     {
       label: 'Delete',
       icon: 'i-heroicons-archive-box-x-mark',
+      click: () => {
+        store.destroy(row.id);
+      },
     },
   ],
 ];

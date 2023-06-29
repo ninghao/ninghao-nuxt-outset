@@ -129,7 +129,10 @@ export const useRegionStore = defineStore('region', () => {
   };
 
   // 删除实体
-  const destroy = async (id?: string) => {
+  const destroy = async (entityId?: string) => {
+    // 实体 ID
+    const id = entityId ?? entity.value.id;
+
     // 请求接口
     const { data, error } = await useFetch(`/api/regions/${id}`, {
       method: 'DELETE',
