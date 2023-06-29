@@ -1,17 +1,5 @@
 <template>
   <div class="px-8 py-6 space-y-4">
-    <div class="border-b border-neutral-100 pb-4 mb-8 flex justify-between gap-6">
-      <UButton size="xs" @click="store.update" variant="soft">保存</UButton>
-      <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
-        <UButton
-          size="xs"
-          icon="i-heroicons-ellipsis-horizontal"
-          square
-          color="white"
-          variant="soft"
-        />
-      </UDropdown>
-    </div>
     <UFormGroup name="name" label="名称">
       <UInput
         v-model="store.entity.name"
@@ -44,6 +32,14 @@
         placeholder="请输入代码"
       />
     </UFormGroup>
+    <UFormGroup name="area" label="地区">
+      <UInput
+        v-model="store.entity.area"
+        size="lg"
+        variant="none"
+        placeholder="请输入代码"
+      />
+    </UFormGroup>
     <UFormGroup name="website" label="网址">
       <UInput
         v-model="store.entity.website"
@@ -52,21 +48,12 @@
         placeholder="请输入网址"
       />
     </UFormGroup>
+    <div class="border-t pt-6 border-neutral-100">
+      <UButton size="lg" @click="store.create">创建区域</UButton>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const store = useRegionStore();
-
-const items = [
-  [
-    {
-      label: '删除',
-      icon: 'i-heroicons-archive-box-x-mark',
-      click: () => {
-        store.destroy();
-      },
-    },
-  ],
-];
 </script>

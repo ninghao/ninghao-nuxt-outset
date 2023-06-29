@@ -8,7 +8,7 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showModal('BrandCreate')"
+        @click="store.showModal('RegionCreate')"
       />
     </div>
     <UContainer>
