@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { schema } from './base';
+import { brandSchema } from '~/schema/brand';
 
 /**
  * 创建区域
@@ -30,3 +31,24 @@ export const createRegionDtoSchema = schema.merge(
 );
 
 export type CreateRegionDto = z.infer<typeof createRegionDtoSchema>;
+
+/**
+ * 区域
+ */
+export const regionSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  title: z.string(),
+  alias: z.string(),
+  area: z.string(),
+  code: z.string(),
+  website: z.string(),
+  brand: brandSchema,
+});
+
+export type Region = z.infer<typeof regionSchema>;
+
+/**
+ * 区域列表
+ */
+export const regionsSchema = z.array(regionSchema);
