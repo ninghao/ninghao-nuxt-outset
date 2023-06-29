@@ -12,7 +12,7 @@ const links = [
   {
     label: '区域',
     icon: 'i-heroicons-map',
-    to: '/console/locations',
+    to: '/console/regions',
   },
   {
     label: '来源',
