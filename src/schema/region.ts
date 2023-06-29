@@ -52,3 +52,4 @@ export type Region = z.infer<typeof regionSchema>;
  * 区域列表
  */
 export const regionsSchema = z.array(regionSchema);
+export type Regions = z.infer<typeof regionsSchema>;
