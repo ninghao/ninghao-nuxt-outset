@@ -13,7 +13,9 @@ export default defineEventHandler(async (event) => {
     }
 
     const [{ result }] = await surreal.query<[Array<Region>]>(`
-      SELECT * FROM region;
+      SELECT * 
+      FROM region 
+      FETCH brand;
     `);
 
     return result;

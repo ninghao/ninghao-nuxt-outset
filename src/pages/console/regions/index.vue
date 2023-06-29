@@ -12,7 +12,7 @@
       />
     </div>
     <UContainer>
-      <BrandView />
+      <RegionList />
     </UContainer>
   </div>
 </template>

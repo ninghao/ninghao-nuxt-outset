@@ -43,7 +43,7 @@ export const regionSchema = z.object({
   area: z.string(),
   code: z.string(),
   website: z.string(),
-  brand: brandSchema,
+  // brand: brandSchema,
 });
 
 export type Region = z.infer<typeof regionSchema>;
