@@ -53,3 +53,9 @@ export type Region = z.infer<typeof regionSchema>;
  */
 export const regionsSchema = z.array(regionSchema);
 export type Regions = z.infer<typeof regionsSchema>;
+
+/**
+ * 修改区域
+ */
+export const updateRegionDtoSchema = z.optional(createRegionDtoSchema.partial());
+export type UpdateRegionDto = z.infer<typeof updateRegionDtoSchema>;
