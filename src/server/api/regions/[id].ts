@@ -1,7 +1,10 @@
 import { updateRegionDtoSchema, Region } from '~/schema/region';
 
 export default defineEventHandler(async (event) => {
+  // 请求参数
   const id = getRouterParam(event, 'id');
+
+  // 请求方法
   const method = getMethod(event);
 
   /**
@@ -43,6 +46,23 @@ export default defineEventHandler(async (event) => {
 
     const body = await parseBody(event, updateRegionDtoSchema);
     const [result] = await surreal.merge(id!, body);
+
+    return result;
+  }
+
+  /**
+   * 删除区域
+   */
+  if (method === 'DELETE') {
+    // 检查用户身份
+    authGuard(event);
+
+    // 检查用户权限
+    if (event.context.ability.cannot('delete', 'Region')) {
+      forbiddenException();
+    }
+
+    const [result] = await surreal.delete(id!);
 
     return result;
   }

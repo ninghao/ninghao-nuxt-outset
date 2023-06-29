@@ -57,6 +57,7 @@ const items = (row: Region) => [
       label: 'Edit',
       icon: 'i-heroicons-pencil-square',
       click: () => {
+        store.retrieve({ id: row.id });
         consoleStore.showSideover('RegionEdit');
       },
     },

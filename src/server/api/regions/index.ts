@@ -3,6 +3,9 @@ import { Region, createRegionDtoSchema } from '~/schema/region';
 export default defineEventHandler(async (event) => {
   const method = getMethod(event);
 
+  /**
+   * 区域列表
+   */
   if (method === 'GET') {
     // 检查用户身份
     authGuard(event);
@@ -21,6 +24,9 @@ export default defineEventHandler(async (event) => {
     return result;
   }
 
+  /**
+   * 创建区域
+   */
   if (method === 'POST') {
     // 检查用户身份
     authGuard(event);
