@@ -1,51 +1,27 @@
 import { z } from 'zod';
+import { schema } from './base';
 
 /**
- * 创建品牌
+ * 创建
  */
-export const createBrandDtoSchema = z.object({
-  id: z.string().trim().optional(),
-
-  name: z
-    .string({
-      required_error: '请提供名称',
-    })
-    .trim()
-    .min(1, { message: '名称不能为空白' })
-    .regex(/^[A-Za-z]+$/, { message: '名称必须由字母组成' }),
-
-  title: z
-    .string({
-      required_error: '请提供标题',
-    })
-    .trim()
-    .min(1, { message: '标题不能为空白' }),
-
-  alias: z
-    .string({
-      required_error: '请提供中文名',
-    })
-    .trim()
-    .min(1, { message: '中文名不能为空白' }),
-
-  logo: z
-    .string({
-      required_error: '请提供标志文件名',
-    })
-    .trim()
-    .min(1, { message: '标志文件名不能为空白' }),
-});
-
-export type CreateBrandDto = z.infer<typeof createBrandDtoSchema>;
+export const createBrandDtoSchema = schema.merge(
+  z.object({
+    logo: z
+      .string({
+        required_error: '请提供标志文件名',
+      })
+      .trim()
+      .min(1, { message: '标志文件名不能为空白' }),
+  }),
+);
 
 /**
- * 修改品牌
+ * 修改
  */
 export const updateBrandDtoSchema = z.optional(createBrandDtoSchema.partial());
-export type UpdateBrandDto = z.infer<typeof updateBrandDtoSchema>;
 
 /**
- * 品牌
+ * 实体
  */
 export const brandSchema = z.object({
   id: z.string(),
@@ -55,6 +31,28 @@ export const brandSchema = z.object({
   logo: z.string(),
 });
 
-export type Brand = z.infer<typeof brandSchema>;
-
+/**
+ * 列表
+ */
 export const brandsSchema = z.array(brandSchema);
+
+/**
+ * 类型
+ */
+export type Brand = z.infer<typeof brandSchema>;
+export type Brands = z.infer<typeof brandsSchema>;
+export type CreateBrandDto = z.infer<typeof createBrandDtoSchema>;
+export type UpdateBrandDto = z.infer<typeof updateBrandDtoSchema>;
+
+/**
+ * 空白
+ */
+export const _brand = {
+  name: '',
+  title: '',
+  alias: '',
+  area: '',
+  code: '',
+  website: '',
+  brand: '',
+};
