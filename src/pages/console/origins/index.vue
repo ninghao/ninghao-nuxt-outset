@@ -1,11 +1,18 @@
 <template>
   <div class="py-6">
-    <UContainer class="space-y-8">
-      <div class="flex justify-between items-center">
-        <h1>来源</h1>
-        <UButton>添加</UButton>
-      </div>
-      <div>content</div>
+    <div class="flex justify-between items-center px-6 pb-12">
+      <h1>来源</h1>
+      <UButton
+        icon="i-heroicons-plus"
+        size="xs"
+        color="primary"
+        square
+        variant="solid"
+        @click="store.showSideover('OriginCreate')"
+      />
+    </div>
+    <UContainer>
+      <RegionList />
     </UContainer>
   </div>
 </template>
@@ -13,5 +20,11 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'console',
+});
+
+const store = useConsoleStore();
+
+useHead({
+  title: '来源',
 });
 </script>

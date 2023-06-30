@@ -21,6 +21,7 @@ const components: Record<string, any> = {
   BrandEdit: resolveComponent('BrandEdit'),
   RegionEdit: resolveComponent('RegionEdit'),
   RegionCreate: resolveComponent('RegionCreate'),
+  OriginCreate: resolveComponent('OriginCreate'),
 };
 
 const modalComponent = computed(() => {
