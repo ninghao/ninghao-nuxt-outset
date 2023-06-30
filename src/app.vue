@@ -12,4 +12,14 @@
 
 <script setup lang="ts">
 useFavicon();
+
+const {
+  public: { appName },
+} = useRuntimeConfig();
+
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - ${appName}` : appName;
+  },
+});
 </script>
