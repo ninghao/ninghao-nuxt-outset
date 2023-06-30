@@ -74,8 +74,6 @@ export const useRegionStore = defineStore('region', () => {
         transform: (data) => regionSchema.parse(data),
       });
 
-      console.log(data);
-
       if (error.value) return;
 
       if (data.value) {

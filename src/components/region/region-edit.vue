@@ -1,7 +1,7 @@
 <template>
   <div class="px-8 py-6 space-y-4">
     <div class="border-b border-neutral-100 pb-4 mb-8 flex justify-between gap-6">
-      <UButton size="xs" @click="store.update" variant="soft">保存</UButton>
+      <UButton size="xs" @click="store.update">保存</UButton>
       <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
         <UButton
           size="xs"
@@ -52,11 +52,23 @@
         placeholder="请输入网址"
       />
     </UFormGroup>
+    <UFormGroup name="brand" label="品牌">
+      <USelectMenu
+        v-model="store.entity.brand"
+        :options="brandStore.entities"
+        by="id"
+        optionAttribute="title"
+        placeholder="请选择品牌"
+      >
+      </USelectMenu>
+    </UFormGroup>
   </div>
 </template>
 
 <script setup lang="ts">
 const store = useRegionStore();
+const brandStore = useBrandStore();
+await brandStore.retrieve();
 
 const items = [
   [

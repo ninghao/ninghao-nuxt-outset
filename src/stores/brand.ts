@@ -74,8 +74,6 @@ export const useBrandStore = defineStore('brand', () => {
         transform: (data) => brandSchema.parse(data),
       });
 
-      console.log(data);
-
       if (error.value) return;
 
       if (data.value) {

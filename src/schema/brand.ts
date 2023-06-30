@@ -48,11 +48,9 @@ export type UpdateBrandDto = z.infer<typeof updateBrandDtoSchema>;
  * 空白
  */
 export const _brand = {
+  id: '',
   name: '',
   title: '',
   alias: '',
-  area: '',
-  code: '',
-  website: '',
-  brand: '',
+  logo: '',
 };

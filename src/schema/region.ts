@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { schema } from './base';
-import { brandSchema } from '~/schema/brand';
+import { brandSchema, _brand } from '~/schema/brand';
 
 /**
  * 创建
@@ -50,7 +50,7 @@ export const regionSchema = z.object({
   area: z.string(),
   code: z.string(),
   website: z.string(),
-  // brand: brandSchema,
+  brand: brandSchema,
 });
 
 /**
@@ -76,5 +76,5 @@ export const _region = {
   area: '',
   code: '',
   website: '',
-  brand: '',
+  brand: _brand,
 };
