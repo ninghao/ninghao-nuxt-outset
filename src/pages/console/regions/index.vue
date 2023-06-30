@@ -8,7 +8,7 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showModal('RegionCreate')"
+        @click="store.showSideover('RegionCreate')"
       />
     </div>
     <UContainer>
