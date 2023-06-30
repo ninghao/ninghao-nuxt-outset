@@ -20,13 +20,17 @@ export const createRegionDtoSchema = schema.merge(
     website: z
       .string({ required_error: '请提供网址' })
       .trim()
-      .min(12, { message: '网址至少需要12位字符' })
-      .regex(/^(https?):\/\/[^\s/$.?#].[^\s]*$/, { message: '请提供正确格式的网址' }),
+      .url({ message: '地址格式不对' })
+      .nullish(),
 
-    brand: z
-      .string({ required_error: '请提供品牌' })
-      .trim()
-      .min(1, { message: '品牌不能为空' }),
+    brand: z.union([
+      brandSchema.transform((data) => data.id),
+      z
+        .string()
+        .trim()
+        .min(3)
+        .regex(/^[a-z]+:[a-z_]+$/, { message: '格式不对' }),
+    ]),
   }),
 );
 
