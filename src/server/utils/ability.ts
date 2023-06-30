@@ -5,7 +5,7 @@ import { User } from '../../app.type';
 export type Actions = 'create' | 'read' | 'update' | 'delete' | 'manage';
 
 // 主题
-export type Subjects = 'Brand' | 'Region' | 'Role' | 'User' | 'all';
+export type Subjects = 'Brand' | 'Region' | 'Origin' | 'Role' | 'User' | 'all';
 
 // 应用能力
 export type AppAbility = MongoAbility<[Actions, Subjects]>;
