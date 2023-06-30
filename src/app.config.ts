@@ -36,9 +36,20 @@ const formGroup = {
   error: 'mt-2 text-sm text-red-500 dark:text-red-400',
 };
 
+const select = {
+  default: {
+    size: 'lg',
+    color: 'white',
+    variant: 'none',
+    loadingIcon: 'i-heroicons-arrow-path-20-solid',
+    trailingIcon: 'i-heroicons-chevron-down-20-solid',
+  },
+};
+
 export default {
   ui: {
     card,
     formGroup,
+    select,
   },
 };

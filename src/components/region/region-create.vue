@@ -51,9 +51,21 @@
         placeholder="请输入网址"
       />
     </UFormGroup>
+    <UFormGroup name="brand" label="品牌">
+      <USelectMenu
+        v-model="store.entity.brand"
+        :options="brandStore.entities"
+        by="id"
+        optionAttribute="title"
+        placeholder="请选择品牌"
+      >
+      </USelectMenu>
+    </UFormGroup>
   </div>
 </template>
 
 <script setup lang="ts">
 const store = useRegionStore();
+const brandStore = useBrandStore();
+await brandStore.retrieve();
 </script>
