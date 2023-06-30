@@ -15,6 +15,8 @@
 <script setup lang="ts">
 import { Region } from '~/schema/region';
 
+const isModalOpen = ref(false);
+
 const store = useRegionStore();
 await store.retrieve();
 
@@ -67,7 +69,19 @@ const items = (row: Region) => [
       label: 'Delete',
       icon: 'i-heroicons-archive-box-x-mark',
       click: () => {
-        store.destroy(row.id);
+        useToast().add({
+          title: `确定要执行删除吗？`,
+          actions: [
+            {
+              color: 'red',
+              variant: 'outline',
+              label: '确定删除',
+              click: () => {
+                store.destroy(row.id);
+              },
+            },
+          ],
+        });
       },
     },
   ],
