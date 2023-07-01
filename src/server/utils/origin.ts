@@ -1,81 +1,23 @@
-export default defineEventHandler(async (event) => {
-  // ID 参数
-  const id = getRouterParam(event, 'id');
+export const louisvuittonCnRestfulHeaders = {
+  Referer: 'https://www.louisvuitton.cn/zhs-cn/bags/for-women/all-handbags/_/N-t1rrahxp',
+  Origin: 'https://www.louisvuitton.cn',
+  // Host: 'https://www.louisvuitton.cn',
+  Pragma: 'no-cache',
+  'Sec-Ch-Ua-Platform': `"macOS"`,
+  'Sec-Fetch-Mode': 'cors',
+  'Sec-Fetch-Site': 'same-site',
+  'Sec-Ch-Ua-Mobile': '?0',
+  'Sec-Ch-Ua': `"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"`,
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+  Client_secret: '60bbcdcD722D411B88cBb72C8246a22F',
+  Client_id: '607e3016889f431fb8020693311016c9',
+};
 
-  // 来源数据
-  const [origin] = await surreal.select(id ?? '');
-
-  //
-  if (origin.region === 'region:louisvuitton_cn' && origin.type === 'RESTful') {
-    console.log('request region:louisvuitton_cn api');
-    // https://api-www.louisvuitton.cn/eco-eu/search-merch-eapi/v1/zhs-cn/plp/products/t1rrahxp
-
-    try {
-      // const result: any = await $fetch(origin.url as string, {
-      //   headers: louisvuittonCnRestfulHeaders,
-      // });
-
-      const result = multiPageRestFulRawData;
-      const totalPages = result.nbPages;
-
-      const actions = Array.from({ length: totalPages + 1 }, (_, index) => {
-        return async () => {
-          const url = `${origin.url}?page=${index}`;
-
-          console.log(`request url`, url);
-
-          const result: any = await $fetch(url, {
-            headers: louisvuittonCnRestfulHeaders,
-          });
-
-          if (result && result.hits.length) {
-            createProductFromOrigin(result.hits, origin);
-          }
-
-          return new Promise((resolve) => {
-            setTimeout(resolve, 10000);
-          });
-        };
-      });
-
-      // 递归执行动作
-      const executeActions = async (index: number) => {
-        if (index >= actions.length) {
-          console.log('所有动作执行完成');
-          return;
-        }
-
-        const action = actions[index];
-
-        try {
-          await action();
-          executeActions(index + 1);
-        } catch (error) {
-          console.error('动作执行出错:', error);
-        }
-      };
-
-      executeActions(0);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  return {
-    result: 'ok',
-  };
-
-  // 初始数据
-  const data = multiPageRestFulRawData;
-
-  // 需要 page 查询符
-  const totalPages = data.nbPages;
-  const firstPageNumber = 0;
-  const totalItems = data.nbHits;
-  const items = data.hits;
-
-  // const products: Array<Record<string, any>> = [];
-
+export const createProductFromOrigin = async (
+  items: Array<Record<string, any>>,
+  origin: any,
+) => {
   for (const item of items) {
     // const brand = 'brand:louisvuitton';
     const brand = origin.brand;
@@ -156,7 +98,7 @@ export default defineEventHandler(async (event) => {
      * 第二级产品
      */
     const subItems = item.isSimilarTo.filter(
-      (subItem) => subItem.identifier !== item.identifier,
+      (subItem: any) => subItem.identifier !== item.identifier,
     );
 
     if (subItems.length) {
@@ -196,21 +138,4 @@ export default defineEventHandler(async (event) => {
     //   const
     // }
   }
-
-  const actions = Array.from({ length: 22 }, (_, index) => {
-    return () => {
-      console.log(`request ${index}`);
-
-      return new Promise((resolve) => {
-        setTimeout(resolve, 3000);
-      });
-    };
-  });
-
-  // // 执行动作
-  // executeActions(0);
-
-  return {
-    result: 'ok',
-  };
-});
+};

@@ -1,8 +1,7 @@
-export default defineEventHandler(
-  async ({ context: { ability } }) => {
-    return {
-      readPost: ability.can('read', 'Brand'),
-      deleteUser: ability.can('delete', 'User'),
-    };
-  },
-);
+export default defineEventHandler((event) => {
+  const request = getRequestHeaders(event);
+
+  console.log(request);
+
+  return { message: 'greet' };
+});
