@@ -32,9 +32,7 @@ export default defineNitroPlugin(async (nitroApp) => {
    */
   const name = config.surreal.administratorName;
 
-  const password = await createHash(
-    config.surreal.administratorPassword,
-  );
+  const password = await createHash(config.surreal.administratorPassword);
 
   await surreal.update(`user:${name}`, {
     name,
@@ -74,4 +72,64 @@ export default defineNitroPlugin(async (nitroApp) => {
         VALUE '${publicKey}';
       `,
   );
+
+  /**
+   * 品牌 Brand
+   */
+  await surreal.update('brand:hermes', {
+    alias: '爱马仕',
+    id: 'brand:hermes',
+    logo: '/images/brands/hermes.svg',
+    name: 'hermes',
+    title: 'Hermès',
+  });
+
+  await surreal.update('brand:louisvuitton', {
+    alias: '路易威登',
+    id: 'brand:louisvuitton',
+    logo: '/images/brands/louis-vuitton.svg',
+    name: 'louisvuitton',
+    title: 'LOUIS VUITTON',
+  });
+
+  /**
+   * 区域 Region
+   */
+  await surreal.update('region:louisvuitton_cn', {
+    alias: 'Mainland China',
+    area: 'Asia',
+    brand: 'brand:louisvuitton',
+    code: 'cn',
+    id: 'region:louisvuitton_cn',
+    name: 'louisvuitton_cn',
+    title: '中国内地',
+    website: 'https://www.louisvuitton.cn/zhs-cn/homepage',
+  });
+
+  /**
+   * 来源 Origin
+   */
+  await surreal.update('origin:n79c1rw3ijc4tzshz3li', {
+    region: 'region:louisvuitton_cn',
+    type: 'RESTful',
+    url: 'https://api-www.louisvuitton.cn/eco-eu/search-merch-eapi/v1/zhs-cn/plp/products/t1rrahxp',
+  });
+
+  /**
+   * Schema
+   */
+  await surreal.query(`
+    DEFINE FIELD created ON product VALUE $before OR time::now();
+    DEFINE FIELD updated ON product VALUE time::now();
+    
+    DEFINE FIELD created ON origin VALUE $before OR time::now();
+    DEFINE FIELD updated ON origin VALUE time::now();
+
+    DEFINE FIELD created ON user VALUE $before OR time::now();
+    DEFINE FIELD updated ON user VALUE time::now();
+  `);
+
+  await surreal.query(`
+    DEFINE INDEX productSkuIndex ON TABLE product COLUMNS sku UNIQUE;
+  `);
 });
