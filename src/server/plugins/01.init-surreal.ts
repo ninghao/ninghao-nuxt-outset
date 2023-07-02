@@ -131,5 +131,6 @@ export default defineNitroPlugin(async (nitroApp) => {
 
   await surreal.query(`
     DEFINE INDEX productSkuIndex ON TABLE product COLUMNS sku UNIQUE;
+    DEFINE INDEX productOriginIndex ON TABLE available COLUMNS in, out UNIQUE;
   `);
 });
