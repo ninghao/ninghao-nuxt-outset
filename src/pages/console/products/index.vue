@@ -11,9 +11,7 @@
         @click="store.showSideover('OriginCreate')"
       />
     </div>
-    <UContainer>
-      <ProductList />
-    </UContainer>
+    <ProductList class="px-6" />
   </div>
 </template>
 
