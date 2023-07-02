@@ -14,7 +14,11 @@
     </template>
     <template #productImage-data="{ row }">
       <div class="w-14">
-        <img :src="getRemoteImage(row.image.remote.url, 200, 200)" />
+        <img
+          class="object-cover"
+          :src="useProductRemoteImage({ url: row.image.remote.url, width: 200 })"
+          alt=""
+        />
       </div>
     </template>
   </UTable>
@@ -27,14 +31,6 @@ const store = useProductStore();
 await store.retrieve();
 
 const consoleStore = useConsoleStore();
-
-const getRemoteImage = (
-  url: string,
-  width: number | string,
-  height?: number | string,
-) => {
-  return url.replace('{IMG_WIDTH}', `${width}`).replace('{IMG_HEIGHT}', `${height}`);
-};
 
 const columns = [
   {
