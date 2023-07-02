@@ -22,6 +22,16 @@ export default defineEventHandler(async (event) => {
       FETCH category, brand;
     `);
 
+    const [countResult] = await surreal.query(`select count() from product group all`);
+
+    const totalCount = countResult.result ? (countResult as any).result[0].count : 0;
+    const totalPages = Math.ceil(totalCount / 25);
+
+    setHeaders(event, {
+      'x-total-count': totalCount,
+      'x-total-pages': totalPages,
+    });
+
     return result;
   }
 });

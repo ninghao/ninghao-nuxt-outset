@@ -18,6 +18,11 @@ export const useProductStore = defineStore('product', () => {
   // 实体列表
   const entities = ref<Products>([]);
 
+  const currentPage = ref(1);
+
+  const totalCount = ref(0);
+  const totalPages = ref(0);
+
   /**
    * Getters 🌵
    */
@@ -33,6 +38,18 @@ export const useProductStore = defineStore('product', () => {
   //   entity.value = { ..._region };
   // };
 
+  const setTotalCount = (data: number | string | null) => {
+    if (data) {
+      totalCount.value = parseInt(`${data}`, 10);
+    }
+  };
+
+  const setTotalPages = (data: number | string | null) => {
+    if (data) {
+      totalPages.value = parseInt(`${data}`, 10);
+    }
+  };
+
   /**
    * 读取实体
    */
@@ -42,6 +59,10 @@ export const useProductStore = defineStore('product', () => {
     // 获取实体列表
     const { data, error } = await useFetch(`/api/products`, {
       ...useApiInterceptor(),
+      onResponse(context) {
+        setTotalCount(context.response.headers.get('x-total-count'));
+        setTotalPages(context.response.headers.get('x-total-pages'));
+      },
       transform: (data) => productsSchema.parse(data),
     });
 
@@ -59,5 +80,5 @@ export const useProductStore = defineStore('product', () => {
   /**
    * 返回值
    */
-  return { retrieve, entities };
+  return { retrieve, entities, currentPage, totalCount, totalPages };
 });

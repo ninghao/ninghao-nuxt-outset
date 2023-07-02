@@ -1,27 +1,35 @@
 <template>
-  <UTable :rows="store.entities" :columns="columns">
-    <template #actions-data="{ row }">
-      <UDropdown :items="items(row)">
-        <UButton
-          color="gray"
-          variant="ghost"
-          icon="i-heroicons-ellipsis-horizontal-20-solid"
-        />
-      </UDropdown>
-    </template>
-    <template #brandTitle-data="{ row }">
-      {{ row.brand.title }}
-    </template>
-    <template #productImage-data="{ row }">
-      <div class="w-14">
-        <img
-          class="object-cover"
-          :src="useProductRemoteImage({ url: row.image.remote.url, width: 200 })"
-          alt=""
-        />
-      </div>
-    </template>
-  </UTable>
+  <div>
+    <UPagination
+      v-model="store.currentPage"
+      :page-count="store.totalPages"
+      :total="store.totalCount"
+      class="mb-6"
+    />
+    <UTable :rows="store.entities" :columns="columns" total="700" page-count="25">
+      <template #actions-data="{ row }">
+        <UDropdown :items="items(row)">
+          <UButton
+            color="gray"
+            variant="ghost"
+            icon="i-heroicons-ellipsis-horizontal-20-solid"
+          />
+        </UDropdown>
+      </template>
+      <template #brandTitle-data="{ row }">
+        {{ row.brand.title }}
+      </template>
+      <template #productImage-data="{ row }">
+        <div class="w-14">
+          <img
+            class="object-cover"
+            :src="useProductRemoteImage({ url: row.image.remote.url, width: 200 })"
+            alt=""
+          />
+        </div>
+      </template>
+    </UTable>
+  </div>
 </template>
 
 <script setup lang="ts">
