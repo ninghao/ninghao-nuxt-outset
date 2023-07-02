@@ -85,7 +85,7 @@ export const createProductFromOrigin = async (
       },
       description,
       brand,
-      region,
+      // region,
     };
 
     try {
@@ -119,7 +119,7 @@ export const createProductFromOrigin = async (
           },
           description,
           brand,
-          region,
+          // region,
         };
 
         try {
