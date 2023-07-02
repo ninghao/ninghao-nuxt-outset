@@ -9,7 +9,7 @@ export const categorySchema = z.object({
   alias: z.string(),
   categoryId: z.string(),
   url: z.string(),
-  brand: brandSchema,
+  brand: z.union([brandSchema, z.string()]),
 });
 
 /**

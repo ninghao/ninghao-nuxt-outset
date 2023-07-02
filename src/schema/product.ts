@@ -30,22 +30,26 @@ import { brandSchema } from './brand';
 export const productSchema = z.object({
   id: z.string(),
   title: z.string(),
-  color: z.string(),
-  material: z.string(),
-  price: z.string(),
-  productId: z.string(),
+  color: z.string().optional(),
+  material: z.string().optional(),
+  price: z.string().optional(),
+  productId: z.string().optional(),
   sku: z.string(),
   description: z.string(),
   url: z.string(),
   category: categorySchema,
   brand: brandSchema,
   image: z.object({
-    local: z.object({
-      url: z.string(),
-    }),
-    remote: z.object({
-      url: z.string(),
-    }),
+    local: z
+      .object({
+        url: z.string(),
+      })
+      .optional(),
+    remote: z
+      .object({
+        url: z.string(),
+      })
+      .optional(),
   }),
 });
 

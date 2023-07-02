@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
 
     const [{ result }] = await surreal.query<[Array<Product>]>(`
       SELECT * 
-      FROM product 
+      FROM product
+      LIMIT 25
       FETCH category, brand;
     `);
 
