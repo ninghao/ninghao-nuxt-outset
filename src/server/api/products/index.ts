@@ -30,6 +30,7 @@ export default defineEventHandler(async (event) => {
           *
         FROM 
           product
+        ORDER BY created DESC
         LIMIT 
           $limit
         START 
