@@ -1,4 +1,10 @@
-import { Product, Products, _product, productsSchema } from '~/schema/product';
+import {
+  Product,
+  Products,
+  _product,
+  createProductDtoSchema,
+  productsSchema,
+} from '~/schema/product';
 
 /**
  * RegionStore
@@ -40,9 +46,9 @@ export const useProductStore = defineStore('product', () => {
   /**
    * 重置状态
    */
-  // const $reset = () => {
-  //   entity.value = { ..._region };
-  // };
+  const $reset = () => {
+    entity.value = { ..._product };
+  };
 
   const setTotalCount = (data: number | string | null) => {
     if (data) {
@@ -75,7 +81,37 @@ export const useProductStore = defineStore('product', () => {
   };
 
   /**
+   * 创建实体
+   */
+  const create = async () => {
+    // 主体数据
+    const body = createProductDtoSchema.parse(entity.value);
+
+    // 请求接口
+    const { data, error } = await useFetch('/api/products', {
+      method: 'POST',
+      body,
+      ...useApiInterceptor(),
+    });
+
+    // 处理错误
+    if (error.value) return;
+
+    // 重置状态
+    $reset();
+
+    // 显示通知
+    useToast().add({ title: '成功创建了商品' });
+
+    // 更新列表
+    retrieve();
+
+    // 返回数据
+    return data;
+  };
+
+  /**
    * 返回值
    */
-  return { retrieve, entity, entities, totalCount, entitiesQuery };
+  return { create, retrieve, entity, entities, totalCount, entitiesQuery };
 });
