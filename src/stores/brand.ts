@@ -1,4 +1,12 @@
-import { _brand, Brand, Brands, createBrandDtoSchema } from '~/schema/brand';
+import {
+  _brand,
+  Brand,
+  Brands,
+  brandSchema,
+  brandsSchema,
+  updateBrandDtoSchema,
+  createBrandDtoSchema,
+} from '~/schema/brand';
 
 /**
  * BrandStore
@@ -101,7 +109,7 @@ export const useBrandStore = defineStore('brand', () => {
   // 更新实体
   const update = async () => {
     // 请求主体
-    const body = updateRegionDtoSchema.parse(entity.value);
+    const body = updateBrandDtoSchema.parse(entity.value);
 
     // 实体 ID
     const id = body?.id;
