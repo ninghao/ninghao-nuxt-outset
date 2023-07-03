@@ -1,4 +1,12 @@
-import { _region, Region, Regions, createRegionDtoSchema } from '~/schema/region';
+import {
+  _region,
+  Region,
+  Regions,
+  regionSchema,
+  regionsSchema,
+  updateRegionDtoSchema,
+  createRegionDtoSchema,
+} from '~/schema/region';
 
 /**
  * RegionStore
