@@ -30,24 +30,21 @@ export default defineEventHandler(async (event) => {
         FROM 
           category
         ORDER BY brand DESC
-        LIMIT 
-          $limit
-        START 
-          $start
+     
         FETCH 
           brand;
       `,
       { limit, start },
     );
 
-    const [countResult] = await surreal.query(`SELECT count() FROM category GROUP all`);
-    const totalCount = countResult.result ? (countResult as any).result[0].count : 0;
-    const totalPages = Math.ceil(totalCount / limit);
+    // const [countResult] = await surreal.query(`SELECT count() FROM category GROUP all`);
+    // const totalCount = countResult.result ? (countResult as any).result[0].count : 0;
+    // const totalPages = Math.ceil(totalCount / limit);
 
-    setHeaders(event, {
-      'x-total-count': totalCount,
-      'x-total-pages': totalPages,
-    });
+    // setHeaders(event, {
+    //   'x-total-count': totalCount,
+    //   'x-total-pages': totalPages,
+    // });
 
     return result;
   }
