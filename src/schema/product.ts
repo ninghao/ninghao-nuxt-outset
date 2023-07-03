@@ -25,6 +25,37 @@ import { brandSchema } from './brand';
 // },
 
 /**
+ * 创建
+ */
+export const createProductDtoSchema = z.object({
+  id: z.string().optional(),
+  title: z.string(),
+  color: z.string().optional(),
+  material: z.string().optional(),
+  price: z.string().optional(),
+  productId: z.string().optional(),
+  sku: z.string(),
+  description: z.string().optional(),
+  url: z.string().optional(),
+  category: z.union([categorySchema.transform((data) => data.id), z.string()]).optional(),
+  brand: z.union([brandSchema.transform((data) => data.id), z.string()]),
+  image: z
+    .object({
+      local: z
+        .object({
+          url: z.string(),
+        })
+        .optional(),
+      remote: z
+        .object({
+          url: z.string(),
+        })
+        .optional(),
+    })
+    .optional(),
+});
+
+/**
  * 实体
  */
 export const productSchema = z.object({
@@ -63,3 +94,4 @@ export const productsSchema = z.array(productSchema);
  */
 export type Product = z.infer<typeof productSchema>;
 export type Products = z.infer<typeof productsSchema>;
+export type CreateProductDto = z.infer<typeof createProductDtoSchema>;

@@ -1,4 +1,5 @@
 import { Product } from '~/schema/product';
+import { createProductDtoSchema } from '~/schema/product';
 import { entitiesRequestQuerySchema } from '~/schema/api';
 
 export default defineEventHandler(async (event) => {
@@ -47,6 +48,25 @@ export default defineEventHandler(async (event) => {
       'x-total-count': totalCount,
       'x-total-pages': totalPages,
     });
+
+    return result;
+  }
+
+  /**
+   * 创建
+   */
+  if (method === 'POST') {
+    // 检查用户身份
+    authGuard(event);
+
+    // 检查用户权限
+    if (event.context.ability.cannot('create', 'Product')) {
+      forbiddenException();
+    }
+
+    const body = await parseBody(event, createProductDtoSchema);
+
+    const [result] = await surreal.create(`product`, body);
 
     return result;
   }
