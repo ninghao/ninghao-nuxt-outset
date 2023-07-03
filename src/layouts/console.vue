@@ -22,6 +22,7 @@ const components: Record<string, any> = {
   RegionEdit: resolveComponent('RegionEdit'),
   RegionCreate: resolveComponent('RegionCreate'),
   OriginCreate: resolveComponent('OriginCreate'),
+  ProductCreate: resolveComponent('ProductCreate'),
 };
 
 const modalComponent = computed(() => {

@@ -8,7 +8,7 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showSideover('OriginCreate')"
+        @click="store.showSideover('ProductCreate')"
       />
     </div>
     <ProductList class="px-6" />

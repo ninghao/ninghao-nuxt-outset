@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { brandSchema } from '~/schema/brand';
+import { _brand, brandSchema } from '~/schema/brand';
 
 /**
  * 实体
@@ -23,3 +23,15 @@ export const categoriesSchema = z.array(categorySchema);
  */
 export type Category = z.infer<typeof categorySchema>;
 export type Categories = z.infer<typeof categoriesSchema>;
+
+/**
+ * 空白
+ */
+export const _category = {
+  id: '',
+  title: '',
+  alias: '',
+  categoryId: '',
+  url: '',
+  brand: _brand,
+};

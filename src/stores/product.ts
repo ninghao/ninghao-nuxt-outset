@@ -1,4 +1,4 @@
-import { Products, productsSchema } from '~/schema/product';
+import { Product, Products, _product, productsSchema } from '~/schema/product';
 
 /**
  * RegionStore
@@ -13,7 +13,7 @@ export const useProductStore = defineStore('product', () => {
    */
 
   // 单个实体
-  // const entity = ref<Partial<Product>>({ ..._product });
+  const entity = ref<Partial<Product>>({ ..._product });
 
   // 实体列表
   const entities = ref<Products>([]);
@@ -65,8 +65,6 @@ export const useProductStore = defineStore('product', () => {
       transform: (data) => productsSchema.parse(data),
     });
 
-    // console.log(data.value);
-
     if (error.value) return;
 
     if (data.value) {
@@ -79,5 +77,5 @@ export const useProductStore = defineStore('product', () => {
   /**
    * 返回值
    */
-  return { retrieve, entities, totalCount, entitiesQuery };
+  return { retrieve, entity, entities, totalCount, entitiesQuery };
 });

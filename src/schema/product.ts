@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { categorySchema } from './category';
-import { brandSchema } from './brand';
+import { _category, categorySchema } from './category';
+import { _brand, brandSchema } from './brand';
 
 // {
 //   "id": "product:02aftiywa7obkzg23fl6",
@@ -30,14 +30,14 @@ import { brandSchema } from './brand';
 export const createProductDtoSchema = z.object({
   id: z.string().optional(),
   title: z.string(),
-  color: z.string().optional(),
-  material: z.string().optional(),
-  price: z.string().optional(),
-  productId: z.string().optional(),
+  color: z.string(),
+  material: z.string(),
+  price: z.string(),
+  productId: z.string(),
   sku: z.string(),
-  description: z.string().optional(),
-  url: z.string().optional(),
-  category: z.union([categorySchema.transform((data) => data.id), z.string()]).optional(),
+  description: z.string(),
+  url: z.string(),
+  category: z.union([categorySchema.transform((data) => data.id), z.string()]),
   brand: z.union([brandSchema.transform((data) => data.id), z.string()]),
   image: z
     .object({
@@ -64,29 +64,31 @@ export const updateProductDtoSchema = z.optional(createProductDtoSchema.partial(
  * 实体
  */
 export const productSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   title: z.string(),
   color: z.string().optional(),
   material: z.string().optional(),
   price: z.string().optional(),
   productId: z.string().optional(),
   sku: z.string(),
-  description: z.string(),
-  url: z.string(),
-  category: categorySchema,
-  brand: brandSchema,
-  image: z.object({
-    local: z
-      .object({
-        url: z.string(),
-      })
-      .optional(),
-    remote: z
-      .object({
-        url: z.string(),
-      })
-      .optional(),
-  }),
+  description: z.string().optional(),
+  url: z.string().optional(),
+  category: categorySchema.optional(),
+  brand: brandSchema.optional(),
+  image: z
+    .object({
+      local: z
+        .object({
+          url: z.string(),
+        })
+        .optional(),
+      remote: z
+        .object({
+          url: z.string(),
+        })
+        .optional(),
+    })
+    .optional(),
 });
 
 /**
@@ -101,3 +103,27 @@ export type Product = z.infer<typeof productSchema>;
 export type Products = z.infer<typeof productsSchema>;
 export type CreateProductDto = z.infer<typeof createProductDtoSchema>;
 export type UpdateProductDto = z.infer<typeof updateProductDtoSchema>;
+
+/**
+ * 空白
+ */
+export const _product: Product = {
+  title: '',
+  color: '',
+  material: '',
+  price: '',
+  productId: '',
+  sku: '',
+  description: '',
+  url: '',
+  category: _category,
+  brand: _brand,
+  image: {
+    remote: {
+      url: '',
+    },
+    local: {
+      url: '',
+    },
+  },
+};

@@ -17,11 +17,14 @@
         </UDropdown>
       </template>
       <template #brandTitle-data="{ row }">
-        {{ row.brand.title }}
+        <div v-if="row.brand && row.brand.title">
+          {{ row.brand.title }}
+        </div>
       </template>
       <template #productImage-data="{ row }">
         <div class="w-14">
           <img
+            v-if="row.image && row.image.remote"
             class="object-cover"
             :src="useProductRemoteImage({ url: row.image.remote.url, width: 200 })"
             alt=""
