@@ -55,7 +55,7 @@ export default defineNuxtConfig({
    * 导入
    */
   imports: {
-    dirs: ['composables/**', 'stores', 'stores/**', 'schema'],
+    dirs: ['composables/**', 'stores', 'stores/**'],
   },
 
   /**

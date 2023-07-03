@@ -1,4 +1,4 @@
-import { Products } from '~/schema/product';
+import { Products, productsSchema } from '~/schema/product';
 
 /**
  * RegionStore

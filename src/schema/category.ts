@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { brandSchema } from '~/schema/brand';
 
 /**
  * 实体
