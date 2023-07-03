@@ -56,6 +56,11 @@ export const createProductDtoSchema = z.object({
 });
 
 /**
+ * 修改
+ */
+export const updateProductDtoSchema = z.optional(createProductDtoSchema.partial());
+
+/**
  * 实体
  */
 export const productSchema = z.object({
@@ -95,3 +100,4 @@ export const productsSchema = z.array(productSchema);
 export type Product = z.infer<typeof productSchema>;
 export type Products = z.infer<typeof productsSchema>;
 export type CreateProductDto = z.infer<typeof createProductDtoSchema>;
+export type UpdateProductDto = z.infer<typeof updateProductDtoSchema>;
