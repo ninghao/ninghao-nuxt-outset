@@ -3,7 +3,9 @@ import {
   Products,
   _product,
   createProductDtoSchema,
+  productSchema,
   productsSchema,
+  updateProductDtoSchema,
 } from '~/schema/product';
 
 /**
@@ -62,6 +64,26 @@ export const useProductStore = defineStore('product', () => {
   const retrieve = async (options?: RetrieveOptions) => {
     const { id } = options || {};
 
+    console.log(id);
+
+    // 获取单个实体
+    if (id) {
+      const { data, error } = await useFetch(`/api/products/${id}`, {
+        ...useApiInterceptor(),
+        transform: (data) => productSchema.parse(data),
+      });
+
+      console.log(data);
+
+      if (error.value) return;
+
+      if (data.value) {
+        entity.value = data.value;
+      }
+
+      return data;
+    }
+
     // 获取实体列表
     const { data, error } = await useFetch(`/api/products?${entitiesQueryString.value}`, {
       ...useApiInterceptor(),
@@ -111,7 +133,72 @@ export const useProductStore = defineStore('product', () => {
   };
 
   /**
+   * 更新实体
+   */
+  const update = async () => {
+    // 请求主体
+    const body = updateProductDtoSchema.parse(entity.value);
+
+    // 实体 ID
+    const id = body?.id;
+
+    // 请求接口
+    const { data, error } = await useFetch(`/api/products/${id}`, {
+      method: 'PUT',
+      body,
+      ...useApiInterceptor(),
+    });
+
+    // 处理错误
+    if (error.value) return;
+
+    // 显示通知
+    useToast().add({ title: '成功更新了产品' });
+
+    // 更新列表
+    retrieve();
+
+    // 返回数据
+    return data;
+  };
+
+  /**
+   * 删除实体
+   */
+  const destroy = async (entityId?: string) => {
+    // 实体 ID
+    const id = entityId ?? entity.value.id;
+
+    // 请求接口
+    const { data, error } = await useFetch(`/api/products/${id}`, {
+      method: 'DELETE',
+      ...useApiInterceptor(),
+    });
+
+    // 处理错误
+    if (error.value) return;
+
+    // 显示通知
+    useToast().add({ title: '成功删除了产品' });
+
+    // 更新列表
+    retrieve();
+
+    // 返回数据
+    return data;
+  };
+
+  /**
    * 返回值
    */
-  return { create, retrieve, entity, entities, totalCount, entitiesQuery };
+  return {
+    create,
+    retrieve,
+    update,
+    destroy,
+    entity,
+    entities,
+    totalCount,
+    entitiesQuery,
+  };
 });

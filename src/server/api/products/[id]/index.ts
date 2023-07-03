@@ -23,7 +23,8 @@ export default defineEventHandler(async (event) => {
       `
         SELECT * 
         FROM product
-        WHERE id = $id;
+        WHERE id = $id
+        FETCH brand, category;
       `,
       { id },
     );

@@ -68,8 +68,6 @@ export const useCategoryStore = defineStore('category', () => {
       },
     );
 
-    console.log('data.value', data.value);
-
     if (error.value) return;
 
     if (data.value) {

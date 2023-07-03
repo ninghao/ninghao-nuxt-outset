@@ -81,7 +81,7 @@ const items = (row: Product) => [
       icon: 'i-heroicons-pencil-square',
       click: () => {
         store.retrieve({ id: row.id });
-        consoleStore.showSideover('RegionEdit');
+        consoleStore.showSideover('ProductEdit');
       },
     },
   ],
@@ -98,7 +98,7 @@ const items = (row: Product) => [
               variant: 'outline',
               label: '确定删除',
               click: () => {
-                // store.destroy(row.id);
+                store.destroy(row.id);
               },
             },
           ],
