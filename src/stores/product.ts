@@ -18,14 +18,20 @@ export const useProductStore = defineStore('product', () => {
   // 实体列表
   const entities = ref<Products>([]);
 
-  const currentPage = ref(1);
-
   const totalCount = ref(0);
-  const totalPages = ref(0);
+
+  const entitiesQuery = ref({
+    page: 1,
+    sort: '',
+  });
 
   /**
    * Getters 🌵
    */
+
+  const entitiesQueryString = computed(() => {
+    return useEntitiesQueryString(entitiesQuery.value);
+  });
 
   /**
    * Actions 🚀
@@ -44,12 +50,6 @@ export const useProductStore = defineStore('product', () => {
     }
   };
 
-  const setTotalPages = (data: number | string | null) => {
-    if (data) {
-      totalPages.value = parseInt(`${data}`, 10);
-    }
-  };
-
   /**
    * 读取实体
    */
@@ -57,11 +57,10 @@ export const useProductStore = defineStore('product', () => {
     const { id } = options || {};
 
     // 获取实体列表
-    const { data, error } = await useFetch(`/api/products`, {
+    const { data, error } = await useFetch(`/api/products?${entitiesQueryString.value}`, {
       ...useApiInterceptor(),
       onResponse(context) {
         setTotalCount(context.response.headers.get('x-total-count'));
-        setTotalPages(context.response.headers.get('x-total-pages'));
       },
       transform: (data) => productsSchema.parse(data),
     });
@@ -80,5 +79,5 @@ export const useProductStore = defineStore('product', () => {
   /**
    * 返回值
    */
-  return { retrieve, entities, currentPage, totalCount, totalPages };
+  return { retrieve, entities, totalCount, entitiesQuery };
 });

@@ -1,4 +1,7 @@
 import type { FetchContext, FetchResponse } from 'ofetch';
+import qs from 'qs';
+import { entitiesRequestQuerySchema } from '~/schema/api';
+import { pickBy } from 'lodash';
 
 /**
  * 请求拦截器
@@ -48,4 +51,24 @@ export const useApiInterceptor = () => {
       toast.add({ title: '无法执行请求' });
     },
   };
+};
+
+/**
+ * 每页实体数量
+ */
+export const useEntitiesPerPage = () => {
+  const config = useRuntimeConfig();
+  return parseInt(`${config.public.entitiesPerPage}`, 10);
+};
+
+/**
+ * Query
+ */
+export const useEntitiesQueryString = (data: Record<string, any>) => {
+  const _data = pickBy(
+    entitiesRequestQuerySchema.parse(data),
+    (item) => item !== '' && item !== undefined && item !== null,
+  );
+
+  return qs.stringify(_data);
 };

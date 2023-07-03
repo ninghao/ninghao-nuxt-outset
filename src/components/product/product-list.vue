@@ -1,8 +1,8 @@
 <template>
   <div>
     <UPagination
-      v-model="store.currentPage"
-      :page-count="store.totalPages"
+      v-model="store.entitiesQuery.page"
+      :page-count="useEntitiesPerPage()"
       :total="store.totalCount"
       class="mb-6"
     />
@@ -37,6 +37,10 @@ import { Product } from '~/schema/product';
 
 const store = useProductStore();
 await store.retrieve();
+
+watch(store.entitiesQuery, () => {
+  store.retrieve();
+});
 
 const consoleStore = useConsoleStore();
 

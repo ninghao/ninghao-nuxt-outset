@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       appName: '',
       apiBaseUrl: '/api',
       apiToken: '',
+      entitiesPerPage: 25,
     },
 
     // Surreal 数据库
@@ -39,6 +40,11 @@ export default defineNuxtConfig({
       publicKey: '',
       privateKey: '',
       expiresIn: '7d',
+    },
+
+    // API
+    api: {
+      entitiesPerPage: '25',
     },
   },
 
