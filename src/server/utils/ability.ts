@@ -10,6 +10,7 @@ export type Subjects =
   | 'Region'
   | 'Origin'
   | 'Product'
+  | 'Category'
   | 'Role'
   | 'User'
   | 'all';
