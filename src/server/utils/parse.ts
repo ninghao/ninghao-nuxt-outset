@@ -155,7 +155,7 @@ const convertFiltersToWhere = (data: Filters) => {
     }
   }
 
-  return `WHERE ${conditions.join(' AND ')}`;
+  return conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 };
 
 export const getEntitiesApiParams = (event: H3Event) => {
@@ -166,7 +166,7 @@ export const getEntitiesApiParams = (event: H3Event) => {
   const start = query.page === 1 ? 0 : (query.page - 1) * limit;
 
   // 查询条件
-  const where = query.filters ? convertFiltersToWhere(query.filters) : '';
+  const where = convertFiltersToWhere(query.filters);
 
   return { limit, start, where };
 };

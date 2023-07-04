@@ -1,7 +1,7 @@
 import type { FetchContext, FetchResponse } from 'ofetch';
 import qs from 'qs';
 import { entitiesRequestQuerySchema } from '~/schema/api';
-import { pickBy } from 'lodash';
+import { pickBy, isPlainObject, isArray, isNil, isEmpty, toString, map } from 'lodash';
 
 /**
  * 请求拦截器
@@ -64,11 +64,33 @@ export const useEntitiesPerPage = () => {
 /**
  * Query
  */
-export const useEntitiesQueryString = (data: Record<string, any>) => {
-  const _data = pickBy(
-    entitiesRequestQuerySchema.parse(data),
-    (item) => item !== '' && item !== undefined && item !== null,
-  );
+const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+  return pickBy(obj, (value) => {
+    // 自定义判断函数，去除空白值
+    if (isPlainObject(value)) {
+      // 递归处理嵌套对象
+      return !isEmpty(removeEmptyValues(value));
+    } else if (isArray(value)) {
+      // 递归处理嵌套数组
+      return !isEmpty(map(value, removeEmptyValues));
+    } else {
+      // 去除空白字符串、null、undefined
+      return !(isNil(value) || isEmpty(toString(value).trim()));
+    }
+  });
+};
 
-  return qs.stringify(_data);
+export const useEntitiesQueryString = (data: Record<string, any>) => {
+  const _data = pickBy(entitiesRequestQuerySchema.parse(data), (item) => {
+    if (typeof item === 'object') {
+      const result = removeEmptyValues(item);
+      return Object.keys(result).length ? true : false;
+    }
+
+    return item !== '' && item !== undefined && item !== null;
+  });
+
+  return qs.stringify(_data, {
+    encodeValuesOnly: true, // prettify URL
+  });
 };

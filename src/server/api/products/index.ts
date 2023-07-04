@@ -37,12 +37,14 @@ export default defineEventHandler(async (event) => {
     });
 
     // 统计
-    const [countResult] = await surreal.query(
+    const [countResult] = await surreal.query<[Array<{ count: number }>]>(
       `select count() from product ${where} group all`,
     );
 
     // 分页
-    const totalCount = countResult.result ? (countResult as any).result[0].count : 0;
+
+    const totalCount =
+      countResult.result && countResult.result.length ? countResult.result[0].count : 0;
     const totalPages = Math.ceil(totalCount / limit);
 
     setHeaders(event, {

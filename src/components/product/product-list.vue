@@ -1,11 +1,23 @@
 <template>
   <div>
-    <UPagination
-      v-model="store.entitiesQuery.page"
-      :page-count="useEntitiesPerPage()"
-      :total="store.totalCount"
-      class="mb-6"
-    />
+    <div class="flex gap-8 justify-between">
+      <div>
+        <UInput
+          placeholder="搜索 ..."
+          v-model="store.entitiesQuery.filters.sku.$contains"
+        >
+          <template #trailing>
+            <span class="text-gray-500 dark:text-gray-400 text-xs">SKU</span>
+          </template>
+        </UInput>
+      </div>
+      <UPagination
+        v-model="store.entitiesQuery.page"
+        :page-count="useEntitiesPerPage()"
+        :total="store.totalCount"
+        class="mb-6"
+      />
+    </div>
     <UTable :rows="store.entities" :columns="columns" total="700" page-count="25">
       <template #actions-data="{ row }">
         <UDropdown :items="items(row)">

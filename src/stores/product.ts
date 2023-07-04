@@ -31,6 +31,11 @@ export const useProductStore = defineStore('product', () => {
   const entitiesQuery = ref({
     page: 1,
     sort: '',
+    filters: {
+      sku: {
+        $contains: '',
+      },
+    },
   });
 
   /**
@@ -64,16 +69,12 @@ export const useProductStore = defineStore('product', () => {
   const retrieve = async (options?: RetrieveOptions) => {
     const { id } = options || {};
 
-    console.log(id);
-
     // 获取单个实体
     if (id) {
       const { data, error } = await useFetch(`/api/products/${id}`, {
         ...useApiInterceptor(),
         transform: (data) => productSchema.parse(data),
       });
-
-      console.log(data);
 
       if (error.value) return;
 
