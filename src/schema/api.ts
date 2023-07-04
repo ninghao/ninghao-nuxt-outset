@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+export const filtersSchema = z.record(z.string(), z.record(z.string())).optional();
+
 export const entitiesRequestQuerySchema = z.object({
   page: z.union([
     z.number().default(1),
@@ -10,4 +12,9 @@ export const entitiesRequestQuerySchema = z.object({
   ]),
 
   sort: z.string().optional(),
+
+  filters: filtersSchema,
 });
+
+export type EntitiesRequestQuery = z.infer<typeof entitiesRequestQuerySchema>;
+export type Filters = z.infer<typeof filtersSchema>;

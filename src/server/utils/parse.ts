@@ -1,16 +1,10 @@
-import {
-  createError,
-  readBody,
-  getQuery,
-  getHeaders,
-  parseCookies,
-} from 'h3';
+import { createError, readBody, getQuery, getHeaders, parseCookies } from 'h3';
 import type { H3Event } from 'h3';
 import { z } from 'zod';
+import qs from 'qs';
+import { Filters, entitiesRequestQuerySchema } from '~/schema/api';
 
-export const validateWithSchema = <
-  ZodSchema extends z.ZodTypeAny,
->(
+export const validateWithSchema = <ZodSchema extends z.ZodTypeAny>(
   data: any,
   schema: ZodSchema,
   statusCode: number,
@@ -35,12 +29,7 @@ export const parseBody = async <ZodSchema extends z.ZodTypeAny>(
 ) => {
   const data = await readBody(event);
 
-  return validateWithSchema(
-    data,
-    schema,
-    errorCode,
-    errorMessage,
-  );
+  return validateWithSchema(data, schema, errorCode, errorMessage);
 };
 
 export const parseParams = <ZodSchema extends z.ZodTypeAny>(
@@ -51,12 +40,7 @@ export const parseParams = <ZodSchema extends z.ZodTypeAny>(
 ) => {
   const data = event.context.params;
 
-  return validateWithSchema(
-    data,
-    schema,
-    errorCode,
-    errorMessage,
-  );
+  return validateWithSchema(data, schema, errorCode, errorMessage);
 };
 
 export const parseQuery = <ZodSchema extends z.ZodTypeAny>(
@@ -65,14 +49,9 @@ export const parseQuery = <ZodSchema extends z.ZodTypeAny>(
   errorCode = 422,
   errorMessage = 'Query parsing failed',
 ) => {
-  const data = getQuery(event);
+  const data = qs.parse(getQuery(event) as any);
 
-  return validateWithSchema(
-    data,
-    schema,
-    errorCode,
-    errorMessage,
-  );
+  return validateWithSchema(data, schema, errorCode, errorMessage);
 };
 
 export const parseCookie = <ZodSchema extends z.ZodTypeAny>(
@@ -83,12 +62,7 @@ export const parseCookie = <ZodSchema extends z.ZodTypeAny>(
 ) => {
   const data = parseCookies(event);
 
-  return validateWithSchema(
-    data,
-    schema,
-    errorCode,
-    errorMessage,
-  );
+  return validateWithSchema(data, schema, errorCode, errorMessage);
 };
 
 export const parseHeader = <ZodSchema extends z.ZodTypeAny>(
@@ -99,12 +73,7 @@ export const parseHeader = <ZodSchema extends z.ZodTypeAny>(
 ) => {
   const data = getHeaders(event);
 
-  return validateWithSchema(
-    data,
-    schema,
-    errorCode,
-    errorMessage,
-  );
+  return validateWithSchema(data, schema, errorCode, errorMessage);
 };
 
 export const parseData = async <ZodSchema extends z.ZodTypeAny>(
@@ -115,12 +84,7 @@ export const parseData = async <ZodSchema extends z.ZodTypeAny>(
 ) => {
   const data = await dataOrPromise;
 
-  return validateWithSchema(
-    data,
-    schema,
-    errorCode,
-    errorMessage,
-  );
+  return validateWithSchema(data, schema, errorCode, errorMessage);
 };
 
 export const makeParser = <ZodSchema extends z.ZodTypeAny>(
@@ -161,4 +125,48 @@ export const makePromiseParser = <ZodSchema extends z.ZodTypeAny>(
       errorMessageOverwrite || errorMessage,
     );
   };
+};
+
+/**
+ * 转换成 where 声明
+ */
+const convertFiltersToWhere = (data: Filters) => {
+  const conditions = [];
+
+  for (const key in data) {
+    const value = data[key];
+
+    if (typeof value === 'object') {
+      const operator = Object.keys(value)[0];
+      const operand = value[operator];
+
+      switch (operator) {
+        case '$contains':
+          conditions.push(`${key} CONTAINS '${operand}'`);
+          break;
+
+        case '$eq':
+          conditions.push(`${key} = ${operand}`);
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
+
+  return `WHERE ${conditions.join(' AND ')}`;
+};
+
+export const getEntitiesApiParams = (event: H3Event) => {
+  const config = useRuntimeConfig();
+  const query = parseQuery(event, entitiesRequestQuerySchema);
+  // 分页
+  const limit = parseInt(`${config.public.entitiesPerPage}`, 10);
+  const start = query.page === 1 ? 0 : (query.page - 1) * limit;
+
+  // 查询条件
+  const where = query.filters ? convertFiltersToWhere(query.filters) : '';
+
+  return { limit, start, where };
 };
