@@ -32,6 +32,17 @@
     </div>
     <UTable :rows="store.entities" :columns="columns" total="700" page-count="25">
       <template #actions-data="{ row }">
+        <UButton
+          color="gray"
+          variant="ghost"
+          icon="i-heroicons-adjustments-horizontal"
+          @click="
+            () => {
+              store.retrieve({ id: row.id });
+              consoleStore.showSideover('ProductEdit');
+            }
+          "
+        />
         <UDropdown :items="items(row)">
           <UButton
             color="gray"
@@ -99,16 +110,16 @@ const columns = [
 ];
 
 const items = (row: Product) => [
-  [
-    {
-      label: 'Edit',
-      icon: 'i-heroicons-pencil-square',
-      click: () => {
-        store.retrieve({ id: row.id });
-        consoleStore.showSideover('ProductEdit');
-      },
-    },
-  ],
+  // [
+  //   {
+  //     label: 'Edit',
+  //     icon: 'i-heroicons-pencil-square',
+  //     click: () => {
+  //       store.retrieve({ id: row.id });
+  //       consoleStore.showSideover('ProductEdit');
+  //     },
+  //   },
+  // ],
   [
     {
       label: 'Delete',
