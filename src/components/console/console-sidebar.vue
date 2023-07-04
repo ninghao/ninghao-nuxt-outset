@@ -29,11 +29,11 @@ const links = [
     icon: 'i-heroicons-shopping-bag',
     to: '/console/products',
   },
-  {
-    label: '用户',
-    icon: 'i-heroicons-user',
-    to: '/console/users',
-  },
+  // {
+  //   label: '用户',
+  //   icon: 'i-heroicons-user',
+  //   to: '/console/users',
+  // },
   // {
   //   label: '管理',
   //   icon: 'i-heroicons-user-circle',
