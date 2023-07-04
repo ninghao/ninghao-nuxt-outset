@@ -35,6 +35,9 @@ export const useProductStore = defineStore('product', () => {
       sku: {
         $contains: '',
       },
+      title: {
+        $contains: '',
+      },
     },
   });
 

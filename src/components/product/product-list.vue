@@ -1,15 +1,27 @@
 <template>
   <div>
     <div class="flex gap-8 justify-between">
-      <div>
-        <UInput
-          placeholder="搜索 ..."
-          v-model="store.entitiesQuery.filters.sku.$contains"
-        >
-          <template #trailing>
-            <span class="text-gray-500 dark:text-gray-400 text-xs">SKU</span>
-          </template>
-        </UInput>
+      <div class="flex gap-6">
+        <div>
+          <UInput
+            placeholder="搜索 ..."
+            v-model="store.entitiesQuery.filters.sku.$contains"
+          >
+            <template #trailing>
+              <span class="text-gray-500 dark:text-gray-400 text-xs">SKU</span>
+            </template>
+          </UInput>
+        </div>
+        <div>
+          <UInput
+            placeholder="搜索 ..."
+            v-model="store.entitiesQuery.filters.title.$contains"
+          >
+            <template #trailing>
+              <span class="text-gray-500 dark:text-gray-400 text-xs">标题</span>
+            </template>
+          </UInput>
+        </div>
       </div>
       <UPagination
         v-model="store.entitiesQuery.page"
