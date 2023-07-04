@@ -139,3 +139,18 @@ export const createProductFromOrigin = async (
     // }
   }
 };
+
+export const hermesCnRestfulHeaders = {
+  Accept: 'application/json, text/plain, */*',
+  Referer: 'https://www.hermes.cn/',
+  Origin: 'https://www.hermes.cn',
+  // Host: 'https://www.louisvuitton.cn',
+  Pragma: 'no-cache',
+  'Sec-Ch-Ua-Platform': `"macOS"`,
+  'Sec-Fetch-Mode': 'cors',
+  'Sec-Fetch-Site': 'same-site',
+  'Sec-Ch-Ua-Mobile': '?0',
+  'Sec-Ch-Ua': `"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"`,
+  'User-Agent':
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36',
+};
