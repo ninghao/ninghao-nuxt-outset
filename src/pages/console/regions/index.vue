@@ -11,9 +11,7 @@
         @click="store.showSideover('RegionCreate')"
       />
     </div>
-    <UContainer>
-      <RegionList />
-    </UContainer>
+    <RegionList class="px-6" />
   </div>
 </template>
 

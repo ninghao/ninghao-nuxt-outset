@@ -14,16 +14,16 @@ const links = [
     icon: 'i-heroicons-map',
     to: '/console/regions',
   },
-  {
-    label: '来源',
-    icon: 'i-heroicons-link',
-    to: '/console/origins',
-  },
-  {
-    label: '日志',
-    icon: 'i-heroicons-bug-ant',
-    to: '/console/logs',
-  },
+  // {
+  //   label: '来源',
+  //   icon: 'i-heroicons-link',
+  //   to: '/console/origins',
+  // },
+  // {
+  //   label: '日志',
+  //   icon: 'i-heroicons-bug-ant',
+  //   to: '/console/logs',
+  // },
   {
     label: '产品',
     icon: 'i-heroicons-shopping-bag',
@@ -34,16 +34,16 @@ const links = [
     icon: 'i-heroicons-user',
     to: '/console/users',
   },
-  {
-    label: '管理',
-    icon: 'i-heroicons-user-circle',
-    to: '/console/admins',
-  },
-  {
-    label: '设置',
-    icon: 'i-heroicons-adjustments-horizontal',
-    to: '/console/settings',
-  },
+  // {
+  //   label: '管理',
+  //   icon: 'i-heroicons-user-circle',
+  //   to: '/console/admins',
+  // },
+  // {
+  //   label: '设置',
+  //   icon: 'i-heroicons-adjustments-horizontal',
+  //   to: '/console/settings',
+  // },
   // {
   //   label: 'Profile',
   //   avatar: {

@@ -11,9 +11,7 @@
         @click="store.showModal('BrandCreate')"
       />
     </div>
-    <UContainer>
-      <BrandView />
-    </UContainer>
+    <BrandList class="px-6" />
   </div>
 </template>
 
