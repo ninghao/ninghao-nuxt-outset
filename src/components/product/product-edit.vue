@@ -95,11 +95,21 @@
         <div v-for="item in regionStore.entities" :key="item.id">
           <UButton
             variant="soft"
-            color="gray"
+            :color="`${store.entity.available?.includes(item.id) ? 'primary' : 'gray'}`"
             size="xs"
-            @click="availableStore.create({ product: store.entity.id, region: item.id })"
-            >{{ item.title }}</UButton
+            @click="
+              async () => {
+                await availableStore.create({
+                  product: store.entity.id,
+                  region: item.id,
+                });
+
+                store.retrieve({ id: store.entity.id });
+              }
+            "
           >
+            {{ item.title }}
+          </UButton>
         </div>
       </div>
     </div>

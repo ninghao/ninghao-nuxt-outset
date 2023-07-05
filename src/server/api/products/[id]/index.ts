@@ -19,16 +19,26 @@ export default defineEventHandler(async (event) => {
       forbiddenException();
     }
 
+    // 查询声明
+    const statement = `
+      SELECT 
+        *,
+        ->available->region.id AS available
+      FROM product
+      WHERE id = $id
+      FETCH brand, category;
+    `;
+
+    // 查询参数
+    const statementParams = { id };
+
+    // 执行查询
     const [{ result }] = await surreal.query<[Array<Product>]>(
-      `
-        SELECT * 
-        FROM product
-        WHERE id = $id
-        FETCH brand, category;
-      `,
-      { id },
+      statement,
+      statementParams,
     );
 
+    // 返回结果
     return result![0];
   }
 

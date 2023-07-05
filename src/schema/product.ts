@@ -75,6 +75,7 @@ export const productSchema = z.object({
   url: z.string().optional(),
   category: categorySchema.optional(),
   brand: brandSchema.optional(),
+  available: z.array(z.string()).optional(),
   image: z
     .object({
       local: z
@@ -119,6 +120,7 @@ export const _product: Product = {
   url: '',
   category: _category,
   brand: _brand,
+  available: [],
   image: {
     remote: {
       url: '',

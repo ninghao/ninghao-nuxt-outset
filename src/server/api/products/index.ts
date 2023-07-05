@@ -22,7 +22,9 @@ export default defineEventHandler(async (event) => {
 
     // 查询声明
     const statement = `
-      SELECT *
+      SELECT 
+        *,
+        ->available->region.id AS available
       FROM product ${where}
       ORDER BY created DESC
       LIMIT $limit
