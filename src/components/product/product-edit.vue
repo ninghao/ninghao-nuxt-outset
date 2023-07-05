@@ -113,7 +113,11 @@ brandStore.retrieve();
 const categoryStore = useCategoryStore();
 categoryStore.retrieve();
 const regionStore = useRegionStore();
-regionStore.retrieve();
+
+store.$subscribe(() => {
+  regionStore.retrieve({ brand: store.entity.brand?.id });
+});
+
 const availableStore = useAvailableStore();
 
 const items = [

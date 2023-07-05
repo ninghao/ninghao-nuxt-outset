@@ -15,12 +15,21 @@ export default defineEventHandler(async (event) => {
       forbiddenException();
     }
 
-    const [{ result }] = await surreal.query<[Array<Region>]>(`
-      SELECT * 
-      FROM region 
-      FETCH brand;
-    `);
+    // 准备查询
+    const { where } = getEntitiesApiParams(event);
 
+    // 查询声明
+    const statement = `
+      SELECT * 
+      FROM region
+      ${where}
+      FETCH brand;
+    `;
+
+    // 执行查询
+    const [{ result }] = await surreal.query<[Array<Region>]>(statement);
+
+    // 返回结果
     return result;
   }
 

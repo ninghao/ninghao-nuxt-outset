@@ -13,6 +13,7 @@ import {
  */
 type RetrieveOptions = {
   id?: string;
+  brand?: string;
 };
 
 export const useRegionStore = defineStore('region', () => {
@@ -26,9 +27,21 @@ export const useRegionStore = defineStore('region', () => {
   // 实体列表
   const entities = ref<Regions>([]);
 
+  // 实体列表查询参数
+  const entitiesQuery = ref({
+    filters: {
+      'brand.id': {
+        $eq: '',
+      },
+    },
+  });
+
   /**
    * Getters 🌵
    */
+  const entitiesQueryString = computed(() => {
+    return useEntitiesQueryString(entitiesQuery.value);
+  });
 
   /**
    * Actions 🚀
@@ -73,7 +86,7 @@ export const useRegionStore = defineStore('region', () => {
 
   // 读取实体
   const retrieve = async (options?: RetrieveOptions) => {
-    const { id } = options || {};
+    const { id, brand } = options || {};
 
     // 获取单个实体
     if (id) {
@@ -91,8 +104,13 @@ export const useRegionStore = defineStore('region', () => {
       return data;
     }
 
+    // 设置查询参数
+    if (brand) {
+      entitiesQuery.value.filters['brand.id'].$eq = brand;
+    }
+
     // 获取实体列表
-    const { data, error } = await useFetch(`/api/regions`, {
+    const { data, error } = await useFetch(`/api/regions?${entitiesQueryString.value}`, {
       ...useApiInterceptor(),
       transform: (data) => regionsSchema.parse(data),
     });
