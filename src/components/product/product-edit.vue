@@ -140,7 +140,13 @@
       <div>可用区</div>
       <div class="flex gap-6 ml-4">
         <div v-for="item in regionStore.entities" :key="item.id">
-          <UButton variant="soft" color="gray" size="xs">{{ item.title }}</UButton>
+          <UButton
+            variant="soft"
+            color="gray"
+            size="xs"
+            @click="availableStore.create({ product: store.entity.id, region: item.id })"
+            >{{ item.title }}</UButton
+          >
         </div>
       </div>
     </div>
@@ -155,6 +161,7 @@ const categoryStore = useCategoryStore();
 await categoryStore.retrieve();
 const regionStore = useRegionStore();
 await regionStore.retrieve();
+const availableStore = useAvailableStore();
 
 const items = [
   [

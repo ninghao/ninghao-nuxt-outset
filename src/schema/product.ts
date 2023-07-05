@@ -64,7 +64,7 @@ export const updateProductDtoSchema = z.optional(createProductDtoSchema.partial(
  * 实体
  */
 export const productSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   title: z.string(),
   color: z.string().optional(),
   material: z.string().optional(),
@@ -108,6 +108,7 @@ export type UpdateProductDto = z.infer<typeof updateProductDtoSchema>;
  * 空白
  */
 export const _product: Product = {
+  id: '',
   title: '',
   color: '',
   material: '',

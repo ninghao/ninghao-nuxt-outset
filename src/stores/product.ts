@@ -21,7 +21,7 @@ export const useProductStore = defineStore('product', () => {
    */
 
   // 单个实体
-  const entity = ref<Partial<Product>>({ ..._product });
+  const entity = ref<Product>({ ..._product });
 
   // 实体列表
   const entities = ref<Products>([]);
