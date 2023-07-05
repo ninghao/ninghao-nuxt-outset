@@ -157,11 +157,11 @@
 <script setup lang="ts">
 const store = useProductStore();
 const brandStore = useBrandStore();
-await brandStore.retrieve();
+brandStore.retrieve();
 const categoryStore = useCategoryStore();
-await categoryStore.retrieve();
+categoryStore.retrieve();
 const regionStore = useRegionStore();
-await regionStore.retrieve();
+regionStore.retrieve();
 const availableStore = useAvailableStore();
 
 const items = [
