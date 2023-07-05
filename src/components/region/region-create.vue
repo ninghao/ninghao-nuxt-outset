@@ -60,27 +60,19 @@
         optionAttribute="title"
         placeholder="请选择品牌"
       >
-        <UButton
-          color="white"
-          variant="none"
-          class="w-full bg-gray flex justify-between items-center pl-4"
+        <div
+          :class="[
+            'font-light text-sm',
+            'flex justify-between items-center',
+            'w-full pl-4',
+            'bg-gray',
+            {
+              'text-gray-400': !store.entity.brand?.title,
+            },
+          ]"
         >
-          <div
-            :class="[
-              'font-light',
-              {
-                'text-gray-400': !store.entity.brand?.title,
-              },
-            ]"
-          >
-            {{ store.entity.brand?.title ? store.entity.brand?.title : '请选择品牌' }}
-          </div>
-          <UIcon
-            name="i-heroicons-chevron-right-20-solid"
-            class="w-5 h-5 transition-transform text-gray-400"
-            :class="[open && 'transform rotate-90']"
-          />
-        </UButton>
+          {{ store.entity.brand?.title ? store.entity.brand?.title : '请选择品牌' }}
+        </div>
       </USelectMenu>
     </UFormGroup>
   </div>
@@ -89,5 +81,5 @@
 <script setup lang="ts">
 const store = useRegionStore();
 const brandStore = useBrandStore();
-await brandStore.retrieve();
+brandStore.retrieve();
 </script>
