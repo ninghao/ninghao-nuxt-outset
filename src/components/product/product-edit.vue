@@ -15,6 +15,7 @@
     <div class="space-y-4">
       <UFormGroup name="title" label="标题">
         <UInput
+          autofocus
           v-model="store.entity.title"
           size="lg"
           variant="none"
