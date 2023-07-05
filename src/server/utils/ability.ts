@@ -11,6 +11,7 @@ export type Subjects =
   | 'Origin'
   | 'Product'
   | 'Category'
+  | 'Available'
   | 'Role'
   | 'User'
   | 'all';
