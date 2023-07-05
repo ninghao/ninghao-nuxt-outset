@@ -72,69 +72,21 @@
       </UFormGroup>
       <UFormGroup name="brand" label="品牌">
         <USelectMenu
-          v-slot="{ open }"
           v-model="store.entity.brand"
           :options="brandStore.entities"
           by="id"
           optionAttribute="title"
           placeholder="请选择品牌"
-        >
-          <UButton
-            color="white"
-            variant="none"
-            class="w-full bg-gray flex justify-between items-center pl-4"
-          >
-            <div
-              :class="[
-                'font-light',
-                {
-                  'text-gray-400': !store.entity.brand?.title,
-                },
-              ]"
-            >
-              {{ store.entity.brand?.title ? store.entity.brand?.title : '请选择品牌' }}
-            </div>
-            <UIcon
-              name="i-heroicons-chevron-right-20-solid"
-              class="w-5 h-5 transition-transform text-gray-400"
-              :class="[open && 'transform rotate-90']"
-            />
-          </UButton>
-        </USelectMenu>
+        />
       </UFormGroup>
       <UFormGroup name="category" label="分类">
         <USelectMenu
-          v-slot="{ open }"
           v-model="store.entity.category"
           :options="categoryStore.entities"
           by="id"
           optionAttribute="title"
           placeholder="请选择分类"
-        >
-          <UButton
-            color="white"
-            variant="none"
-            class="w-full bg-gray flex justify-between items-center pl-4"
-          >
-            <div
-              :class="[
-                'font-light',
-                {
-                  'text-gray-400': !store.entity.brand?.title,
-                },
-              ]"
-            >
-              {{
-                store.entity.category?.title ? store.entity.category?.title : '请选择分类'
-              }}
-            </div>
-            <UIcon
-              name="i-heroicons-chevron-right-20-solid"
-              class="w-5 h-5 transition-transform text-gray-400"
-              :class="[open && 'transform rotate-90']"
-            />
-          </UButton>
-        </USelectMenu>
+        />
       </UFormGroup>
     </div>
     <div class="border-t py-4 font-light text-sm space-y-4">
