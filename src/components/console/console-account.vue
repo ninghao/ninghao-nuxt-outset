@@ -1,9 +1,6 @@
 <template>
   <div class="pl-2">
-    <UDropdown
-      :items="items"
-      :popper="{ placement: 'bottom-start' }"
-    >
+    <UDropdown :items="items" :popper="{ placement: 'bottom-start' }">
       <div class="flex gap-1">
         <UAvatar
           src="/images/avatars/avatar-01.jpg"
@@ -13,12 +10,14 @@
           chip-text=""
           chip-position="top-right"
         />
-
-        <UButton
-          color="white"
-          variant="soft"
-          :label="store.currentUser.name"
-        />
+        <ClientOnly>
+          <template #fallback>
+            <div class="flex flex-col items-center justify-center ml-2">
+              <USkeleton class="h-4 w-20" />
+            </div>
+          </template>
+          <UButton color="white" variant="soft" :label="store.currentUser.name" />
+        </ClientOnly>
       </div>
     </UDropdown>
   </div>
