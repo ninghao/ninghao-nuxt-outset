@@ -24,12 +24,17 @@ export default defineEventHandler(async (event) => {
     const statement = `
       SELECT 
         *,
-        ->available->region AS available
-      FROM product ${where}
-      ORDER BY created DESC
-      LIMIT $limit
-      START $start
-      FETCH category, brand, available;
+        ->(available WHERE isPublished = true)->region AS available
+      FROM 
+        product ${where}
+      ORDER BY 
+        created DESC
+      LIMIT 
+        $limit
+      START 
+        $start
+      FETCH 
+        category, brand, available;
     `;
 
     // 查询

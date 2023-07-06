@@ -26,8 +26,10 @@ export const useProductStore = defineStore('product', () => {
   // 实体列表
   const entities = ref<Products>([]);
 
+  // 实体总数
   const totalCount = ref(0);
 
+  // 地址查询符
   const entitiesQuery = ref({
     page: 1,
     sort: '',
@@ -48,6 +50,11 @@ export const useProductStore = defineStore('product', () => {
   const entitiesQueryString = computed(() => {
     return useEntitiesQueryString(entitiesQuery.value);
   });
+
+  const isAvaiable = (regionId: string) =>
+    computed(() => {
+      return entity.value.available?.some((region) => region.id === regionId);
+    });
 
   /**
    * Actions 🚀
@@ -204,5 +211,6 @@ export const useProductStore = defineStore('product', () => {
     entities,
     totalCount,
     entitiesQuery,
+    isAvaiable,
   };
 });

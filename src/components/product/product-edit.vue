@@ -95,20 +95,25 @@
         <div v-for="item in regionStore.entities" :key="item.id">
           <UButton
             variant="soft"
-            :color="`${
-              store.entity.available?.some((region) => region.id === item.id)
-                ? 'primary'
-                : 'gray'
-            }`"
+            :color="`${store.isAvaiable(item.id).value ? 'primary' : 'gray'}`"
             size="xs"
             @click="
               async () => {
-                await availableStore.create({
-                  product: store.entity.id,
-                  region: item.id,
-                });
+                if (!store.isAvaiable(item.id).value) {
+                  await availableStore.create({
+                    product: store.entity.id,
+                    region: item.id,
+                  });
+                } else {
+                  await availableStore.update({
+                    product: store.entity.id,
+                    region: item.id,
+                    isPublished: false,
+                  });
+                }
 
                 store.retrieve({ id: store.entity.id });
+                store.retrieve();
               }
             "
           >
