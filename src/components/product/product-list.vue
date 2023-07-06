@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="flex gap-8 justify-between">
-      <div class="flex gap-6">
+    <div class="flex gap-8 justify-between items-center">
+      <div class="flex gap-6 items-center">
         <div>
           <UInput
             placeholder="搜索 ..."
@@ -21,6 +21,13 @@
               <span class="text-gray-500 dark:text-gray-400 text-xs">标题</span>
             </template>
           </UInput>
+        </div>
+        <div class="flex gap-2 text-sm">
+          <UCheckbox
+            name="available"
+            label="可用区"
+            @change="store.toggleAvailableFilter"
+          />
         </div>
       </div>
       <UPagination
@@ -81,6 +88,7 @@
 </template>
 
 <script setup lang="ts">
+import { log } from 'console';
 import { Product } from '~/schema/product';
 
 const store = useProductStore();

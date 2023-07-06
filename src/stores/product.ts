@@ -40,6 +40,9 @@ export const useProductStore = defineStore('product', () => {
       title: {
         $contains: '',
       },
+      'available.isPublished': {
+        $edge: '',
+      },
     },
   });
 
@@ -59,6 +62,14 @@ export const useProductStore = defineStore('product', () => {
   /**
    * Actions 🚀
    */
+
+  const toggleAvailableFilter = () => {
+    if (entitiesQuery.value.filters['available.isPublished'].$edge) {
+      entitiesQuery.value.filters['available.isPublished'].$edge = '';
+    } else {
+      entitiesQuery.value.filters['available.isPublished'].$edge = 'true';
+    }
+  };
 
   /**
    * 重置状态
@@ -212,5 +223,6 @@ export const useProductStore = defineStore('product', () => {
     totalCount,
     entitiesQuery,
     isAvaiable,
+    toggleAvailableFilter,
   };
 });

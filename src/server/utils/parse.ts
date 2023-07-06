@@ -149,6 +149,16 @@ const convertFiltersToWhere = (data: Filters) => {
           conditions.push(`${key} = ${operand}`);
           break;
 
+        case '$edge':
+          const _key = key.split('.');
+
+          if (_key.length > 1) {
+            conditions.push(`->(${_key[0]} WHERE ${_key[1]} == ${operand})`);
+          } else {
+            conditions.push(`->${key}`);
+          }
+
+          break;
         default:
           break;
       }
@@ -167,6 +177,8 @@ export const getEntitiesApiParams = (event: H3Event) => {
 
   // 查询条件
   const where = convertFiltersToWhere(query.filters);
+
+  console.log(where);
 
   return { limit, start, where };
 };
