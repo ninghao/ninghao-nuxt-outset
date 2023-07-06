@@ -100,10 +100,18 @@
             @click="
               async () => {
                 if (!store.isAvaiable(item.id).value) {
-                  await availableStore.create({
+                  const result = await availableStore.create({
                     product: store.entity.id,
                     region: item.id,
                   });
+
+                  if ((result?.value as any).status === 'ERR') {
+                    await availableStore.update({
+                      product: store.entity.id,
+                      region: item.id,
+                      isPublished: true,
+                    });
+                  }
                 } else {
                   await availableStore.update({
                     product: store.entity.id,

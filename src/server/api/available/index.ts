@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
     };
 
     // 执行查询
-    const [{ result }] = await surreal.query(statement, statementParams);
+    const [result] = await surreal.query(statement, statementParams);
 
     // 返回结果
     return result;
