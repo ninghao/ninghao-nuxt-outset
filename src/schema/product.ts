@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { _category, categorySchema } from './category';
 import { _brand, brandSchema } from './brand';
+import { regionsSchema } from './region';
 
 // {
 //   "id": "product:02aftiywa7obkzg23fl6",
@@ -75,7 +76,7 @@ export const productSchema = z.object({
   url: z.string().optional(),
   category: categorySchema.optional(),
   brand: brandSchema.optional(),
-  available: z.array(z.string()).optional(),
+  available: regionsSchema.optional(),
   image: z
     .object({
       local: z

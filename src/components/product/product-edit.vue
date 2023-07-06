@@ -95,7 +95,11 @@
         <div v-for="item in regionStore.entities" :key="item.id">
           <UButton
             variant="soft"
-            :color="`${store.entity.available?.includes(item.id) ? 'primary' : 'gray'}`"
+            :color="`${
+              store.entity.available?.some((region) => region.id === item.id)
+                ? 'primary'
+                : 'gray'
+            }`"
             size="xs"
             @click="
               async () => {

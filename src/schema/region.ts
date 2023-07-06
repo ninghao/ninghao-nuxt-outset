@@ -50,7 +50,7 @@ export const regionSchema = z.object({
   area: z.string(),
   code: z.string(),
   website: z.string(),
-  brand: brandSchema,
+  brand: z.union([brandSchema, z.string()]),
 });
 
 /**

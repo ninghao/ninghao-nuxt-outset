@@ -23,10 +23,10 @@ export default defineEventHandler(async (event) => {
     const statement = `
       SELECT 
         *,
-        ->available->region.id AS available
+        ->available->region AS available
       FROM product
       WHERE id = $id
-      FETCH brand, category;
+      FETCH brand, category, available;
     `;
 
     // 查询参数

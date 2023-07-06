@@ -56,6 +56,16 @@
           {{ row.brand.title }}
         </div>
       </template>
+      <template #availableTitle-data="{ row }">
+        <div v-if="row.available?.length" class="flex gap-2">
+          <div v-for="region in row.available" :key="region.id">
+            <UBadge>{{ region.title }}</UBadge>
+          </div>
+        </div>
+        <div v-else>
+          <UBadge color="amber">暂无</UBadge>
+        </div>
+      </template>
       <template #productImage-data="{ row }">
         <div class="w-14">
           <img
@@ -102,6 +112,10 @@ const columns = [
   {
     key: 'color',
     label: '颜色',
+  },
+  {
+    key: 'availableTitle',
+    label: '可用区',
   },
   {
     key: 'actions',
