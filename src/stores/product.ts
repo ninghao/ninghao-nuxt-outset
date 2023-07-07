@@ -43,6 +43,9 @@ export const useProductStore = defineStore('product', () => {
       'available.isPublished': {
         $edge: '',
       },
+      'brand.id': {
+        $eq: '',
+      },
     },
   });
 

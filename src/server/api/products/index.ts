@@ -20,6 +20,8 @@ export default defineEventHandler(async (event) => {
     // 参数
     const { limit, start, where } = getEntitiesApiParams(event);
 
+    console.log(where);
+
     // 查询声明
     const statement = `
       SELECT 

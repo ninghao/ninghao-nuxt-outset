@@ -29,6 +29,18 @@
             @change="store.toggleAvailableFilter"
           />
         </div>
+        <div class="w-52">
+          <USelectMenu
+            v-model="selectedBrand"
+            :options="[{ id: '', title: '所有品牌' }, ...brandStore.entities]"
+            by="id"
+            optionAttribute="title"
+          >
+            <template #label>
+              {{ selectedBrand?.title }}
+            </template>
+          </USelectMenu>
+        </div>
       </div>
       <UPagination
         v-model="store.entitiesQuery.page"
@@ -88,11 +100,21 @@
 </template>
 
 <script setup lang="ts">
-import { log } from 'console';
 import { Product } from '~/schema/product';
 
 const store = useProductStore();
 await store.retrieve();
+
+const brandStore = useBrandStore();
+await brandStore.retrieve();
+
+const selectedBrand = ref({ id: '', title: '所有品牌' });
+
+watch(selectedBrand, () => {
+  if (selectedBrand.value) {
+    store.entitiesQuery.filters['brand.id'].$eq = selectedBrand.value.id;
+  }
+});
 
 watch(store.entitiesQuery, () => {
   store.retrieve();

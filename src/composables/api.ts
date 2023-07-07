@@ -1,7 +1,6 @@
 import type { FetchContext, FetchResponse } from 'ofetch';
 import qs from 'qs';
 import { entitiesRequestQuerySchema } from '~/schema/api';
-import _ from 'lodash';
 
 /**
  * 请求拦截器
@@ -64,31 +63,28 @@ export const useEntitiesPerPage = () => {
 /**
  * Query
  */
-const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-  return _.pickBy(obj, (value) => {
-    // 自定义判断函数，去除空白值
-    if (_.isPlainObject(value)) {
-      // 递归处理嵌套对象
-      return !_.isEmpty(removeEmptyValues(value));
-    } else if (_.isArray(value)) {
-      // 递归处理嵌套数组
-      return !_.isEmpty(_.map(value, removeEmptyValues));
-    } else {
-      // 去除空白字符串、null、undefined
-      return !(_.isNil(value) || _.isEmpty(_.toString(value).trim()));
+const removeEmptyValues = (obj: any) => {
+  const newObj: any = {};
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const value = obj[key];
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        const nestedObj = removeEmptyValues(value);
+        if (Object.keys(nestedObj).length > 0) {
+          newObj[key] = nestedObj;
+        }
+      } else if (value !== '') {
+        newObj[key] = value;
+      }
     }
-  });
+  }
+
+  return newObj;
 };
 
 export const useEntitiesQueryString = (data: Record<string, any>) => {
-  const _data = _.pickBy(entitiesRequestQuerySchema.parse(data), (item) => {
-    if (typeof item === 'object') {
-      const result = removeEmptyValues(item);
-      return Object.keys(result).length ? true : false;
-    }
-
-    return item !== '' && item !== undefined && item !== null;
-  });
+  const _data = removeEmptyValues(entitiesRequestQuerySchema.parse(data));
 
   return qs.stringify(_data, {
     encodeValuesOnly: true, // prettify URL
