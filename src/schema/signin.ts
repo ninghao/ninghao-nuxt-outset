@@ -3,7 +3,7 @@ import { z } from 'zod';
 /**
  * 用户登录请求主体数据
  */
-export const SigninBodySchema = z.object({
+export const SigninDtoSchema = z.object({
   name: z
     .string({
       required_error: '请提供用户名',
@@ -19,4 +19,4 @@ export const SigninBodySchema = z.object({
     }),
 });
 
-export type SigninBody = z.infer<typeof SigninBodySchema>;
+export type SigninBody = z.infer<typeof SigninDtoSchema>;

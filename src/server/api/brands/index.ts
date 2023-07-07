@@ -1,9 +1,4 @@
-import { Brand } from '../../schema/brand';
-import { CreateBrandBody, CreateBrandBodySchema } from '../schema/brand';
-
-const createBrand = async (brand: CreateBrandBody) => {
-  return surreal.create(`brand:${brand.name}`, brand);
-};
+import { Brand, createBrandDtoSchema } from '~/schema/brand';
 
 export default defineEventHandler(async (event) => {
   const method = getMethod(event);
@@ -33,8 +28,8 @@ export default defineEventHandler(async (event) => {
       forbiddenException();
     }
 
-    const body = await parseBody(event, CreateBrandBodySchema);
-    const result = await createBrand(body);
+    const body = await parseBody(event, createBrandDtoSchema);
+    const [result] = await surreal.create(`brand:${body.name}`, body);
 
     return result;
   }
