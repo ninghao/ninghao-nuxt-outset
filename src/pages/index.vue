@@ -1,16 +1,8 @@
 <template>
-  <div
-    :class="[
-      'flex flex-col items-center justify-center',
-      'min-h-screen',
-    ]"
-  >
-    <AppLogo />
+  <div :class="['flex flex-col items-center justify-center', 'min-h-screen']">
     <UButton
       color="white"
-      @click="
-        navigateTo(`${store.isLoggedIn ? '/console' : '/signin'}`)
-      "
+      @click="navigateTo(`${store.isLoggedIn ? '/console' : '/signin'}`)"
       class="mt-4"
       size="xs"
     >
