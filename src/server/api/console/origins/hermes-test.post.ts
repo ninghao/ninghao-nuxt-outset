@@ -1,7 +1,6 @@
 // https://bck.hermes.cn/products?locale=cn_zh&category=WOMENBAGSSMALLLEATHERGOODS&sort=relevance&offset=200&pagesize=40
 
-import { Region, createRegionDtoSchema } from '~/schema/region';
-import { hermesCnRestfulHeaders } from '../../utils/origin';
+import { hermesCnRestfulHeaders } from '~/server/utils/origin';
 
 export default defineEventHandler(async (event) => {
   const method = getMethod(event);

@@ -1,4 +1,4 @@
-import { Region, createRegionDtoSchema } from '~/schema/region';
+import { Region } from '~/schema/region';
 
 export default defineEventHandler(async (event) => {
   const method = getMethod(event);

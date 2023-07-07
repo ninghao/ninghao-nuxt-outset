@@ -1,6 +1,5 @@
 import { Product } from '~/schema/product';
 import { createProductDtoSchema } from '~/schema/product';
-import qs from 'qs';
 
 export default defineEventHandler(async (event) => {
   const method = getMethod(event);
