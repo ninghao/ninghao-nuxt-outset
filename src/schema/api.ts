@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
-export const filtersSchema = z.record(z.string(), z.record(z.string())).optional();
+export const filtersSchema = z
+  .record(z.string(), z.record(z.union([z.string(), z.record(z.string(), z.string())])))
+  .optional();
 
 export const entitiesRequestQuerySchema = z.object({
   page: z.union([

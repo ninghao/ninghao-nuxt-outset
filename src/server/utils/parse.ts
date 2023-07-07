@@ -155,7 +155,16 @@ const convertFiltersToWhere = (data: Filters) => {
           if (_key.length > 1) {
             conditions.push(`->(${_key[0]} WHERE ${_key[1]} == ${operand})`);
           } else {
-            conditions.push(`->${key}`);
+            if (typeof operand === 'object') {
+              const edgeConditions = Object.entries(operand)
+                .map(([key, value]) => `${key} == ${value}`)
+                .join(' AND ');
+
+              const edgeWhereClause = `WHERE ${edgeConditions}`;
+              conditions.push(`->(${key} ${edgeWhereClause})`);
+            } else {
+              conditions.push(`->${key}`);
+            }
           }
 
           break;
@@ -177,8 +186,6 @@ export const getEntitiesApiParams = (event: H3Event) => {
 
   // 查询条件
   const where = convertFiltersToWhere(query.filters);
-
-  console.log(where);
 
   return { limit, start, where };
 };
