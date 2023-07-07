@@ -33,6 +33,8 @@ export default defineNuxtConfig({
       tokenName: 'yoyo_token',
       administratorName: 'wanghao',
       administratorPassword: '258369',
+      authenticatedName: 'xiaoxue',
+      authenticatedPassword: '258369',
     },
 
     // JWT

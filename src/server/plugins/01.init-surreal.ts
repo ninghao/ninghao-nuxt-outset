@@ -30,14 +30,24 @@ export default defineNitroPlugin(async (nitroApp) => {
   /**
    * 用户
    */
-  const name = config.surreal.administratorName;
+  // 管理员
+  const administratorName = config.surreal.administratorName;
+  const administratorPassword = await createHash(config.surreal.administratorPassword);
 
-  const password = await createHash(config.surreal.administratorPassword);
-
-  await surreal.update(`user:${name}`, {
-    name,
-    password,
+  await surreal.update(`user:${administratorName}`, {
+    name: administratorName,
+    password: administratorPassword,
     roles: ['role:administrator', 'role:authenticated'],
+  });
+
+  // 普通用户
+  const authenticatedName = config.surreal.authenticatedName;
+  const authenticatedPassword = await createHash(config.surreal.authenticatedPassword);
+
+  await surreal.update(`user:${authenticatedName}`, {
+    name: authenticatedName,
+    password: authenticatedPassword,
+    roles: ['role:authenticated'],
   });
 
   /**
