@@ -39,7 +39,7 @@ export const useBrandCreateStore = defineStore('brandCreate', () => {
     };
 
     // 请求接口
-    const { data, error } = await useFetch('/api/brands', {
+    const { data, error } = await useFetch('/api/console/brands', {
       method: 'POST',
       body,
       ...useApiInterceptor(),

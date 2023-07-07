@@ -20,7 +20,7 @@ export const useRegionIndexStore = defineStore('regionIndex', () => {
 
   const getRegions = async () => {
     // 请求接口
-    const { data, error } = await useFetch('/api/regions', {
+    const { data, error } = await useFetch('/api/console/regions', {
       ...useApiInterceptor(),
       transform: (data) => regionsSchema.parse(data),
     });

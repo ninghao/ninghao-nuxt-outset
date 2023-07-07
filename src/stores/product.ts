@@ -95,7 +95,7 @@ export const useProductStore = defineStore('product', () => {
 
     // 获取单个实体
     if (id) {
-      const { data, error } = await useFetch(`/api/products/${id}`, {
+      const { data, error } = await useFetch(`/api/console/products/${id}`, {
         ...useApiInterceptor(),
         transform: (data) => productSchema.parse(data),
       });
@@ -110,13 +110,16 @@ export const useProductStore = defineStore('product', () => {
     }
 
     // 获取实体列表
-    const { data, error } = await useFetch(`/api/products?${entitiesQueryString.value}`, {
-      ...useApiInterceptor(),
-      onResponse(context) {
-        setTotalCount(context.response.headers.get('x-total-count'));
+    const { data, error } = await useFetch(
+      `/api/console/products?${entitiesQueryString.value}`,
+      {
+        ...useApiInterceptor(),
+        onResponse(context) {
+          setTotalCount(context.response.headers.get('x-total-count'));
+        },
+        transform: (data) => productsSchema.parse(data),
       },
-      transform: (data) => productsSchema.parse(data),
-    });
+    );
 
     if (error.value) return;
 
@@ -135,7 +138,7 @@ export const useProductStore = defineStore('product', () => {
     const body = createProductDtoSchema.parse(entity.value);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/products', {
+    const { data, error } = await useFetch('/api/console/products', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -168,7 +171,7 @@ export const useProductStore = defineStore('product', () => {
     const id = body?.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/products/${id}`, {
+    const { data, error } = await useFetch(`/api/console/products/${id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),
@@ -195,7 +198,7 @@ export const useProductStore = defineStore('product', () => {
     const id = entityId ?? entity.value.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/products/${id}`, {
+    const { data, error } = await useFetch(`/api/console/products/${id}`, {
       method: 'DELETE',
       ...useApiInterceptor(),
     });

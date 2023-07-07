@@ -31,7 +31,7 @@ export const useBrandUpdateStore = defineStore('brandUpdate', () => {
     console.log(body);
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/brands/${body?.id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${body?.id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),

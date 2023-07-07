@@ -49,7 +49,7 @@ export const useBrandStore = defineStore('brand', () => {
     const body = createBrandDtoSchema.parse(entity.value);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/brands', {
+    const { data, error } = await useFetch('/api/console/brands', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -77,7 +77,7 @@ export const useBrandStore = defineStore('brand', () => {
 
     // 获取单个实体
     if (id) {
-      const { data, error } = await useFetch(`/api/brands/${id}`, {
+      const { data, error } = await useFetch(`/api/console/brands/${id}`, {
         ...useApiInterceptor(),
         transform: (data) => brandSchema.parse(data),
       });
@@ -92,7 +92,7 @@ export const useBrandStore = defineStore('brand', () => {
     }
 
     // 获取实体列表
-    const { data, error } = await useFetch(`/api/brands`, {
+    const { data, error } = await useFetch(`/api/console/brands`, {
       ...useApiInterceptor(),
       transform: (data) => brandsSchema.parse(data),
     });
@@ -115,7 +115,7 @@ export const useBrandStore = defineStore('brand', () => {
     const id = body?.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/brands/${id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),
@@ -140,7 +140,7 @@ export const useBrandStore = defineStore('brand', () => {
     const id = entityId ?? entity.value.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/brands/${id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
       method: 'DELETE',
       ...useApiInterceptor(),
     });

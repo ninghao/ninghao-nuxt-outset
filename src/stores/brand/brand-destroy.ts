@@ -16,7 +16,7 @@ export const useBrandDestroyStore = defineStore('brandDestroy', () => {
 
   const deleteBrandById = async (id: string) => {
     // 请求接口
-    const { data, error } = await useFetch(`/api/brands/${id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
       method: 'DELETE',
       ...useApiInterceptor(),
     });

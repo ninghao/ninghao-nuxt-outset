@@ -29,7 +29,7 @@ export const useAvailableStore = defineStore('available', () => {
     const body = createAvailableDtoSchema.parse(dto);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/available', {
+    const { data, error } = await useFetch('/api/console/available', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -50,7 +50,7 @@ export const useAvailableStore = defineStore('available', () => {
     const body = updateAvailableDtoSchema.parse(dto);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/available', {
+    const { data, error } = await useFetch('/api/console/available', {
       method: 'PUT',
       body,
       ...useApiInterceptor(),

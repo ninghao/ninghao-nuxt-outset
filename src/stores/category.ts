@@ -58,7 +58,7 @@ export const useCategoryStore = defineStore('category', () => {
 
     // 获取实体列表
     const { data, error } = await useFetch(
-      `/api/categories?${entitiesQueryString.value}`,
+      `/api/console/categories?${entitiesQueryString.value}`,
       {
         ...useApiInterceptor(),
         onResponse(context) {

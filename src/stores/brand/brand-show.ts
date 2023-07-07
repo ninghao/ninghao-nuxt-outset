@@ -30,7 +30,7 @@ export const useBrandShowStore = defineStore('brandShow', () => {
     const _id = id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/brands/${_id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${_id}`, {
       ...useApiInterceptor(),
       transform: (data) => brandSchema.parse(data),
     });

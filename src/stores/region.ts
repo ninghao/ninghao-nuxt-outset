@@ -62,7 +62,7 @@ export const useRegionStore = defineStore('region', () => {
     const body = createRegionDtoSchema.parse(entity.value);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/regions', {
+    const { data, error } = await useFetch('/api/console/regions', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -90,7 +90,7 @@ export const useRegionStore = defineStore('region', () => {
 
     // 获取单个实体
     if (id) {
-      const { data, error } = await useFetch(`/api/regions/${id}`, {
+      const { data, error } = await useFetch(`/api/console/regions/${id}`, {
         ...useApiInterceptor(),
         transform: (data) => regionSchema.parse(data),
       });
@@ -110,10 +110,13 @@ export const useRegionStore = defineStore('region', () => {
     }
 
     // 获取实体列表
-    const { data, error } = await useFetch(`/api/regions?${entitiesQueryString.value}`, {
-      ...useApiInterceptor(),
-      transform: (data) => regionsSchema.parse(data),
-    });
+    const { data, error } = await useFetch(
+      `/api/console/regions?${entitiesQueryString.value}`,
+      {
+        ...useApiInterceptor(),
+        transform: (data) => regionsSchema.parse(data),
+      },
+    );
 
     if (error.value) return;
 
@@ -133,7 +136,7 @@ export const useRegionStore = defineStore('region', () => {
     const id = body?.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/regions/${id}`, {
+    const { data, error } = await useFetch(`/api/console/regions/${id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),
@@ -158,7 +161,7 @@ export const useRegionStore = defineStore('region', () => {
     const id = entityId ?? entity.value.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/regions/${id}`, {
+    const { data, error } = await useFetch(`/api/console/regions/${id}`, {
       method: 'DELETE',
       ...useApiInterceptor(),
     });
