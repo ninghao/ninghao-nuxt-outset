@@ -52,6 +52,6 @@ const onClickBrandItem = async (id: string) => {
     brandUpdateStore.brand = brand.value;
   }
 
-  consoleStore.showSideover('BrandEdit');
+  consoleStore.showSideover('ConsoleBrandEdit');
 };
 </script>

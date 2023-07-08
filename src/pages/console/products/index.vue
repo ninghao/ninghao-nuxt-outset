@@ -8,10 +8,10 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showSideover('ProductCreate')"
+        @click="store.showSideover('ConsoleProductCreate')"
       />
     </div>
-    <ProductList class="px-6" />
+    <ConsoleProductList class="px-6" />
   </div>
 </template>
 

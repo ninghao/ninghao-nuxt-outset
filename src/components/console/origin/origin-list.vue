@@ -60,7 +60,7 @@ const items = (row: Region) => [
       icon: 'i-heroicons-pencil-square',
       click: () => {
         store.retrieve({ id: row.id });
-        consoleStore.showSideover('RegionEdit');
+        consoleStore.showSideover('ConsoleRegionEdit');
       },
     },
   ],

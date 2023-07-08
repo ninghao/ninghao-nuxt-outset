@@ -58,7 +58,7 @@ const items = (row: Product) => [
       icon: 'i-heroicons-pencil-square',
       click: () => {
         store.retrieve({ id: row.id });
-        consoleStore.showSideover('BrandEdit');
+        consoleStore.showSideover('ConsoleBrandEdit');
       },
     },
   ],

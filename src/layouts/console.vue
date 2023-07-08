@@ -1,6 +1,6 @@
 <template>
   <div class="flex font-light">
-    <ConsoleAside />
+    <ConsoleLayoutAside />
     <main class="flex-1">
       <slot></slot>
     </main>
@@ -17,13 +17,13 @@
 const store = useConsoleStore();
 
 const components: Record<string, any> = {
-  BrandCreate: resolveComponent('BrandCreate'),
-  BrandEdit: resolveComponent('BrandEdit'),
-  RegionEdit: resolveComponent('RegionEdit'),
-  RegionCreate: resolveComponent('RegionCreate'),
-  OriginCreate: resolveComponent('OriginCreate'),
-  ProductCreate: resolveComponent('ProductCreate'),
-  ProductEdit: resolveComponent('ProductEdit'),
+  ConsoleBrandCreate: resolveComponent('ConsoleBrandCreate'),
+  ConsoleBrandEdit: resolveComponent('ConsoleBrandEdit'),
+  ConsoleRegionEdit: resolveComponent('ConsoleRegionEdit'),
+  ConsoleRegionCreate: resolveComponent('ConsoleRegionCreate'),
+  ConsoleOriginCreate: resolveComponent('ConsoleOriginCreate'),
+  ConsoleProductCreate: resolveComponent('ConsoleProductCreate'),
+  ConsoleProductEdit: resolveComponent('ConsoleProductEdit'),
 };
 
 const modalComponent = computed(() => {

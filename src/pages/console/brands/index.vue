@@ -8,10 +8,10 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showModal('BrandCreate')"
+        @click="store.showModal('ConsoleBrandCreate')"
       />
     </div>
-    <BrandList class="px-6" />
+    <ConsoleBrandList class="px-6" />
   </div>
 </template>
 

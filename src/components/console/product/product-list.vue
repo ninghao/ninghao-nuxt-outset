@@ -58,7 +58,7 @@
           @click="
             () => {
               store.retrieve({ id: row.id });
-              consoleStore.showSideover('ProductEdit');
+              consoleStore.showSideover('ConsoleProductEdit');
             }
           "
         />

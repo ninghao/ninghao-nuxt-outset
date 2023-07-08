@@ -8,10 +8,10 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showSideover('RegionCreate')"
+        @click="store.showSideover('ConsoleRegionCreate')"
       />
     </div>
-    <RegionList class="px-6" />
+    <ConsoleRegionList class="px-6" />
   </div>
 </template>
 

@@ -8,11 +8,11 @@
         color="primary"
         square
         variant="solid"
-        @click="store.showSideover('OriginCreate')"
+        @click="store.showSideover('ConsoleOriginCreate')"
       />
     </div>
     <UContainer>
-      <RegionList />
+      <ConsoleRegionList />
     </UContainer>
   </div>
 </template>
