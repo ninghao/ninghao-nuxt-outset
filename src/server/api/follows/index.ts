@@ -1,4 +1,5 @@
 import { createFollowDtoSchema, updateFollowDtoSchema } from '~/schema/follow';
+import { Product } from '~/schema/product';
 
 export default defineEventHandler(async (event) => {
   // 请求方法
@@ -17,23 +18,73 @@ export default defineEventHandler(async (event) => {
     // 参数
     const { limit, start, conditions } = getEntitiesApiParams(event);
 
-    // 查询声明
+    // 条件
+    const _conditions = `
+      ->(available WHERE isPublished == true)<-follow<-(user WHERE id == $user)
+      ${conditions ? 'AND ' + conditions : ''}    
+    `;
+
+    // 声明
     const statement = `
-       SELECT 
+       SELECT
          *,
-         ->(available WHERE isPublished = true)->region AS available
-       FROM 
+         ->(available WHERE isPublished = true)->region AS available,
+         count(->available<-(follow WHERE in == $user)) > 0 AS isFollowed
+       FROM
          product
-      ${conditions ? 'WHERE ' + conditions : ''}
-       ORDER BY 
+       WHERE
+         ${_conditions}
+       ORDER BY
          created DESC
-       LIMIT 
+       LIMIT
          $limit
-       START 
+       START
          $start
-       FETCH 
+       FETCH
          category, brand, available;
      `;
+
+    // 参数
+    const statementParams = { user, limit, start };
+
+    // 执行
+    const [{ result }] = await surreal.query<[Array<Product>]>(
+      statement,
+      statementParams,
+    );
+
+    /**
+     * 统计
+     */
+    const countStatement = `
+      SELECT 
+        count() 
+      FROM 
+        product 
+      WHERE
+        ${_conditions}
+      GROUP ALL
+    `;
+
+    const countStatementParams = { user };
+
+    const [{ result: countResult }] = await surreal.query<[Array<{ count: number }>]>(
+      countStatement,
+      countStatementParams,
+    );
+
+    if (countResult?.length) {
+      const totalCount = countResult[0].count;
+      const totalPages = Math.ceil(totalCount / limit);
+
+      setHeaders(event, {
+        'x-total-count': totalCount,
+        'x-total-pages': totalPages,
+      });
+    }
+
+    // 返回结果
+    return result;
   }
 
   /**
