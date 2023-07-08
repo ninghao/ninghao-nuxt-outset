@@ -23,10 +23,10 @@
 <script setup lang="ts">
 import { Product } from '~/schema/product';
 
-const store = useBrandStore();
+const store = useConsoleBrandStore();
 await store.retrieve();
 
-const consoleStore = useConsoleStore();
+const consoleStore = useConsoleLayoutStore();
 
 const columns = [
   {

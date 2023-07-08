@@ -1,34 +1,53 @@
 import {
-  _brand,
-  Brand,
-  Brands,
-  brandSchema,
-  brandsSchema,
-  updateBrandDtoSchema,
-  createBrandDtoSchema,
-} from '~/schema/brand';
+  _region,
+  Region,
+  Regions,
+  regionSchema,
+  regionsSchema,
+  updateRegionDtoSchema,
+  createRegionDtoSchema,
+} from '~/schema/region';
+
+import { Brand } from '~/schema/brand';
 
 /**
- * BrandStore
+ * RegionStore
  */
 type RetrieveOptions = {
   id?: string;
+  brand?: string;
 };
 
-export const useBrandStore = defineStore('brand', () => {
+export const useConsoleRegionStore = defineStore('consoleRegion', () => {
   /**
    * State 🌴
    */
 
   // 单个实体
-  const entity = ref<Partial<Brand>>({ ..._brand });
+  const entity = ref<Partial<Region>>({ ..._region });
 
   // 实体列表
-  const entities = ref<Brands>([]);
+  const entities = ref<Regions>([]);
+
+  // 实体列表查询参数
+  const entitiesQuery = ref({
+    filters: {
+      'brand.id': {
+        $eq: '',
+      },
+    },
+  });
 
   /**
    * Getters 🌵
    */
+  const entitiesQueryString = computed(() => {
+    return useEntitiesQueryString(entitiesQuery.value);
+  });
+
+  const brandTitle = computed(() => {
+    return (entity.value.brand as Brand).title;
+  });
 
   /**
    * Actions 🚀
@@ -38,7 +57,7 @@ export const useBrandStore = defineStore('brand', () => {
    * 重置状态
    */
   const $reset = () => {
-    entity.value = { ..._brand };
+    entity.value = { ..._region };
   };
 
   /**
@@ -46,10 +65,10 @@ export const useBrandStore = defineStore('brand', () => {
    */
   const create = async () => {
     // 主体数据
-    const body = createBrandDtoSchema.parse(entity.value);
+    const body = createRegionDtoSchema.parse(entity.value);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/console/brands', {
+    const { data, error } = await useFetch('/api/console/regions', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -73,13 +92,13 @@ export const useBrandStore = defineStore('brand', () => {
 
   // 读取实体
   const retrieve = async (options?: RetrieveOptions) => {
-    const { id } = options || {};
+    const { id, brand } = options || {};
 
     // 获取单个实体
     if (id) {
-      const { data, error } = await useFetch(`/api/console/brands/${id}`, {
+      const { data, error } = await useFetch(`/api/console/regions/${id}`, {
         ...useApiInterceptor(),
-        transform: (data) => brandSchema.parse(data),
+        transform: (data) => regionSchema.parse(data),
       });
 
       if (error.value) return;
@@ -91,11 +110,19 @@ export const useBrandStore = defineStore('brand', () => {
       return data;
     }
 
+    // 设置查询参数
+    if (brand) {
+      entitiesQuery.value.filters['brand.id'].$eq = brand;
+    }
+
     // 获取实体列表
-    const { data, error } = await useFetch(`/api/console/brands`, {
-      ...useApiInterceptor(),
-      transform: (data) => brandsSchema.parse(data),
-    });
+    const { data, error } = await useFetch(
+      `/api/console/regions?${entitiesQueryString.value}`,
+      {
+        ...useApiInterceptor(),
+        transform: (data) => regionsSchema.parse(data),
+      },
+    );
 
     if (error.value) return;
 
@@ -109,13 +136,13 @@ export const useBrandStore = defineStore('brand', () => {
   // 更新实体
   const update = async () => {
     // 请求主体
-    const body = updateBrandDtoSchema.parse(entity.value);
+    const body = updateRegionDtoSchema.parse(entity.value);
 
     // 实体 ID
     const id = body?.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
+    const { data, error } = await useFetch(`/api/console/regions/${id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),
@@ -125,7 +152,7 @@ export const useBrandStore = defineStore('brand', () => {
     if (error.value) return;
 
     // 显示通知
-    useToast().add({ title: '成功更新了品牌' });
+    useToast().add({ title: '成功更新了区域' });
 
     // 更新列表
     retrieve();
@@ -140,7 +167,7 @@ export const useBrandStore = defineStore('brand', () => {
     const id = entityId ?? entity.value.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
+    const { data, error } = await useFetch(`/api/console/regions/${id}`, {
       method: 'DELETE',
       ...useApiInterceptor(),
     });
@@ -161,5 +188,5 @@ export const useBrandStore = defineStore('brand', () => {
   /**
    * 返回值
    */
-  return { create, retrieve, update, destroy, entity, entities };
+  return { create, retrieve, update, destroy, entity, entities, brandTitle };
 });

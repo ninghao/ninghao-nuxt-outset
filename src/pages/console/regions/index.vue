@@ -20,7 +20,7 @@ definePageMeta({
   layout: 'console',
 });
 
-const store = useConsoleStore();
+const store = useConsoleLayoutStore();
 
 useHead({
   title: '区域',

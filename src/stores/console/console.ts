@@ -1,7 +1,7 @@
 /**
  * ConsoleStore
  */
-export const useConsoleStore = defineStore('console', () => {
+export const useConsoleLayoutStore = defineStore('consoleLayout', () => {
   /**
    * State
    */

@@ -67,11 +67,11 @@
             'w-full pl-4',
             'bg-gray',
             {
-              'text-gray-400': !store.entity.brand?.title,
+              'text-gray-400': !store.brandTitle,
             },
           ]"
         >
-          {{ store.entity.brand?.title ? store.entity.brand?.title : '请选择品牌' }}
+          {{ store.brandTitle ? store.brandTitle : '请选择品牌' }}
         </div>
       </USelectMenu>
     </UFormGroup>
@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-const store = useRegionStore();
-const brandStore = useBrandStore();
+const store = useConsoleRegionStore();
+const brandStore = useConsoleBrandStore();
 brandStore.retrieve();
 </script>

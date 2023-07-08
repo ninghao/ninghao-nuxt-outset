@@ -22,7 +22,7 @@ definePageMeta({
   layout: 'console',
 });
 
-const store = useConsoleStore();
+const store = useConsoleLayoutStore();
 
 useHead({
   title: '来源',

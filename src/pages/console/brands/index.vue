@@ -20,5 +20,5 @@ definePageMeta({
   layout: 'console',
 });
 
-const store = useConsoleStore();
+const store = useConsoleLayoutStore();
 </script>

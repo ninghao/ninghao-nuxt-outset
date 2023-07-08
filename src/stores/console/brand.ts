@@ -1,47 +1,34 @@
 import {
-  _region,
-  Region,
-  Regions,
-  regionSchema,
-  regionsSchema,
-  updateRegionDtoSchema,
-  createRegionDtoSchema,
-} from '~/schema/region';
+  _brand,
+  Brand,
+  Brands,
+  brandSchema,
+  brandsSchema,
+  updateBrandDtoSchema,
+  createBrandDtoSchema,
+} from '~/schema/brand';
 
 /**
- * RegionStore
+ * BrandStore
  */
 type RetrieveOptions = {
   id?: string;
-  brand?: string;
 };
 
-export const useRegionStore = defineStore('region', () => {
+export const useConsoleBrandStore = defineStore('consoleBrand', () => {
   /**
    * State 🌴
    */
 
   // 单个实体
-  const entity = ref<Partial<Region>>({ ..._region });
+  const entity = ref<Partial<Brand>>({ ..._brand });
 
   // 实体列表
-  const entities = ref<Regions>([]);
-
-  // 实体列表查询参数
-  const entitiesQuery = ref({
-    filters: {
-      'brand.id': {
-        $eq: '',
-      },
-    },
-  });
+  const entities = ref<Brands>([]);
 
   /**
    * Getters 🌵
    */
-  const entitiesQueryString = computed(() => {
-    return useEntitiesQueryString(entitiesQuery.value);
-  });
 
   /**
    * Actions 🚀
@@ -51,7 +38,7 @@ export const useRegionStore = defineStore('region', () => {
    * 重置状态
    */
   const $reset = () => {
-    entity.value = { ..._region };
+    entity.value = { ..._brand };
   };
 
   /**
@@ -59,10 +46,10 @@ export const useRegionStore = defineStore('region', () => {
    */
   const create = async () => {
     // 主体数据
-    const body = createRegionDtoSchema.parse(entity.value);
+    const body = createBrandDtoSchema.parse(entity.value);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/console/regions', {
+    const { data, error } = await useFetch('/api/console/brands', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -86,13 +73,13 @@ export const useRegionStore = defineStore('region', () => {
 
   // 读取实体
   const retrieve = async (options?: RetrieveOptions) => {
-    const { id, brand } = options || {};
+    const { id } = options || {};
 
     // 获取单个实体
     if (id) {
-      const { data, error } = await useFetch(`/api/console/regions/${id}`, {
+      const { data, error } = await useFetch(`/api/console/brands/${id}`, {
         ...useApiInterceptor(),
-        transform: (data) => regionSchema.parse(data),
+        transform: (data) => brandSchema.parse(data),
       });
 
       if (error.value) return;
@@ -104,19 +91,11 @@ export const useRegionStore = defineStore('region', () => {
       return data;
     }
 
-    // 设置查询参数
-    if (brand) {
-      entitiesQuery.value.filters['brand.id'].$eq = brand;
-    }
-
     // 获取实体列表
-    const { data, error } = await useFetch(
-      `/api/console/regions?${entitiesQueryString.value}`,
-      {
-        ...useApiInterceptor(),
-        transform: (data) => regionsSchema.parse(data),
-      },
-    );
+    const { data, error } = await useFetch(`/api/console/brands`, {
+      ...useApiInterceptor(),
+      transform: (data) => brandsSchema.parse(data),
+    });
 
     if (error.value) return;
 
@@ -130,13 +109,13 @@ export const useRegionStore = defineStore('region', () => {
   // 更新实体
   const update = async () => {
     // 请求主体
-    const body = updateRegionDtoSchema.parse(entity.value);
+    const body = updateBrandDtoSchema.parse(entity.value);
 
     // 实体 ID
     const id = body?.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/console/regions/${id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
       method: 'PUT',
       body,
       ...useApiInterceptor(),
@@ -146,7 +125,7 @@ export const useRegionStore = defineStore('region', () => {
     if (error.value) return;
 
     // 显示通知
-    useToast().add({ title: '成功更新了区域' });
+    useToast().add({ title: '成功更新了品牌' });
 
     // 更新列表
     retrieve();
@@ -161,7 +140,7 @@ export const useRegionStore = defineStore('region', () => {
     const id = entityId ?? entity.value.id;
 
     // 请求接口
-    const { data, error } = await useFetch(`/api/console/regions/${id}`, {
+    const { data, error } = await useFetch(`/api/console/brands/${id}`, {
       method: 'DELETE',
       ...useApiInterceptor(),
     });

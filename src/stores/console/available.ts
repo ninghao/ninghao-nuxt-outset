@@ -8,7 +8,7 @@ import {
 /**
  * AvailableStore
  */
-export const useAvailableStore = defineStore('available', () => {
+export const useConsoleAvailableStore = defineStore('consoleAvailable', () => {
   /**
    * State 🌴
    */

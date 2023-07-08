@@ -102,10 +102,10 @@
 <script setup lang="ts">
 import { Product } from '~/schema/product';
 
-const store = useProductStore();
+const store = useConsoleProductStore();
 await store.retrieve();
 
-const brandStore = useBrandStore();
+const brandStore = useConsoleBrandStore();
 await brandStore.retrieve();
 
 const selectedBrand = ref({ id: '', title: '所有品牌' });
@@ -120,7 +120,7 @@ watch(store.entitiesQuery, () => {
   store.retrieve();
 });
 
-const consoleStore = useConsoleStore();
+const consoleStore = useConsoleLayoutStore();
 
 const columns = [
   {

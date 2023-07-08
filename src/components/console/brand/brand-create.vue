@@ -39,5 +39,5 @@
 </template>
 
 <script setup lang="ts">
-const store = useBrandStore();
+const store = useConsoleBrandStore();
 </script>

@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-const store = useConsoleStore();
+const store = useConsoleLayoutStore();
 
 const components: Record<string, any> = {
   ConsoleBrandCreate: resolveComponent('ConsoleBrandCreate'),

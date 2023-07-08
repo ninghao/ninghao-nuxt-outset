@@ -17,10 +17,10 @@ import { Region } from '~/schema/region';
 
 const isModalOpen = ref(false);
 
-const store = useRegionStore();
+const store = useConsoleRegionStore();
 await store.retrieve();
 
-const consoleStore = useConsoleStore();
+const consoleStore = useConsoleLayoutStore();
 
 const columns = [
   {

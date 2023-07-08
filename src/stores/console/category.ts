@@ -7,7 +7,7 @@ type RetrieveOptions = {
   id?: string;
 };
 
-export const useCategoryStore = defineStore('category', () => {
+export const useConsoleCategoryStore = defineStore('consoleCategory', () => {
   /**
    * State 🌴
    */

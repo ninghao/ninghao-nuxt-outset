@@ -111,9 +111,9 @@
 </template>
 
 <script setup lang="ts">
-const store = useProductStore();
-const brandStore = useBrandStore();
+const store = useConsoleProductStore();
+const brandStore = useConsoleBrandStore();
 brandStore.retrieve();
-const categoryStore = useCategoryStore();
+const categoryStore = useConsoleCategoryStore();
 categoryStore.retrieve();
 </script>

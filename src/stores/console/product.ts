@@ -15,7 +15,7 @@ type RetrieveOptions = {
   id?: string;
 };
 
-export const useProductStore = defineStore('product', () => {
+export const useConsoleProductStore = defineStore('consoleProduct', () => {
   /**
    * State 🌴
    */

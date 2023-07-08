@@ -134,18 +134,18 @@
 </template>
 
 <script setup lang="ts">
-const store = useProductStore();
-const brandStore = useBrandStore();
+const store = useConsoleProductStore();
+const brandStore = useConsoleBrandStore();
 brandStore.retrieve();
-const categoryStore = useCategoryStore();
+const categoryStore = useConsoleCategoryStore();
 categoryStore.retrieve();
-const regionStore = useRegionStore();
+const regionStore = useConsoleRegionStore();
 
 store.$subscribe(() => {
   regionStore.retrieve({ brand: store.entity.brand?.id });
 });
 
-const availableStore = useAvailableStore();
+const availableStore = useConsoleAvailableStore();
 
 const items = [
   [
