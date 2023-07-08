@@ -15,9 +15,45 @@
           <div class="font-normal">{{ item.title }}</div>
         </div>
         <div>
-          <UButton size="xs" variant="outline" color="black" class="px-4 rounded-none"
-            >关注</UButton
+          <UButton
+            v-if="!item.isFollowed"
+            size="xs"
+            variant="outline"
+            color="black"
+            class="px-4 rounded-none"
+            @click="
+              () => {
+                if (item.available) {
+                  const region = item.available[0].id;
+                  const product = item.id;
+
+                  followStore.create({ region, product });
+                  item.isFollowed = true;
+                }
+              }
+            "
           >
+            关注
+          </UButton>
+          <UButton
+            v-if="item.isFollowed"
+            size="xs"
+            variant="none"
+            class="px-4 rounded-none"
+            @click="
+              () => {
+                if (item.available) {
+                  const region = item.available[0].id;
+                  const product = item.id;
+
+                  followStore.create({ region, product });
+                }
+              }
+            "
+          >
+            <UIcon name="i-heroicons-check" />
+            已关注
+          </UButton>
         </div>
       </div>
     </div>
@@ -27,4 +63,6 @@
 <script setup lang="ts">
 const store = useProductStore();
 store.retrieve();
+
+const followStore = useFollowStore();
 </script>

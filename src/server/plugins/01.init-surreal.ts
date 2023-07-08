@@ -137,10 +137,14 @@ export default defineNitroPlugin(async (nitroApp) => {
 
     DEFINE FIELD created ON user VALUE $before OR time::now();
     DEFINE FIELD updated ON user VALUE time::now();
+
+    DEFINE FIELD created ON follow VALUE $before OR time::now();
+    DEFINE FIELD updated ON follow VALUE time::now();
   `);
 
   await surreal.query(`
     DEFINE INDEX productSkuIndex ON TABLE product COLUMNS sku UNIQUE;
     DEFINE INDEX productOriginIndex ON TABLE available COLUMNS in, out UNIQUE;
+    DEFINE INDEX userAvailableIndex ON TABLE follow COLUMNS in, out UNIQUE;
   `);
 });

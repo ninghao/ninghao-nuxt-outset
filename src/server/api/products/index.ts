@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
     // 参数
     const { limit, start, where } = getEntitiesApiParams(event);
 
+    const user = event.context.user?.id;
+
     // 查询声明
     const statement = `
        SELECT 
@@ -20,7 +22,8 @@ export default defineEventHandler(async (event) => {
          title,
          brand,
          image,
-         ->(available WHERE isPublished = true)->region AS available
+         ->(available WHERE isPublished = true)->region AS available,
+         count(->available<-(follow WHERE in == $user)) > 0 AS isFollowed
        FROM 
          product ${where}
        LIMIT 
@@ -35,6 +38,7 @@ export default defineEventHandler(async (event) => {
     const statementParams = {
       limit,
       start,
+      user,
     };
 
     // 查询

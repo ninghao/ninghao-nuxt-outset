@@ -77,6 +77,7 @@ export const productSchema = z.object({
   category: categorySchema.optional(),
   brand: brandSchema.optional(),
   available: regionsSchema.optional(),
+  isFollowed: z.boolean().optional(),
   image: z
     .object({
       local: z
