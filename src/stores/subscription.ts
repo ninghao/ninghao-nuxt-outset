@@ -60,7 +60,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
   });
 
   const isCurrentSelectedType = computed(() => (data: SubscriptionType) => {
-    return data.id !== selectedSubscriptionType.value?.id;
+    return data.id == selectedSubscriptionType.value?.id;
   });
 
   /**

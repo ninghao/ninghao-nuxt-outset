@@ -24,13 +24,16 @@
       >
         <div class="text-sm">{{ item.title }}</div>
         <div><span class="text-xs">¥</span>{{ item.price }}</div>
-        <AppCheckmark v-if="isCurrentSelectedType(item)" />
+        <AppCheckmark v-if="subscriptionStore.isCurrentSelectedType(item)" />
       </div>
     </div>
-    <div :class="['border border-black', 'py-7 px-6']" v-if="selectedSubscriptionType">
+    <div
+      :class="['border border-black', 'py-7 px-6']"
+      v-if="subscriptionStore.selectedSubscriptionType"
+    >
       微信支付
     </div>
-    <div class="text-xs" v-if="selectedRegion">
+    <div class="text-xs" v-if="subscriptionStore.selectedRegion">
       {{ (subscriptionStore.selectedRegion?.brand as Brand).title }}
       {{ subscriptionStore.selectedRegion?.title }}
     </div>
@@ -44,7 +47,4 @@ const store = useSubscriptionTypeStore();
 store.retrieve();
 
 const subscriptionStore = useSubscriptionStore();
-
-const { isCurrentSelectedType, selectedSubscriptionType, selectedRegion } =
-  storeToRefs(subscriptionStore);
 </script>
