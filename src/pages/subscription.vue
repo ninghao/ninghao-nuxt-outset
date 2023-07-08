@@ -1,5 +1,6 @@
 <template>
   <div>
-    <SubscriptionRegionList />
+    <SubscriptionRegionList v-if="false" />
+    <SubscriptionTypeList />
   </div>
 </template>
