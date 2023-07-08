@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     authGuard(event);
 
     // 参数
-    const { limit, start, where } = getEntitiesApiParams(event);
+    const { limit, start, conditions } = getEntitiesApiParams(event);
 
     const user = event.context.user?.id;
 
@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
          ->(available WHERE isPublished = true)->region AS available,
          count(->available<-(follow WHERE in == $user)) > 0 AS isFollowed
        FROM 
-         product ${where}
+         product
+      ${conditions ? 'WHERE ' + conditions : ''}
        LIMIT 
          $limit
        START 
@@ -49,7 +50,7 @@ export default defineEventHandler(async (event) => {
 
     // 统计
     const [countResult] = await surreal.query<[Array<{ count: number }>]>(
-      `select count() from product ${where} group all`,
+      `select count() from product ${conditions ? 'WHERE ' + conditions : ''} group all`,
     );
 
     // 分页

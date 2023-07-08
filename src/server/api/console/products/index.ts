@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
     }
 
     // 参数
-    const { limit, start, where } = getEntitiesApiParams(event);
+    const { limit, start, conditions } = getEntitiesApiParams(event);
 
     // 查询声明
     const statement = `
@@ -25,7 +25,8 @@ export default defineEventHandler(async (event) => {
         *,
         ->(available WHERE isPublished = true)->region AS available
       FROM 
-        product ${where}
+        product
+      ${conditions ? 'WHERE ' + conditions : ''}
       ORDER BY 
         created DESC
       LIMIT 
@@ -44,7 +45,7 @@ export default defineEventHandler(async (event) => {
 
     // 统计
     const [countResult] = await surreal.query<[Array<{ count: number }>]>(
-      `select count() from product ${where} group all`,
+      `select count() from product  ${conditions ? 'WHERE ' + conditions : ''} group all`,
     );
 
     // 分页

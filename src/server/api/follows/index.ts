@@ -11,6 +11,32 @@ export default defineEventHandler(async (event) => {
   const user = event.context.user?.id;
 
   /**
+   * 列表
+   */
+  if (method === 'GET') {
+    // 参数
+    const { limit, start, conditions } = getEntitiesApiParams(event);
+
+    // 查询声明
+    const statement = `
+       SELECT 
+         *,
+         ->(available WHERE isPublished = true)->region AS available
+       FROM 
+         product
+      ${conditions ? 'WHERE ' + conditions : ''}
+       ORDER BY 
+         created DESC
+       LIMIT 
+         $limit
+       START 
+         $start
+       FETCH 
+         category, brand, available;
+     `;
+  }
+
+  /**
    * 创建
    */
   if (method === 'POST') {

@@ -16,13 +16,13 @@ export default defineEventHandler(async (event) => {
     }
 
     // 准备查询
-    const { where } = getEntitiesApiParams(event);
+    const { conditions } = getEntitiesApiParams(event);
 
     // 查询声明
     const statement = `
       SELECT * 
       FROM region
-      ${where}
+      ${conditions ? 'WHERE ' + conditions : ''}
       FETCH brand;
     `;
 
