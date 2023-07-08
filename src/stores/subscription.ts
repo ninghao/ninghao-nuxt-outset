@@ -37,6 +37,24 @@ export const useSubscriptionStore = defineStore('subscription', () => {
    * Getters 🌵
    */
 
+  // const isStepActive = (stepName: string) => () =>
+  //   computed(() => {
+  //     console.log(stepName === currentStep.value);
+
+  //     if (stepName === currentStep.value) {
+  //       return true;
+  //     }
+
+  //     return false;
+  //   });
+  const isStepActive = computed(() => (stepName: string) => {
+    if (stepName === currentStep.value) {
+      return true;
+    }
+
+    return false;
+  });
+
   /**
    * Actions 🚀
    */
@@ -66,5 +84,6 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     setSelectedSubscriptionType,
     currentStep,
     setCurrentStep,
+    isStepActive,
   };
 });
