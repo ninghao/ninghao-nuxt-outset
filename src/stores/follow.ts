@@ -1,4 +1,5 @@
 import { createFollowDtoSchema, updateFollowDtoSchema } from '~/schema/follow';
+import { Products, productsSchema } from '~/schema/product';
 
 /**
  * FollowStore
@@ -8,13 +9,57 @@ export const useFollowStore = defineStore('follow', () => {
    * State 🌴
    */
 
+  // 实体列表
+  const entities = ref<Products>([]);
+
+  // 实体总数
+  const totalCount = ref(0);
+
+  // 地址查询符
+  const entitiesQuery = ref({
+    page: 1,
+    sort: '',
+  });
+
   /**
    * Getters 🌵
    */
 
+  const entitiesQueryString = computed(() => {
+    return useEntitiesQueryString(entitiesQuery.value);
+  });
+
   /**
    * Actions 🚀
    */
+
+  const setTotalCount = (data: number | string | null) => {
+    if (data) {
+      totalCount.value = parseInt(`${data}`, 10);
+    }
+  };
+
+  /**
+   * 读取
+   */
+  const retrieve = async () => {
+    // 获取实体列表
+    const { data, error } = await useFetch(`/api/follows?${entitiesQueryString.value}`, {
+      ...useApiInterceptor(),
+      onResponse(context) {
+        setTotalCount(context.response.headers.get('x-total-count'));
+      },
+      transform: (data) => productsSchema.parse(data),
+    });
+
+    if (error.value) return;
+
+    if (data.value) {
+      entities.value = data.value;
+    }
+
+    return data;
+  };
 
   /**
    * 创建
@@ -61,5 +106,5 @@ export const useFollowStore = defineStore('follow', () => {
   /**
    * 返回
    */
-  return { create, update };
+  return { create, retrieve, update, entities };
 });

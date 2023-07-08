@@ -1,7 +1,7 @@
 <template>
-  <div :class="['grid grid-cols-2 gap-1', 'text-center font-light text-sm']">
+  <div :class="['grid grid-cols-2 gap-1', 'text-center font-light text-sm', 'pb-8']">
     <div v-for="item in store.entities" :key="item.id">
-      <div>
+      <div class="aspect-1/1">
         <img
           v-if="item.image && item.image.remote"
           class="object-cover"
