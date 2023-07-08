@@ -9,6 +9,15 @@ export const createFollowDtoSchema = z.object({
 });
 
 /**
+ * 修改
+ */
+export const updateFollowDtoSchema = z.object({
+  product: z.string(),
+  region: z.string(),
+});
+
+/**
  * 类型
  */
 export type CreateFollowDto = z.infer<typeof createFollowDtoSchema>;
+export type UpdateFollowDto = z.infer<typeof updateFollowDtoSchema>;

@@ -46,7 +46,8 @@
                   const region = item.available[0].id;
                   const product = item.id;
 
-                  followStore.create({ region, product });
+                  followStore.update({ region, product });
+                  item.isFollowed = false;
                 }
               }
             "
