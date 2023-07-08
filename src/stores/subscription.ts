@@ -55,6 +55,14 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     return false;
   });
 
+  const isCurrentSelectedRegion = computed(() => (data: Region) => {
+    return data.id !== selectedRegion.value?.id;
+  });
+
+  const isCurrentSelectedType = computed(() => (data: SubscriptionType) => {
+    return data.id !== selectedSubscriptionType.value?.id;
+  });
+
   /**
    * Actions 🚀
    */
@@ -85,5 +93,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     currentStep,
     setCurrentStep,
     isStepActive,
+    isCurrentSelectedRegion,
+    isCurrentSelectedType,
   };
 });
