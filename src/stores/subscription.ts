@@ -1,5 +1,5 @@
 import { Region } from '~/schema/region';
-import { SubscriptionType } from '~/schema/subscription-type';
+import { Plan } from '~/schema/plan';
 
 /**
  * SubscriptionStore
@@ -9,11 +9,11 @@ export const useSubscriptionStore = defineStore('subscription', () => {
    * State 🌴
    */
 
-  // 选择的区域
-  const selectedRegion = ref<Region>();
+  // 选择的订阅区域
+  const region = ref<Region>();
 
-  // 选择的订阅类型
-  const selectedSubscriptionType = ref<SubscriptionType>();
+  // 选择的订阅计划
+  const plan = ref<Plan>();
 
   // 订阅步骤
   const steps = ref([
@@ -31,22 +31,13 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     },
   ]);
 
+  // 当前步骤
   const currentStep = ref('selectRegion');
 
   /**
    * Getters 🌵
    */
 
-  // const isStepActive = (stepName: string) => () =>
-  //   computed(() => {
-  //     console.log(stepName === currentStep.value);
-
-  //     if (stepName === currentStep.value) {
-  //       return true;
-  //     }
-
-  //     return false;
-  //   });
   const isStepActive = computed(() => (stepName: string) => {
     if (stepName === currentStep.value) {
       return true;
@@ -55,29 +46,27 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     return false;
   });
 
-  const isCurrentSelectedRegion = computed(() => (data: Region) => {
-    return data.id !== selectedRegion.value?.id;
+  const isSelectedRegion = computed(() => (data: Region) => {
+    return data.id !== region.value?.id;
   });
 
-  const isCurrentSelectedType = computed(() => (data: SubscriptionType) => {
-    return data.id == selectedSubscriptionType.value?.id;
+  const isSelectedPlan = computed(() => (data: Plan) => {
+    return data.id == plan.value?.id;
   });
 
   /**
    * Actions 🚀
    */
 
-  const setSelectedRegion = (data: Region) => {
-    selectedRegion.value = data;
+  const setRegion = (data: Region) => {
+    region.value = data;
   };
 
-  const setSelectedSubscriptionType = (data: SubscriptionType) => {
-    selectedSubscriptionType.value = data;
+  const setPlan = (data: Plan) => {
+    plan.value = data;
   };
 
   const setCurrentStep = (data: string) => {
-    console.log(data);
-
     currentStep.value = data;
   };
 
@@ -85,15 +74,15 @@ export const useSubscriptionStore = defineStore('subscription', () => {
    * 返回值
    */
   return {
-    selectedRegion,
+    region,
+    plan,
     steps,
-    setSelectedRegion,
-    selectedSubscriptionType,
-    setSelectedSubscriptionType,
     currentStep,
     setCurrentStep,
     isStepActive,
-    isCurrentSelectedRegion,
-    isCurrentSelectedType,
+    isSelectedPlan,
+    isSelectedRegion,
+    setRegion,
+    setPlan,
   };
 });

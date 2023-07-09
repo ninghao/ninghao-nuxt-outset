@@ -6,7 +6,7 @@
       class="cursor-pointer relative"
       @click="
         () => {
-          subscriptionStore.setSelectedRegion(item);
+          subscriptionStore.setRegion(item);
           subscriptionStore.setCurrentStep('selectType');
         }
       "
@@ -17,13 +17,13 @@
           'border',
           'text-center',
           `${
-            subscriptionStore.isCurrentSelectedRegion(item)
+            subscriptionStore.isSelectedRegion(item)
               ? 'border-black'
               : 'border-green-400 text-green-500 '
           }`,
         ]"
       >
-        <AppCheckmark v-if="item.id == subscriptionStore.selectedRegion?.id" />
+        <AppCheckmark v-if="item.id == subscriptionStore.region?.id" />
 
         <div class="text-xs">
           {{ (item.brand as Brand).title }}

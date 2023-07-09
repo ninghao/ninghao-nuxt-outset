@@ -12,10 +12,7 @@
         ]"
         @click="
           () => {
-            if (
-              (item.name === 'selectType' && !store.selectedRegion) ||
-              item.name === 'pay'
-            ) {
+            if ((item.name === 'selectType' && !store.region) || item.name === 'pay') {
               return;
             }
 
