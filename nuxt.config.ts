@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   /**
    * 开发者工具
    */
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 
   /**
    * 模块

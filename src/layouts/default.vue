@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-lg mx-auto">
+  <div class="max-w-lg mx-auto flex flex-col min-h-screen">
     <header class="font-light flex flex-col items-center py-8">
       <AppLogo class="w-20 mb-6 mt-8 ml-3 h-8" />
       <nav class="flex gap-10 text-sm">
@@ -14,7 +14,7 @@
         </NuxtLink>
       </nav>
     </header>
-    <main>
+    <main class="flex-1 flex flex-col">
       <slot></slot>
     </main>
   </div>
