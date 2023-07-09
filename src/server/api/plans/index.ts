@@ -1,4 +1,4 @@
-import { SubscriptionType } from '~/schema/subscription-type';
+import { Plan } from '~/schema/plan';
 
 export default defineEventHandler(async (event) => {
   // 请求方法
@@ -22,11 +22,11 @@ export default defineEventHandler(async (event) => {
       SELECT
         *
       FROM
-        subscriptionType;
+        plan;
     `;
 
     // 查询
-    const [{ result }] = await surreal.query<[Array<SubscriptionType>]>(statement);
+    const [{ result }] = await surreal.query<[Array<Plan>]>(statement);
 
     return result;
   }

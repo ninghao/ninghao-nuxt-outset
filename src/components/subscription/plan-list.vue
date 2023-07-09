@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import { Brand } from '~/schema/brand';
 
-const store = useSubscriptionTypeStore();
+const store = usePlanStore();
 store.retrieve();
 
 const subscriptionStore = useSubscriptionStore();

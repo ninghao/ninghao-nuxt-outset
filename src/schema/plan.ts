@@ -3,7 +3,7 @@ import { z } from 'zod';
 /**
  * 实体
  */
-export const subscriptionTypeSchema = z.object({
+export const planSchema = z.object({
   id: z.string().optional(),
   name: z.string(),
   title: z.string(),
@@ -17,10 +17,10 @@ export const subscriptionTypeSchema = z.object({
 /**
  * 列表
  */
-export const subscriptionTypesSchema = z.array(subscriptionTypeSchema);
+export const plansSchema = z.array(planSchema);
 
 /**
  * 类型
  */
-export type SubscriptionType = z.infer<typeof subscriptionTypeSchema>;
-export type SubscriptionTypes = z.infer<typeof subscriptionTypesSchema>;
+export type Plan = z.infer<typeof planSchema>;
+export type Plans = z.infer<typeof plansSchema>;

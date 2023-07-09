@@ -1,15 +1,15 @@
-import { SubscriptionTypes, subscriptionTypesSchema } from '~/schema/subscription-type';
+import { Plans, plansSchema } from '~/schema/plan';
 
 /**
- * SubscriptionTypeStore
+ * PlanStore
  */
-export const useSubscriptionTypeStore = defineStore('subscriptionType', () => {
+export const usePlanStore = defineStore('plan', () => {
   /**
    * State 🌴
    */
 
   // 实体列表
-  const entities = ref<SubscriptionTypes>([]);
+  const entities = ref<Plans>([]);
 
   // 地址查询符
   const entitiesQuery = ref({
@@ -44,16 +44,13 @@ export const useSubscriptionTypeStore = defineStore('subscriptionType', () => {
    */
   const retrieve = async () => {
     // 获取实体列表
-    const { data, error } = await useFetch(
-      `/api/subscription-types?${entitiesQueryString.value}`,
-      {
-        ...useApiInterceptor(),
-        onResponse(context) {
-          setTotalCount(context.response.headers.get('x-total-count'));
-        },
-        transform: (data) => subscriptionTypesSchema.parse(data),
+    const { data, error } = await useFetch(`/api/plans?${entitiesQueryString.value}`, {
+      ...useApiInterceptor(),
+      onResponse(context) {
+        setTotalCount(context.response.headers.get('x-total-count'));
       },
-    );
+      transform: (data) => plansSchema.parse(data),
+    });
 
     if (error.value) return;
 
