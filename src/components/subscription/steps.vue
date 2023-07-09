@@ -12,7 +12,7 @@
         ]"
         @click="
           () => {
-            if ((item.name === 'selectType' && !store.region) || item.name === 'pay') {
+            if ((item.name === 'selectPlan' && !store.region) || item.name === 'pay') {
               return;
             }
 
@@ -21,7 +21,7 @@
         "
       >
         <div>{{ index + 1 }}. {{ item.title }}</div>
-        <div class="px-3" v-if="index + 1 !== store.steps.length">—</div>
+        <div v-if="index + 1 !== store.steps.length" class="px-3">—</div>
       </div>
     </div>
   </div>

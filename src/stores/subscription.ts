@@ -1,6 +1,13 @@
 import { Region } from '~/schema/region';
 import { Plan } from '~/schema/plan';
 
+type StepName = 'selectRegion' | 'selectPlan' | 'pay';
+
+type Step = {
+  title: string;
+  name: StepName;
+};
+
 /**
  * SubscriptionStore
  */
@@ -16,14 +23,14 @@ export const useSubscriptionStore = defineStore('subscription', () => {
   const plan = ref<Plan>();
 
   // 订阅步骤
-  const steps = ref([
+  const steps = ref<Array<Step>>([
     {
       title: '选择区域',
       name: 'selectRegion',
     },
     {
       title: '选择时长',
-      name: 'selectType',
+      name: 'selectPlan',
     },
     {
       title: '确定支付',
@@ -32,13 +39,13 @@ export const useSubscriptionStore = defineStore('subscription', () => {
   ]);
 
   // 当前步骤
-  const currentStep = ref('selectRegion');
+  const currentStep = ref<StepName>('selectRegion');
 
   /**
    * Getters 🌵
    */
 
-  const isStepActive = computed(() => (stepName: string) => {
+  const isStepActive = computed(() => (stepName: StepName) => {
     if (stepName === currentStep.value) {
       return true;
     }
@@ -66,7 +73,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     plan.value = data;
   };
 
-  const setCurrentStep = (data: string) => {
+  const setCurrentStep = (data: StepName) => {
     currentStep.value = data;
   };
 
