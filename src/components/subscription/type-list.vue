@@ -33,9 +33,18 @@
     >
       微信支付
     </div>
-    <div class="text-xs" v-if="subscriptionStore.selectedRegion">
-      {{ (subscriptionStore.selectedRegion?.brand as Brand).title }}
-      {{ subscriptionStore.selectedRegion?.title }}
+    <div class="text-xs space-y-2">
+      <div v-if="subscriptionStore.selectedRegion">
+        <div>订阅区域</div>
+        <div>
+          {{ (subscriptionStore.selectedRegion?.brand as Brand).title }}
+          {{ subscriptionStore.selectedRegion?.title }}
+        </div>
+      </div>
+      <div v-if="subscriptionStore.selectedSubscriptionType">
+        <div>支付金额</div>
+        <div>¥{{ subscriptionStore.selectedSubscriptionType.salePrice }}</div>
+      </div>
     </div>
   </div>
 </template>
