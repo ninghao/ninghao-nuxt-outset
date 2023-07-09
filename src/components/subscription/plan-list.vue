@@ -30,11 +30,15 @@
       </div>
     </div>
     <div class="text-xs space-y-4">
-      <div v-if="subscriptionStore.selectedRegion">
+      <div
+        v-if="subscriptionStore.selectedRegion"
+        @click="subscriptionStore.setCurrentStep('selectRegion')"
+      >
         <div>订阅区域</div>
-        <div>
+        <div class="pl-2">
           {{ (subscriptionStore.selectedRegion?.brand as Brand).title }}
           {{ subscriptionStore.selectedRegion?.title }}
+          <UIcon name="i-heroicons-arrow-uturn-left" />
         </div>
       </div>
       <div v-if="subscriptionStore.selectedSubscriptionType">
