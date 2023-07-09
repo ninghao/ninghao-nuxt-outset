@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="max-w-lg mx-auto">
     <header class="font-light flex flex-col items-center py-8">
       <AppLogo class="w-20 mb-6 mt-8 ml-3 h-8" />
       <nav class="flex gap-10 text-sm">
