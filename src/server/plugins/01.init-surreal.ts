@@ -140,11 +140,86 @@ export default defineNitroPlugin(async (nitroApp) => {
 
     DEFINE FIELD created ON follow VALUE $before OR time::now();
     DEFINE FIELD updated ON follow VALUE time::now();
+
+    DEFINE FIELD created ON subscription VALUE $before OR time::now();
+    DEFINE FIELD updated ON subscription VALUE time::now();
+
+    DEFINE FIELD created ON event VALUE $before OR time::now();
+
+    DEFINE FIELD created ON order VALUE $before OR time::now();
   `);
 
   await surreal.query(`
     DEFINE INDEX productSkuIndex ON TABLE product COLUMNS sku UNIQUE;
     DEFINE INDEX productOriginIndex ON TABLE available COLUMNS in, out UNIQUE;
     DEFINE INDEX userAvailableIndex ON TABLE follow COLUMNS in, out UNIQUE;
+  `);
+
+  /**
+   * 事件
+   */
+  await surreal.query(`
+    DEFINE event subscriptionCreated ON TABLE subscription 
+      WHEN 
+        $before == NONE 
+      THEN {
+        CREATE event CONTENT {
+          name: 'subscriptionCreated',
+          entity: $after.id,
+          data: $after
+        }
+      };
+
+    DEFINE event subscriptionActivated ON TABLE subscription 
+      WHEN 
+        $before.status != 'valid' AND $after.status == 'valid'
+      THEN {
+        CREATE event CONTENT {
+          name: 'subscriptionActivated',
+          entity: $after.id,
+          data: {
+            status: $after.status,
+            expired: $after.expired
+          }
+        }
+      };
+    
+    DEFINE event orderCreated ON TABLE order 
+      WHEN 
+        $before == NONE 
+      THEN {
+        CREATE event CONTENT {
+          name: 'orderCreated',
+          entity: $after.id,
+          data: $after
+        }
+      };
+
+    DEFINE event orderPaymentRecived ON TABLE order 
+      WHEN 
+        $before.status != 'paymentRecived' AND $after.status == 'paymentRecived'
+      THEN {
+        CREATE event CONTENT {
+          name: 'orderPaymentRecived',
+          entity: $after.id,
+          data: {
+            status: 'paymentRecived',
+            payload: $after.payload
+          }
+        }
+      };
+
+    DEFINE event orderCompleted ON TABLE order 
+      WHEN 
+        $before.status != 'completed' AND $after.status == 'completed'
+      THEN {
+        CREATE event CONTENT {
+          name: 'orderCompleted',
+          entity: $after.id,
+          data: {
+            status: 'completed',
+          }
+        }
+      };  
   `);
 });
