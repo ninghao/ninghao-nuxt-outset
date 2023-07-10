@@ -30,4 +30,8 @@
 import { Brand } from '~/schema/brand';
 
 const store = useSubscriptionStore();
+
+// 1.准备订阅
+// 2.创建订单
+// 3.发起支付
 </script>
