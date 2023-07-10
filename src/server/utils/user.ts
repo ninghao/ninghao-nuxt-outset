@@ -1,21 +1,26 @@
 import { H3Event } from 'h3';
 import { User, Role } from '~/app.type';
-import { SigninBody } from '../schema/signin';
+import { SigninBody } from '~/schema/signin';
 
 /**
  * 验证用户登录
  */
-export const validateUserSignin = async ({
-  name,
-  password,
-}: SigninBody) => {
-  const [{ result }] = await surreal.query<[Array<User>]>(
-    `
-      SELECT * FROM user 
-        WHERE name = $name
-    `,
-    { name },
-  );
+export const validateUserSignin = async ({ name, password }: SigninBody) => {
+  // 声明
+  const statement = `
+    SELECT 
+      * 
+    FROM 
+      user 
+    WHERE 
+      name = $name
+  `;
+
+  // 参数
+  const statementParams = { name };
+
+  // 查询
+  const [{ result }] = await surreal.query<[Array<User>]>(statement, statementParams);
 
   const [user] = result ?? [];
 
@@ -26,10 +31,7 @@ export const validateUserSignin = async ({
     });
   }
 
-  const isPasswordMatch = await compareHash(
-    user.password!,
-    password,
-  );
+  const isPasswordMatch = await compareHash(user.password!, password);
 
   if (!isPasswordMatch) {
     throw createError({
@@ -45,8 +47,8 @@ export const validateUserSignin = async ({
  * 获得当前用户
  */
 export const getUserById = async (userId: string) => {
-  const [{ result }] = await surreal.query<[Array<User>]>(
-    `
+  // 声明
+  const statement = `
     SELECT 
       id, name, roles
     FROM 
@@ -55,12 +57,17 @@ export const getUserById = async (userId: string) => {
       id = $userId
     FETCH
       roles; 
-  `,
-    { userId },
-  );
+  `;
+
+  // 参数
+  const statementParams = { userId };
+
+  // 查询
+  const [{ result }] = await surreal.query<[Array<User>]>(statement, statementParams);
 
   const [user] = result ?? [];
 
+  // 返回
   return user ? user : undefined;
 };
 
@@ -82,16 +89,15 @@ export const getRequestUser = async (event: H3Event) => {
 /**
  * 角色
  */
-export const hasRole =
-  (roleName: string) => (user: User | undefined) => {
-    let result = false;
+export const hasRole = (roleName: string) => (user: User | undefined) => {
+  let result = false;
 
-    if (user) {
-      const roles = (user.roles as Array<Role>) ?? [];
-      result = roles.some((role) => role.name === roleName);
-    }
+  if (user) {
+    const roles = (user.roles as Array<Role>) ?? [];
+    result = roles.some((role) => role.name === roleName);
+  }
 
-    return result;
-  };
+  return result;
+};
 
 export const isAdministrator = hasRole('administrator');
