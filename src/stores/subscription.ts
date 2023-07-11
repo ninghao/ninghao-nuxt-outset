@@ -8,6 +8,7 @@ import {
   Subscription,
   subscriptionSchema,
 } from '~/schema/subscription';
+import { Payment } from '~/schema/payment';
 
 type StepName = 'selectRegion' | 'selectPlan' | 'pay';
 
@@ -49,6 +50,9 @@ export const useSubscriptionStore = defineStore('subscription', () => {
 
   // 选择的订阅计划
   const plan = ref<Plan>();
+
+  // 选择的支付方法
+  const payment = ref<Payment>();
 
   // 订阅步骤
   const steps = ref<Array<Step>>([
@@ -109,6 +113,10 @@ export const useSubscriptionStore = defineStore('subscription', () => {
 
   const setPlan = (data: Plan) => {
     plan.value = data;
+  };
+
+  const setPayment = (data: Payment) => {
+    payment.value = data;
   };
 
   const setCurrentStep = (data: StepName) => {
@@ -194,5 +202,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     entities,
     entity,
     setSubjectFilter,
+    payment,
+    setPayment,
   };
 });

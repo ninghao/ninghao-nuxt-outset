@@ -16,17 +16,25 @@
       <div v-if="store.plan" class="text-neutral-400 pt-8">
         <div>{{ store.plan.description }}</div>
       </div>
-      <div
-        v-if="store.plan"
-        :class="[
-          'font-medium  bg-green-500 text-white',
-          'py-6 px-6',
-          'text-sm',
-          'cursor-pointer',
-        ]"
-        @click="orderStore.pay"
-      >
-        微信支付
+      <div v-if="store.plan">
+        <div
+          v-for="item in paymentStore.entities"
+          :key="item.id"
+          :class="[
+            'font-medium  bg-green-500 text-white',
+            'py-6 px-6',
+            'text-sm',
+            'cursor-pointer',
+          ]"
+          @click="
+            () => {
+              store.setPayment(item);
+              orderStore.pay();
+            }
+          "
+        >
+          {{ item.title }}
+        </div>
       </div>
     </div>
   </div>
@@ -37,4 +45,6 @@ import { Brand } from '~/schema/brand';
 
 const store = useSubscriptionStore();
 const orderStore = useOrderStore();
+const paymentStore = usePaymentStore();
+paymentStore.retrieve();
 </script>
