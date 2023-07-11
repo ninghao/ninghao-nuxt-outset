@@ -1,11 +1,12 @@
 import { z } from 'zod';
+import { _plan, planSchema } from '~/schema/plan';
 
 /**
  * 创建
  */
 export const createSubscriptionDtoSchema = z.object({
   id: z.string().optional(),
-  plan: z.string(),
+  plan: z.union([z.string(), planSchema.transform((data) => data.id)]),
   subject: z.string(),
 });
 
@@ -14,7 +15,7 @@ export const createSubscriptionDtoSchema = z.object({
  */
 export const subscriptionSchema = z.object({
   id: z.string(),
-  plan: z.string(),
+  plan: planSchema,
   status: z.string(),
   subject: z.string(),
   user: z.string(),
@@ -33,6 +34,6 @@ export type Subscription = z.infer<typeof subscriptionSchema>;
 export type Subscriptions = z.infer<typeof subscriptionsSchema>;
 
 export const _subscription = {
-  plan: '',
+  plan: _plan,
   subject: '',
 };

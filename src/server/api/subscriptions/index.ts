@@ -17,7 +17,8 @@ export default defineEventHandler(async (event) => {
     // 声明
     const statement = `
       SELECT * FROM subscription
-        WHERE user == $user ${conditions ? 'AND ' + conditions : ''};
+        WHERE user == $user ${conditions ? 'AND ' + conditions : ''}
+        FETCH plan;
     `;
 
     // 参数
