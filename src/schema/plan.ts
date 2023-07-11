@@ -24,3 +24,17 @@ export const plansSchema = z.array(planSchema);
  */
 export type Plan = z.infer<typeof planSchema>;
 export type Plans = z.infer<typeof plansSchema>;
+
+/**
+ * 空白
+ */
+export const _plan = {
+  id: '',
+  name: '',
+  title: '',
+  description: '',
+  price: 0,
+  salePrice: 0,
+  followLimit: 0,
+  index: 0,
+};
