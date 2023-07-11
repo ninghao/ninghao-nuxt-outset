@@ -1,3 +1,5 @@
+import { Order, _order, createOrderDtoSchema } from '~/schema/order';
+
 /**
  * OrderStore
  */
@@ -5,6 +7,9 @@ export const useOrderStore = defineStore('order', () => {
   /**
    * State 🌴
    */
+
+  // 单个实体
+  const entity = ref<Partial<Order>>({ ..._order });
 
   /**
    * Getters 🌵
@@ -17,7 +22,34 @@ export const useOrderStore = defineStore('order', () => {
   /**
    * 创建
    */
-  const create = async () => {};
+  const create = async () => {
+    // 主体数据
+    const body = createOrderDtoSchema.parse(entity.value);
+
+    // 请求接口
+    const { data, error } = await useFetch('/api/orders', {
+      method: 'POST',
+      body,
+      ...useApiInterceptor(),
+    });
+
+    console.log(data);
+
+    // 处理错误
+    if (error.value) return;
+
+    // 重置状态
+    // $reset();
+
+    // 显示通知
+    // useToast().add({ title: '成功创建了区域' });
+
+    // 更新列表
+    // retrieve();
+
+    // 返回数据
+    return data;
+  };
 
   /**
    * 支付
@@ -41,7 +73,15 @@ export const useOrderStore = defineStore('order', () => {
       subscription = result?.value?.id ?? '';
     }
 
-    console.log('subscription', subscription);
+    // 2.准备订单
+    entity.value = {
+      payment: '',
+      items: [subscription],
+    };
+
+    await create();
+
+    // console.log('subscription', subscription);
 
     // console.log(result);
 
@@ -51,11 +91,11 @@ export const useOrderStore = defineStore('order', () => {
 
     // 3.发起支付
 
-    console.log('pay');
+    // console.log('pay');
   };
 
   /**
    * 返回值
    */
-  return { pay };
+  return { pay, create };
 });
