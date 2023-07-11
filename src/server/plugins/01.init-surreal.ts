@@ -153,6 +153,7 @@ export default defineNitroPlugin(async (nitroApp) => {
     DEFINE INDEX productSkuIndex ON TABLE product COLUMNS sku UNIQUE;
     DEFINE INDEX productOriginIndex ON TABLE available COLUMNS in, out UNIQUE;
     DEFINE INDEX userAvailableIndex ON TABLE follow COLUMNS in, out UNIQUE;
+    DEFINE INDEX userSubjectIndex ON TABLE subscription COLUMNS user, subject UNIQUE;
   `);
 
   /**
