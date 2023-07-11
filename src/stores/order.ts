@@ -28,14 +28,21 @@ export const useOrderStore = defineStore('order', () => {
     subscriptionStore.setSubjectFilter(subscriptionStore.region?.id ?? '');
     await subscriptionStore.retrieve();
 
-    if (!subscriptionStore.entities.length) {
+    let subscription = subscriptionStore.entities[0]?.id;
+
+    if (!subscription) {
+      // 创建订阅
       subscriptionStore.entity = {
         subject: subscriptionStore.region?.id,
         plan: subscriptionStore.plan?.id,
       };
 
-      await subscriptionStore.create();
+      const result = await subscriptionStore.create();
+      subscription = result?.value?.id ?? '';
     }
+
+    console.log('subscription', subscription);
+
     // console.log(result);
 
     // console.log(subscriptionStore);

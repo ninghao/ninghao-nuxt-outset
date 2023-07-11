@@ -6,6 +6,7 @@ import {
   subscriptionsSchema,
   _subscription,
   Subscription,
+  subscriptionSchema,
 } from '~/schema/subscription';
 
 type StepName = 'selectRegion' | 'selectPlan' | 'pay';
@@ -155,6 +156,7 @@ export const useSubscriptionStore = defineStore('subscription', () => {
       method: 'POST',
       body,
       ...useApiInterceptor(),
+      transform: (data) => subscriptionSchema.parse(data),
     });
 
     // 处理错误
