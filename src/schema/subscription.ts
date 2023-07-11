@@ -31,3 +31,8 @@ export const subscriptionsSchema = z.array(subscriptionSchema);
 export type CreateSubscriptionDto = z.infer<typeof createSubscriptionDtoSchema>;
 export type Subscription = z.infer<typeof subscriptionSchema>;
 export type Subscriptions = z.infer<typeof subscriptionsSchema>;
+
+export const _subscription = {
+  plan: '',
+  subject: '',
+};

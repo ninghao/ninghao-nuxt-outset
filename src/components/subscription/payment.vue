@@ -18,7 +18,13 @@
       </div>
       <div
         v-if="store.plan"
-        :class="['font-medium  bg-green-500 text-white', 'py-6 px-6', 'text-sm']"
+        :class="[
+          'font-medium  bg-green-500 text-white',
+          'py-6 px-6',
+          'text-sm',
+          'cursor-pointer',
+        ]"
+        @click="orderStore.pay"
       >
         微信支付
       </div>
@@ -30,8 +36,5 @@
 import { Brand } from '~/schema/brand';
 
 const store = useSubscriptionStore();
-
-// 1.准备订阅
-// 2.创建订单
-// 3.发起支付
+const orderStore = useOrderStore();
 </script>

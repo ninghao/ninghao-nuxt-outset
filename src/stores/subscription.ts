@@ -1,5 +1,12 @@
 import { Region } from '~/schema/region';
 import { Plan } from '~/schema/plan';
+import {
+  Subscriptions,
+  createSubscriptionDtoSchema,
+  subscriptionsSchema,
+  _subscription,
+  Subscription,
+} from '~/schema/subscription';
 
 type StepName = 'selectRegion' | 'selectPlan' | 'pay';
 
@@ -15,6 +22,26 @@ export const useSubscriptionStore = defineStore('subscription', () => {
   /**
    * State 🌴
    */
+
+  // 单个实体
+  const entity = ref<Partial<Subscription>>({ ..._subscription });
+
+  // 实体列表
+  const entities = ref<Subscriptions>([]);
+
+  // 实体总数
+  const totalCount = ref(0);
+
+  // 地址查询符
+  const entitiesQuery = ref({
+    page: 1,
+    sort: '',
+    filters: {
+      subject: {
+        $eq: '',
+      },
+    },
+  });
 
   // 选择的订阅区域
   const region = ref<Region>();
@@ -45,6 +72,10 @@ export const useSubscriptionStore = defineStore('subscription', () => {
    * Getters 🌵
    */
 
+  const entitiesQueryString = computed(() => {
+    return useEntitiesQueryString(entitiesQuery.value);
+  });
+
   const isStepActive = computed(() => (stepName: StepName) => {
     if (stepName === currentStep.value) {
       return true;
@@ -65,6 +96,12 @@ export const useSubscriptionStore = defineStore('subscription', () => {
    * Actions 🚀
    */
 
+  const setTotalCount = (data: number | string | null) => {
+    if (data) {
+      totalCount.value = parseInt(`${data}`, 10);
+    }
+  };
+
   const setRegion = (data: Region) => {
     region.value = data;
   };
@@ -75,6 +112,65 @@ export const useSubscriptionStore = defineStore('subscription', () => {
 
   const setCurrentStep = (data: StepName) => {
     currentStep.value = data;
+  };
+
+  const setSubjectFilter = (data: string) => {
+    entitiesQuery.value.filters.subject.$eq = data;
+  };
+
+  /**
+   * 读取
+   */
+  const retrieve = async () => {
+    // 获取实体列表
+    const { data, error } = await useFetch(
+      `/api/subscriptions?${entitiesQueryString.value}`,
+      {
+        ...useApiInterceptor(),
+        onResponse(context) {
+          setTotalCount(context.response.headers.get('x-total-count'));
+        },
+        transform: (data) => subscriptionsSchema.parse(data),
+      },
+    );
+
+    if (error.value) return;
+
+    if (data.value) {
+      entities.value = data.value;
+    }
+
+    return data;
+  };
+
+  /**
+   * 创建
+   */
+  const create = async () => {
+    // 主体数据
+    const body = createSubscriptionDtoSchema.parse(entity.value);
+
+    // 请求接口
+    const { data, error } = await useFetch('/api/subscriptions', {
+      method: 'POST',
+      body,
+      ...useApiInterceptor(),
+    });
+
+    // 处理错误
+    if (error.value) return;
+
+    // 重置状态
+    // $reset();
+
+    // 显示通知
+    // useToast().add({ title: '成功创建了区域' });
+
+    // 更新列表
+    retrieve();
+
+    // 返回数据
+    return data;
   };
 
   /**
@@ -91,5 +187,10 @@ export const useSubscriptionStore = defineStore('subscription', () => {
     isSelectedRegion,
     setRegion,
     setPlan,
+    retrieve,
+    create,
+    entities,
+    entity,
+    setSubjectFilter,
   };
 });

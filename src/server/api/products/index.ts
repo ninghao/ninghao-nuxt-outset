@@ -16,12 +16,7 @@ export default defineEventHandler(async (event) => {
     // 查询声明
     const statement = `
        SELECT 
-         id,
-         sku,
-         color,
-         title,
-         brand,
-         image,
+         id, sku, color, title, brand, image,
          ->(available WHERE isPublished = true)->region AS available,
          count(->available<-(follow WHERE in == $user)) > 0 AS isFollowed
        FROM 
