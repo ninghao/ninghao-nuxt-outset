@@ -1,4 +1,4 @@
-import { Order, _order, createOrderDtoSchema } from '~/schema/order';
+import { CreateOrderDto, Order, _dto, createOrderDtoSchema } from '~/schema/order';
 
 /**
  * OrderStore
@@ -9,7 +9,7 @@ export const useOrderStore = defineStore('order', () => {
    */
 
   // 单个实体
-  const entity = ref<Partial<Order>>({ ..._order });
+  const dto = ref<CreateOrderDto>({ ..._dto });
 
   /**
    * Getters 🌵
@@ -24,10 +24,10 @@ export const useOrderStore = defineStore('order', () => {
    */
   const create = async () => {
     // 主体数据
-    const body = createOrderDtoSchema.parse(entity.value);
+    const body = createOrderDtoSchema.parse(dto.value);
 
     // 请求接口
-    const { data, error } = await useFetch('/api/orders', {
+    const { data, error } = await useFetch<Order>('/api/orders', {
       method: 'POST',
       body,
       ...useApiInterceptor(),
@@ -53,16 +53,18 @@ export const useOrderStore = defineStore('order', () => {
    * 支付
    */
   const pay = async () => {
-    // 1.准备订阅
+    /**
+     * 1.准备订阅
+     */
     const subscriptionStore = useSubscriptionStore();
     subscriptionStore.setSubjectFilter(subscriptionStore.region?.id ?? '');
     await subscriptionStore.retrieve();
 
     // 支付方法
-    const payment = subscriptionStore.payment?.id;
+    const payment = subscriptionStore.payment?.id ?? '';
 
     // 订阅计划
-    const plan = subscriptionStore.plan?.id;
+    const plan = subscriptionStore.plan?.id ?? '';
 
     // 订阅
     let subscription = subscriptionStore.entities[0]?.id;
@@ -78,26 +80,29 @@ export const useOrderStore = defineStore('order', () => {
       subscription = result?.value?.id ?? '';
     }
 
-    // 2.准备订单
-    entity.value = {
+    /**
+     * 2.准备订单
+     */
+    dto.value = {
       payment,
       items: [subscription],
       extra: [plan],
     };
 
-    await create();
+    const order = await create();
 
-    // console.log('subscription', subscription);
+    if (!order?.value) return;
 
-    // console.log(result);
+    /**
+     * 3.发起支付
+     */
 
-    // console.log(subscriptionStore);
+    const { data, error } = await useFetch(`/api/orders/${order.value?.id}/pay`, {
+      method: 'POST',
+      ...useApiInterceptor(),
+    });
 
-    // 2.创建订单
-
-    // 3.发起支付
-
-    // console.log('pay');
+    console.log(data);
   };
 
   /**

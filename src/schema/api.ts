@@ -20,3 +20,7 @@ export const entitiesRequestQuerySchema = z.object({
 
 export type EntitiesRequestQuery = z.infer<typeof entitiesRequestQuerySchema>;
 export type Filters = z.infer<typeof filtersSchema>;
+
+export const paramsSchema = z.object({
+  id: z.string(),
+});

@@ -18,7 +18,16 @@ export const updateOrderDtoSchema = z.optional(createOrderDtoSchema);
 /**
  * 实体
  */
-export const orderSchema = z.object({});
+export const orderSchema = z.object({
+  id: z.string(),
+  amount: z.number(),
+  payment: z.string(),
+  status: z.string(),
+  user: z.string(),
+  items: z.array(z.string()),
+  actions: z.array(z.string()),
+  created: z.date(),
+});
 
 /**
  * 列表
@@ -36,7 +45,16 @@ export type UpdateOrderDto = z.infer<typeof updateOrderDtoSchema>;
 /**
  * 空白
  */
-export const _order: Order = {
+// export const _order: Order = {
+//   payment: '',
+//   amount: 0,
+//   status: '',
+//   user: '',
+//   items: [],
+// };
+
+export const _dto = {
   payment: '',
+  extra: [],
   items: [],
 };

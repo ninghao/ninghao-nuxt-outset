@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   authGuard(event);
 
   // 当前用户
-  const user = event.context.user?.id;
+  const user = event.context.user?.id ?? '';
 
   // 创建
   if (method === 'POST') {
@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
       }
     }
 
-    const result = surreal.create<Order>(`order`, {
+    const [result] = await surreal.create(`order`, {
       user,
       status,
       payment,
