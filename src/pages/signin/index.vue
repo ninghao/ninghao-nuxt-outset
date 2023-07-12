@@ -1,6 +1,6 @@
 <template>
   <div :class="['flex flex-col items-center justify-center', 'min-h-screen']">
-    <div :class="['min-w-[400px]', 'border border-neutral-100 px-8 py-12 rounded-xl']">
+    <div :class="['min-w-[400px]', 'md:border border-neutral-100 px-8 py-12 rounded-xl']">
       <AppLogo class="mb-12" />
       <form class="space-y-4 w-full">
         <UFormGroup name="name" label="名字">
