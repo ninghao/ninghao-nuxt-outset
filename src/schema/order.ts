@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { planSchema } from '~/schema/plan';
 
 /**
  * 创建
@@ -6,6 +7,7 @@ import { z } from 'zod';
 export const createOrderDtoSchema = z.object({
   payment: z.string(),
   items: z.array(z.string()),
+  extra: z.array(z.string()).optional(),
 });
 
 /**

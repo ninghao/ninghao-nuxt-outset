@@ -33,8 +33,6 @@ export const useOrderStore = defineStore('order', () => {
       ...useApiInterceptor(),
     });
 
-    console.log(data);
-
     // 处理错误
     if (error.value) return;
 
@@ -60,13 +58,20 @@ export const useOrderStore = defineStore('order', () => {
     subscriptionStore.setSubjectFilter(subscriptionStore.region?.id ?? '');
     await subscriptionStore.retrieve();
 
+    // 支付方法
+    const payment = subscriptionStore.payment?.id;
+
+    // 订阅计划
+    const plan = subscriptionStore.plan?.id;
+
+    // 订阅
     let subscription = subscriptionStore.entities[0]?.id;
 
     if (!subscription) {
       // 创建订阅
       subscriptionStore.entity = {
         subject: subscriptionStore.region?.id,
-        plan: subscriptionStore.plan?.id,
+        plan: subscriptionStore.plan,
       };
 
       const result = await subscriptionStore.create();
@@ -75,8 +80,9 @@ export const useOrderStore = defineStore('order', () => {
 
     // 2.准备订单
     entity.value = {
-      payment: '',
+      payment,
       items: [subscription],
+      extra: [plan],
     };
 
     await create();

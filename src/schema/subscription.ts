@@ -15,7 +15,7 @@ export const createSubscriptionDtoSchema = z.object({
  */
 export const subscriptionSchema = z.object({
   id: z.string(),
-  plan: planSchema,
+  plan: z.union([planSchema, z.string()]),
   status: z.string(),
   subject: z.string(),
   user: z.string(),
