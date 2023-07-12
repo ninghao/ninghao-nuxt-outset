@@ -625,7 +625,7 @@ export const wechatPayH5CreateResultSchema = z.object({
  * 示例值：
  * https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/4200000985202103031441826014?sp_mchid=1900007XXX&sub_mchid=1900008XXX
  */
-export const wechatPayRetriveIdSchema = z.object({
+export const wechatPayRetrieveIdSchema = z.object({
   sp_appid,
   sp_mchid,
 });
@@ -639,7 +639,7 @@ export const wechatPayRetriveIdSchema = z.object({
  * 示例值：
  * https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/1217752501201407033233368XXX?sp_mchid=1230000109&sub_mchid=1900008XXX
  */
-export const wechatPayRetriveOutTradeNoSchema = z.object({
+export const wechatPayRetrieveOutTradeNoSchema = z.object({
   sp_appid,
   sp_mchid,
 });
@@ -675,7 +675,7 @@ export const wechatPayRetriveOutTradeNoSchema = z.object({
   }
  */
 
-export const wechatPayRetriveResultSchema = z.object({
+export const wechatPayRetrieveResultSchema = z.object({
   sp_appid,
   sp_mchid,
   sub_appid,
@@ -828,9 +828,11 @@ export type WechatPayJsApiCreateResult = z.infer<typeof wechatPayJsApiCreateResu
 export type WechatPayH5Create = z.infer<typeof wechatPayH5CreateSchema>;
 export type WechatPayH5CreateResult = z.infer<typeof wechatPayH5CreateResultSchema>;
 
-export type WechatPayRetriveId = z.infer<typeof wechatPayRetriveIdSchema>;
-export type WechatPayRetriveOutTradeNo = z.infer<typeof wechatPayRetriveOutTradeNoSchema>;
-export type WechatPayRetriveResult = z.infer<typeof wechatPayRetriveResultSchema>;
+export type WechatPayRetrieveId = z.infer<typeof wechatPayRetrieveIdSchema>;
+export type WechatPayRetrieveOutTradeNo = z.infer<
+  typeof wechatPayRetrieveOutTradeNoSchema
+>;
+export type WechatPayRetrieveResult = z.infer<typeof wechatPayRetrieveResultSchema>;
 export type WechatPayClose = z.infer<typeof wechatPayCloseSchema>;
 
 export type WechatPayNotifyResult = z.infer<typeof wechatPayNotifyResultSchema>;
