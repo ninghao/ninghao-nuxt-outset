@@ -268,7 +268,7 @@ const payer_total = z
     '用户支付金额，单位为分。（指使用优惠券的情况下，这里等于总金额-优惠券金额）示例值：100',
   );
 
-// 场景信息
+// 商户端设备号
 const device_id = z
   .string()
   .min(1)
@@ -277,6 +277,41 @@ const device_id = z
   .describe(
     '商户端设备号，商户端设备号（发起扣款请求的商户服务器设备号）。示例值：013467007045764',
   );
+
+// 用户终端 IP
+const payer_client_ip = z
+  .string()
+  .min(1)
+  .max(45)
+  .describe(
+    '用户终端IP，用户的客户端IP，支持IPv4和IPv6两种格式的IP地址。示例值：14.23.150.211',
+  );
+
+// 商店门店信息
+const store_info = z
+  .object({
+    id: z.string().describe('门店编号，商户侧门店编号。示例值：0001'),
+    name: z
+      .string()
+      .min(1)
+      .max(256)
+      .optional()
+      .describe('门店名称，商户侧门店名称。示例值：腾讯大厦分店'),
+    area_code: z
+      .string()
+      .min(1)
+      .max(32)
+      .optional()
+      .describe('地区编码，详细请见省市区编号对照表。示例值：440305'),
+    address: z
+      .string()
+      .min(1)
+      .max(512)
+      .describe(
+        '详细地址，详细的商户门店地址。示例值：广东省深圳市南山区科技中一道10000号',
+      ),
+  })
+  .describe('商户门店信息');
 
 // 场景信息
 const scene_info = z
@@ -316,6 +351,15 @@ const promotion_detail = z
   .array(promotion_detail_item)
   .optional()
   .describe('优惠功能，享受优惠时返回该字段。');
+
+// 预支付交易会话标识
+const prepay_id = z
+  .string()
+  .min(1)
+  .max(64)
+  .describe(
+    '预支付交易会话标识，预支付交易会话标识。用于后续接口调用中使用，该值有效期为2小时。示例值：wx201410272009395522657a690389285100',
+  );
 
 /**
  * Native：创建订单
@@ -365,33 +409,33 @@ export const wechatPayNativeCreateResultSchema = z.object({
 });
 
 /**
- * Native：查询订单
+ * 查询订单
  * 1. 微信支付订单号查询
  * GET https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/{transaction_id}
  *
  * 示例值：
  * https://api.mch.weixin.qq.com/v3/pay/partner/transactions/id/4200000985202103031441826014?sp_mchid=1900007XXX&sub_mchid=1900008XXX
  */
-export const wechatPayNativeRetriveIdSchema = z.object({
+export const wechatPayRetriveIdSchema = z.object({
   sp_appid,
   sp_mchid,
 });
 
 /**
- * Native：查询订单
+ * 查询订单
  * 2. 商户订单号查询
  * GET https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/{out_trade_no}
  *
  * 示例值：
  * https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/1217752501201407033233368XXX?sp_mchid=1230000109&sub_mchid=1900008XXX
  */
-export const wechatPayNativeRetriveOutTradeNoSchema = z.object({
+export const wechatPayRetriveOutTradeNoSchema = z.object({
   sp_appid,
   sp_mchid,
 });
 
 /**
- * Native：查询订单结果
+ * 查询订单结果
  * 
  * 示例值：
    {
@@ -421,7 +465,7 @@ export const wechatPayNativeRetriveOutTradeNoSchema = z.object({
   }
  */
 
-export const wechatPayNativeRetriveResultSchema = z.object({
+export const wechatPayRetriveResultSchema = z.object({
   sp_appid,
   sp_mchid,
   sub_appid,
@@ -446,7 +490,7 @@ export const wechatPayNativeRetriveResultSchema = z.object({
 });
 
 /**
- * Native：关闭订单
+ * 关闭订单
  * POST  https://api.mch.weixin.qq.com/v3/pay/partner/transactions/out-trade-no/{out_trade_no}/close
  * 返回无数据（HTTP状态码为204）
  * 示例值：
@@ -456,9 +500,118 @@ export const wechatPayNativeRetriveResultSchema = z.object({
     }
  */
 
-export const wechatPayNativeCloseSchema = z.object({
+export const wechatPayCloseSchema = z.object({
   sp_mchid,
   sub_mchid,
+});
+
+/**
+ * JSAPI：创建订单
+ * POST https://api.mch.weixin.qq.com/v3/pay/partner/transactions/jsapi
+ * 示例值：
+    {
+      "sp_mchid": "1900007XXX",
+      "sub_mchid": "1900008XXX",
+      "out_trade_no": "native12177525012014070332333",
+      "sp_appid": "wxdace645e0bc2cXXX",
+      "sub_appid": "wxdace645e0bc2cXXX",
+      "description": "Image形象店-深圳腾大-QQ公仔",
+      "notify_url": "https://weixin.qq.com/",
+      "amount": {
+        "total": 1,
+        "currency": "CNY"
+      }
+    }
+ */
+
+export const wechatPayJsApiCreateSchema = z.object({
+  sp_appid,
+  sp_mchid,
+  sub_appid,
+  sub_mchid,
+  description,
+  out_trade_no,
+  time_expire,
+  attach,
+  notify_url,
+  goods_tag,
+  support_fapiao,
+  settle_info,
+  amount,
+  payer,
+  detail,
+  scene_info: z
+    .object({
+      payer_client_ip,
+      device_id,
+      store_info,
+    })
+    .describe('场景信息，支付场景描述。'),
+});
+
+/**
+ * JSAPI：创建订单结果
+ * 
+ * 示例：
+   {
+      "prepay_id": "wx2611215250487459928b659bd466620000"
+    }
+ */
+export const wechatPayJsApiCreateResultSchema = z.object({
+  prepay_id,
+});
+
+/**
+ * JSAPI：发起支付
+ * 通过JSAPI下单接口获取到发起支付的必要参数prepay_id，然后使用微信支付提供的前端JS方法调起公众号支付。
+ *
+ * ⚠️ 注意
+ * 1. 请确保实际支付时的请求目录与后台配置的目录一致（5分钟后生效），配置：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/open/pay/chapter2_1.shtml
+ * 2. WeixinJSBridge内置对象在其他浏览器中无效
+ */
+
+export const wechatPayJsApiPayPreSchema = z.object({
+  appId: z
+    .string()
+    .min(1)
+    .max(32)
+    .describe(
+      '应用ID，商户申请的公众号对应的appid，由微信支付生成，可在公众号后台查看。若下单时传了sub_appid，可为sub_appid的值。示例值：wx8888888888888888',
+    ),
+  timeStamp: z
+    .string()
+    .min(1)
+    .max(32)
+    .describe(
+      '时间戳，标准北京时间，时区为东八区，自1970年1月1日 0点0分0秒以来的秒数。注意：部分系统取到的值为毫秒级，需要转换成秒(10位数字)。 示例值：1414561699',
+    ),
+  nonceStr: z
+    .string()
+    .min(1)
+    .max(32)
+    .describe('随机字符串，不长于32位。示例值：5K8264ILTKCH16CQ2502SI8ZNMTM67VS'),
+  package: z
+    .string()
+    .min(1)
+    .max(128)
+    .describe(
+      '订单详情扩展字符串，JSAPI下单接口返回的prepay_id参数值，提交格式如：prepay_id=***示例值：prepay_id=wx21201855730335ac86f8c43d1889123400',
+    ),
+});
+
+export const wechatPayJsApiPaySchema = z.object({
+  signType: z
+    .string()
+    .min(1)
+    .max(32)
+    .describe('签名方式，签名类型，默认为RSA，仅支持RSA。示例值：RSA'),
+  paySign: z
+    .string()
+    .min(1)
+    .max(256)
+    .describe(
+      '签名，使用字段appId、timeStamp、nonceStr、package计算得出的签名值示例值：oR9d8PuhnIc+YZ8cBHFCwfgpaK9gd7vaRvkYD7r...',
+    ),
 });
 
 /**
@@ -568,20 +721,16 @@ export type WechatPayNativeCreateResult = z.infer<
   typeof wechatPayNativeCreateResultSchema
 >;
 
-export type WechatPayNativeRetriveId = z.infer<typeof wechatPayNativeRetriveIdSchema>;
+export type WechatPayJsApiCreate = z.infer<typeof wechatPayJsApiCreateSchema>;
+export type WechatPayJsApiCreateResult = z.infer<typeof wechatPayJsApiCreateResultSchema>;
 
-export type WechatPayNativeRetriveOutTradeNo = z.infer<
-  typeof wechatPayNativeRetriveOutTradeNoSchema
->;
-
-export type WechatPayNativeRetriveResult = z.infer<
-  typeof wechatPayNativeRetriveResultSchema
->;
-
-export type WechatPayNativeClose = z.infer<typeof wechatPayNativeCloseSchema>;
+export type WechatPayRetriveId = z.infer<typeof wechatPayRetriveIdSchema>;
+export type WechatPayRetriveOutTradeNo = z.infer<typeof wechatPayRetriveOutTradeNoSchema>;
+export type WechatPayRetriveResult = z.infer<typeof wechatPayRetriveResultSchema>;
+export type WechatPayClose = z.infer<typeof wechatPayCloseSchema>;
 
 export type WechatPayNotifyResult = z.infer<typeof wechatPayNotifyResultSchema>;
-
 export type WechatPayNotifyResultData = z.infer<typeof wechatPayNotifyResultDataSchema>;
-
 export type WechatPayNotifyResponse = z.infer<typeof wechatPayNotifyResponseSchema>;
+export type WechatPayJsApiPayPre = z.infer<typeof wechatPayJsApiPayPreSchema>;
+export type WechatPayJsApiPay = z.infer<typeof wechatPayJsApiPaySchema>;
