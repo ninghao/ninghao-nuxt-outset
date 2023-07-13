@@ -48,6 +48,14 @@ export default defineNuxtConfig({
     api: {
       entitiesPerPage: '25',
     },
+
+    // 微信支付
+    wechatPay: {
+      appId: '',
+      mchId: '',
+      key: '',
+      apiBase: '',
+    },
   },
 
   // 源文件目录
