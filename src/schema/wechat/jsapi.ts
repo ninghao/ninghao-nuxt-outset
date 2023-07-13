@@ -1,29 +1,11 @@
 import { z } from 'zod';
-import {
-  sp_appid,
-  sp_mchid,
-  sub_appid,
-  sub_mchid,
-  description,
-  out_trade_no,
-  time_expire,
-  attach,
-  notify_url,
-  goods_tag,
-  support_fapiao,
-  settle_info,
-  amount,
-  payer,
-  detail,
-  payer_client_ip,
-  device_id,
-  store_info,
-  prepay_id,
-} from './base';
+import { payer, wechatCreateTransactionSchema, prepay_id, scene_info } from './base';
 
 /**
  * JSAPI：创建订单
+ * 
  * POST https://api.mch.weixin.qq.com/v3/pay/partner/transactions/jsapi
+ * 
  * 示例值：
     {
       "sp_mchid": "1900007XXX",
@@ -42,39 +24,19 @@ import {
       }
     }
  */
-export const wechatPayJsApiCreateSchema = z.object({
-  sp_appid,
-  sp_mchid,
-  sub_appid,
-  sub_mchid,
-  description,
-  out_trade_no,
-  time_expire,
-  attach,
-  notify_url,
-  goods_tag,
-  support_fapiao,
-  settle_info,
-  amount,
+export const wechatPayJsApiCreateSchema = wechatCreateTransactionSchema.extend({
   payer,
-  detail,
-  scene_info: z
-    .object({
-      payer_client_ip,
-      device_id,
-      store_info,
-    })
-    .describe('场景信息，支付场景描述。'),
+  scene_info,
 });
 
 /**
-     * JSAPI：创建订单结果
-     * 
-     * 示例：
-       {
-          "prepay_id": "wx2611215250487459928b659bd466620000"
-        }
-     */
+ * JSAPI：创建订单结果
+ * 
+ * 示例值：
+   {
+      "prepay_id": "wx2611215250487459928b659bd466620000"
+    }
+  */
 export const wechatPayJsApiCreateResultSchema = z.object({
   prepay_id,
 });
@@ -84,7 +46,8 @@ export const wechatPayJsApiCreateResultSchema = z.object({
  * 通过JSAPI下单接口获取到发起支付的必要参数prepay_id，然后使用微信支付提供的前端JS方法调起公众号支付。
  *
  * ⚠️ 注意
- * 1. 请确保实际支付时的请求目录与后台配置的目录一致（5分钟后生效），配置：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/open/pay/chapter2_1.shtml
+ * 1. 请确保实际支付时的请求目录与后台配置的目录一致（5分钟后生效），
+ *    配置：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/open/pay/chapter2_1.shtml
  * 2. WeixinJSBridge内置对象在其他浏览器中无效
  */
 
@@ -137,3 +100,5 @@ export const wechatPayJsApiPaySchema = z.object({
  */
 export type WechatPayJsApiCreate = z.infer<typeof wechatPayJsApiCreateSchema>;
 export type WechatPayJsApiCreateResult = z.infer<typeof wechatPayJsApiCreateResultSchema>;
+export type WechatPayJsApiPayPre = z.infer<typeof wechatPayJsApiPayPreSchema>;
+export type WechatPayJsApiPay = z.infer<typeof wechatPayJsApiPaySchema>;

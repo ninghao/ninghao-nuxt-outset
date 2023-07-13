@@ -1,25 +1,5 @@
 import { z } from 'zod';
-import {
-  sp_appid,
-  sp_mchid,
-  sub_appid,
-  sub_mchid,
-  description,
-  out_trade_no,
-  time_expire,
-  attach,
-  notify_url,
-  goods_tag,
-  support_fapiao,
-  settle_info,
-  amount,
-  detail,
-  code_url,
-  payer,
-  payer_client_ip,
-  device_id,
-  store_info,
-} from './base';
+import { code_url, wechatCreateTransactionSchema, scene_info } from './base';
 
 /**
  * Native：创建订单
@@ -39,21 +19,8 @@ import {
       }
     }
  */
-export const wechatPayNativeCreateSchema = z.object({
-  sp_appid,
-  sp_mchid,
-  sub_appid,
-  sub_mchid,
-  description,
-  out_trade_no,
-  time_expire,
-  attach,
-  notify_url,
-  goods_tag,
-  support_fapiao,
-  settle_info,
-  amount,
-  detail,
+export const wechatPayNativeCreateSchema = wechatCreateTransactionSchema.extend({
+  scene_info,
 });
 
 /**

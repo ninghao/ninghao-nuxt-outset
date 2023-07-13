@@ -3,32 +3,41 @@ import { z } from 'zod';
 /**
  * 商品信息
  */
+export const merchant_goods_id = z
+  .string()
+  .min(1)
+  .max(32)
+  .describe(
+    '商户侧商品编码，由半角的大小写字母、数字、中划线、下划线中的一种或几种组成。示例值：1246464644',
+  );
+export const wechatpay_goods_id = z
+  .string()
+  .min(1)
+  .max(32)
+  .optional()
+  .describe('微信支付商品编码，微信支付定义的统一商品编号（没有可不传）示例值：1001');
+
+export const goods_name = z
+  .string()
+  .min(1)
+  .max(25)
+  .optional()
+  .describe('商品名称，商品的实际名称。示例值：iPhoneX 256G');
+
+export const quantity = z.number().describe('商品数量，用户购买的数量，示例值：1');
+
+export const unit_price = z
+  .number()
+  .describe(
+    '商品单价，单位为：分。如果商户有优惠，需传输商户优惠后的单价(例如：用户对一笔100元的订单使用了商场发的纸质优惠券100-50，则活动商品的单价应为原单价-50)，示例值：528800',
+  );
+
 export const goods_detail_item = z.object({
-  merchant_goods_id: z
-    .string()
-    .min(1)
-    .max(32)
-    .describe(
-      '商户侧商品编码，由半角的大小写字母、数字、中划线、下划线中的一种或几种组成。示例值：1246464644',
-    ),
-  wechatpay_goods_id: z
-    .string()
-    .min(1)
-    .max(32)
-    .optional()
-    .describe('微信支付商品编码，微信支付定义的统一商品编号（没有可不传）示例值：1001'),
-  goods_name: z
-    .string()
-    .min(1)
-    .max(25)
-    .optional()
-    .describe('商品名称，商品的实际名称。示例值：iPhoneX 256G'),
-  quantity: z.number().describe('商品数量，用户购买的数量，示例值：1'),
-  unit_price: z
-    .number()
-    .describe(
-      '商品单价，单位为：分。如果商户有优惠，需传输商户优惠后的单价(例如：用户对一笔100元的订单使用了商场发的纸质优惠券100-50，则活动商品的单价应为原单价-50)，示例值：528800',
-    ),
+  merchant_goods_id,
+  wechatpay_goods_id,
+  goods_name,
+  quantity,
+  unit_price,
 });
 
 /**
@@ -406,10 +415,11 @@ export const h5_info = z
  */
 export const scene_info = z
   .object({
+    payer_client_ip,
     device_id,
+    store_info,
   })
-  .optional()
-  .describe('场景信息，支付场景描述');
+  .describe('场景信息，支付场景描述。');
 
 /**
  * 优惠功能项目
@@ -456,3 +466,23 @@ export const prepay_id = z
   .describe(
     '预支付交易会话标识，预支付交易会话标识。用于后续接口调用中使用，该值有效期为2小时。示例值：wx201410272009395522657a690389285100',
   );
+
+/**
+ * 创建订单
+ */
+export const wechatCreateTransactionSchema = z.object({
+  sp_appid,
+  sp_mchid,
+  sub_appid,
+  sub_mchid,
+  description,
+  out_trade_no,
+  time_expire,
+  attach,
+  notify_url,
+  goods_tag,
+  support_fapiao,
+  settle_info,
+  amount,
+  detail,
+});
