@@ -11,3 +11,4 @@ dist
 .idea
 db
 *.surql
+cert
