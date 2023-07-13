@@ -355,7 +355,54 @@ export const wechatPayRefundResultSchema = z.object({
 });
 
 /**
+ * 查询退款
+ *
+ * 提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，建议在提交退款申请后1分钟发起查询退款状态，
+ * 一般来说零钱支付的退款5分钟内到账，银行卡支付的退款1-3个工作日到账。
+ *
+ * GET https://api.mch.weixin.qq.com/v3/refund/domestic/refunds/{out_refund_no}
+ *
+ * 示例值：
+ * https://api.mch.weixin.qq.com/v3/refund/domestic/refunds/1217752501201407033233368018?sub_mchid=1900000109
+ */
+export const wechatPayRetrieveRefundSchema = z.object({
+  out_refund_no,
+  sub_mchid,
+});
+
+/**
+ * 查询退款：结果
+ *
+ */
+
+export const wechatPayRetrieveRefundResultSchema = z.object({
+  refund_id,
+  out_refund_no,
+  transaction_id,
+  out_trade_no,
+  channel,
+  user_received_account,
+  success_time,
+  create_time,
+  status,
+  funds_account,
+  amount: amount.extend({
+    payer_total,
+    payer_refund,
+    settlement_refund,
+    settlement_total,
+    discount_refund,
+    refund_fee,
+  }),
+  promotion_detail,
+});
+
+/**
  * 类型
  */
-export type WechatPayRefundSchema = z.infer<typeof wechatPayRefundSchema>;
-export type WechatPayRefundResultSchema = z.infer<typeof wechatPayRefundResultSchema>;
+export type WechatPayRefund = z.infer<typeof wechatPayRefundSchema>;
+export type WechatPayRefundResult = z.infer<typeof wechatPayRefundResultSchema>;
+export type WechatPayRetrieveRefund = z.infer<typeof wechatPayRetrieveRefundSchema>;
+export type WechatPayRetrieveRefundResult = z.infer<
+  typeof wechatPayRetrieveRefundResultSchema
+>;
