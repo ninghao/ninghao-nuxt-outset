@@ -55,6 +55,9 @@ export default defineNuxtConfig({
       mchId: '',
       key: '',
       apiBase: '',
+      authType: '',
+      serial: '',
+      apiKeyPath: '',
     },
   },
 

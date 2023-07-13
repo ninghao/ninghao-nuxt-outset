@@ -17,6 +17,8 @@ type CreateWechatAuthorizationOptions = {
 };
 
 export const createWechatAuthorization = (options: CreateWechatAuthorizationOptions) => {
+  const config = useRuntimeConfig();
+
   // 1.请求方法
   const method = options.method ?? 'GET';
 
@@ -36,9 +38,7 @@ export const createWechatAuthorization = (options: CreateWechatAuthorizationOpti
   const data = [method, url, timestamp, nonce_str, body].join('\n') + '\n';
 
   // 接口密钥
-  const privateKey = fs.readFileSync('./cert/apiclient_key.pem', 'utf8');
-
-  console.log(JSON.stringify(data));
+  const privateKey = fs.readFileSync(config.wechatPay.apiKeyPath, 'utf8');
 
   // 生成签名
   const signature = crypto
@@ -47,13 +47,13 @@ export const createWechatAuthorization = (options: CreateWechatAuthorizationOpti
     .sign(privateKey, 'base64');
 
   // 认证类型
-  const authType = 'WECHATPAY2-SHA256-RSA2048';
+  const authType = config.wechatPay.authType;
 
   // 证书序列号
-  const serial_no = '498BC8A280388C7C254C83087E5EA54D6F9EB783';
+  const serial_no = config.wechatPay.serial;
 
   // 商店 ID
-  const mchid = '1625881129';
+  const mchid = config.wechatPay.mchId;
 
   // 签名信息
   const signatureInfo = Object.entries({
